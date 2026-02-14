@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Name - Dynamic Profile</title>
+<title>Your Name - Live Editor</title>
 
 <style>
 * {
@@ -16,7 +16,13 @@ html, body {
   height: 100%;
   font-family: "Noto Serif Bengali", serif;
   background: #f7f7f7;
+}
+
+/* Main Website Styles */
+.website-view {
+  height: 100vh;
   overflow: hidden;
+  position: relative;
 }
 
 .wrapper {
@@ -130,23 +136,76 @@ html, body {
   z-index: 10000;
   display: none;
   width: 90%;
-  max-width: 500px;
-  max-height: 80vh;
-  overflow-y: auto;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow: hidden;
+  flex-direction: column;
 }
 
 .modal.active {
-  display: block;
+  display: flex;
 }
 
-.modal h2, .modal h3 {
+.modal h3 {
   text-align: center;
   margin-top: 0;
   margin-bottom: 20px;
   color: #333;
 }
 
-.modal input, .modal textarea {
+/* Code Editor */
+.code-editor {
+  width: 100%;
+  height: 500px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: vertical;
+  white-space: pre-wrap;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  margin-bottom: 15px;
+}
+
+.editor-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tab-btn.active {
+  background: #000;
+  color: white;
+}
+
+.preview-btn {
+  background: #2196F3;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Login Modal (smaller) */
+.login-modal {
+  max-width: 400px;
+}
+
+.login-modal input {
   width: 100%;
   padding: 12px;
   margin-bottom: 15px;
@@ -156,12 +215,7 @@ html, body {
   box-sizing: border-box;
 }
 
-.modal textarea {
-  height: 80px;
-  resize: vertical;
-}
-
-.modal button {
+.login-modal button {
   width: 100%;
   padding: 12px;
   background: #000;
@@ -174,34 +228,37 @@ html, body {
   margin-bottom: 10px;
 }
 
-.modal button:hover {
-  background: #333;
-}
-
-.modal .close-btn {
+.login-modal .close-btn {
   background: #f0f0f0;
   color: #333;
 }
 
-.modal .close-btn:hover {
-  background: #ddd;
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
 }
 
-/* Form Group */
-.form-group {
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
+.button-group button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
   font-weight: bold;
-  color: #555;
-  font-size: 14px;
+  cursor: pointer;
 }
 
-/* Overlay */
+.save-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.apply-btn {
+  background: #2196F3;
+  color: white;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -217,7 +274,6 @@ html, body {
   display: block;
 }
 
-/* Messages */
 .error-message {
   color: red;
   font-size: 14px;
@@ -234,85 +290,95 @@ html, body {
   text-align: center;
 }
 
-.loading {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #000;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-left: 10px;
-  display: none;
+.info-box {
+  background: #e3f2fd;
+  border-left: 4px solid #2196F3;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 13px;
+  color: #0d47a1;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Export/Import */
+.export-import {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.export-import button {
+  flex: 1;
+  padding: 8px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 </style>
 </head>
-
 <body>
 
-<div class="wrapper">
-  <div class="container">
+<!-- Main Website View -->
+<div class="website-view" id="websiteView">
+  <div class="wrapper">
+    <div class="container">
 
-    <!-- Profile Picture -->
-    <div class="profile">
-      <img id="profileImage" src="Your_Profile_Picture_Link" alt="Profile Picture">
+      <!-- Profile Picture -->
+      <div class="profile">
+        <img id="profileImage" src="Your_Profile_Picture_Link" alt="Profile Picture">
+      </div>
+
+      <!-- Name & Title -->
+      <div class="name" id="userName">Your_Name</div>
+      <div class="title" id="userTitle">Your_Title</div>
+
+      <!-- Buttons -->
+      <a class="btn" id="facebookBtn" href="https://www.facebook.com/your_username">
+        <img src="https://cdn.simpleicons.org/facebook/000000" alt="Facebook Logo">
+        Facebook
+      </a>
+
+      <a class="btn" id="facebookPageBtn" href="https://www.facebook.com/your_username">
+        <img src="https://cdn.simpleicons.org/facebook/000000" alt="Facebook Logo">
+        Facebook Page
+      </a>
+
+      <a class="btn" id="instagramBtn" href="https://www.instagram.com/your_username">
+        <img src="https://cdn.simpleicons.org/instagram/000000" alt="Instagram Logo">
+        Instagram
+      </a>
+
+      <a class="btn" id="whatsappBtn" href="#">
+        <img src="https://cdn.simpleicons.org/whatsapp/000000" alt="WhatsApp Logo">
+        WhatsApp
+      </a>
+
+      <a class="btn" id="tiktokBtn" href="https://www.tiktok.com/@your_username" target="_blank">
+        <img src="https://i.postimg.cc/fRKJCkcx/images-(2).png" alt="TikTok Logo">
+        TikTok
+      </a>
+
+      <a class="btn" id="callBtn" href="tel:01XXXXXXXXX">
+        <img src="https://i.postimg.cc/C59NrRY3/phone-logo-png-seeklogo-248712.png" alt="Phone Logo">
+        Call Me
+      </a>
+
+      <a class="btn" id="aboutBtn" href="#">
+        <img src="https://cdn.simpleicons.org/aboutdotme/000000" alt="About Logo">
+        About Me
+      </a>
+
+      <a class="btn" id="websiteBtn" href="#">
+        <img src="https://i.postimg.cc/TYwJMMPQ/images-(1).png" alt="Website Logo">
+        My Website
+      </a>
+
     </div>
 
-    <!-- Name & Title -->
-    <div class="name" id="userName">Your_Name</div>
-    <div class="title" id="userTitle">Your_Title</div>
-
-    <!-- Buttons -->
-    <a class="btn" id="facebookBtn" href="https://www.facebook.com/your_username">
-      <img src="https://cdn.simpleicons.org/facebook/000000" alt="Facebook Logo">
-      Facebook
-    </a>
-
-    <a class="btn" id="facebookPageBtn" href="https://www.facebook.com/your_username">
-      <img src="https://cdn.simpleicons.org/facebook/000000" alt="Facebook Logo">
-      Facebook Page
-    </a>
-
-    <a class="btn" id="instagramBtn" href="https://www.instagram.com/your_username">
-      <img src="https://cdn.simpleicons.org/instagram/000000" alt="Instagram Logo">
-      Instagram
-    </a>
-
-    <a class="btn" id="whatsappBtn" href="#">
-      <img src="https://cdn.simpleicons.org/whatsapp/000000" alt="WhatsApp Logo">
-      WhatsApp
-    </a>
-
-    <a class="btn" id="tiktokBtn" href="https://www.tiktok.com/@your_username" target="_blank">
-      <img src="https://i.postimg.cc/fRKJCkcx/images-(2).png" alt="TikTok Logo">
-      TikTok
-    </a>
-
-    <a class="btn" id="callBtn" href="tel:01XXXXXXXXX">
-      <img src="https://i.postimg.cc/C59NrRY3/phone-logo-png-seeklogo-248712.png" alt="Phone Logo">
-      Call Me
-    </a>
-
-    <a class="btn" id="aboutBtn" href="#">
-      <img src="https://cdn.simpleicons.org/aboutdotme/000000" alt="About Logo">
-      About Me
-    </a>
-
-    <a class="btn" id="websiteBtn" href="#">
-      <img src="https://i.postimg.cc/TYwJMMPQ/images-(1).png" alt="Website Logo">
-      My Website
-    </a>
-
-  </div>
-
-  <!-- Footer -->
-  <div class="footer" id="footerText">
-    Copyright © 2026 MADE BY <br> "Your_Name". <br> All Rights Reserved.
+    <!-- Footer -->
+    <div class="footer" id="footerText">
+      Copyright © 2026 MADE BY <br> "Your_Name". <br> All Rights Reserved.
+    </div>
   </div>
 </div>
 
@@ -323,7 +389,7 @@ html, body {
 <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
 <!-- Login Modal -->
-<div class="modal" id="loginModal">
+<div class="modal login-modal" id="loginModal">
   <h3>🔐 ADMIN LOGIN</h3>
   <input type="password" id="passwordInput" placeholder="পাসওয়ার্ড দিন" onkeypress="handleKeyPress(event)">
   <button onclick="checkPassword()">লগইন করুন</button>
@@ -331,185 +397,58 @@ html, body {
   <div class="error-message" id="loginError">❌ ভুল পাসওয়ার্ড!</div>
 </div>
 
-<!-- Admin Panel -->
-<div class="modal" id="adminPanel">
-  <h2>📝 ইনফরমেশন আপডেট করুন</h2>
+<!-- HTML Editor Modal -->
+<div class="modal" id="editorModal">
+  <h3>📝 HTML কোড এডিটর</h3>
   
-  <div class="form-group">
-    <label>👤 নাম:</label>
-    <input type="text" id="nameInput" placeholder="Your_Name">
+  <div class="info-box">
+    <strong>⚠️ সতর্কতা:</strong> HTML কোড পরিবর্তন করলে ওয়েবসাইটের ডিজাইন ও কন্টেন্ট পরিবর্তন হবে। 
+    <br><strong>নোট:</strong> এই পরিবর্তন শুধু আপনার ব্রাউজারে থাকবে। GitHub-এ আপডেট করতে চাইলে নতুন কোড কপি করে GitHub-এ পেস্ট করুন।
   </div>
   
-  <div class="form-group">
-    <label>📌 টাইটেল:</label>
-    <input type="text" id="titleInput" placeholder="Your_Title">
+  <div class="export-import">
+    <button onclick="exportHtml()">📥 HTML ডাউনলোড</button>
+    <button onclick="importHtml()">📤 HTML আপলোড</button>
   </div>
   
-  <div class="form-group">
-    <label>🖼️ প্রোফাইল ছবি লিংক:</label>
-    <input type="text" id="profileInput" placeholder="Your_Profile_Picture_Link">
+  <div class="editor-tabs">
+    <button class="tab-btn active" onclick="switchTab('code')">📝 কোড</button>
+    <button class="tab-btn" onclick="switchTab('preview')">👁️ প্রিভিউ</button>
+    <button class="preview-btn" onclick="previewCode()">প্রিভিউ দেখুন</button>
   </div>
   
-  <div class="form-group">
-    <label>📘 Facebook লিংক:</label>
-    <input type="text" id="fbInput" placeholder="https://www.facebook.com/your_username">
+  <textarea id="htmlEditor" class="code-editor" placeholder="এখানে HTML কোড লিখুন..."></textarea>
+  
+  <div id="previewArea" style="display: none; height: 500px; overflow: auto; border: 1px solid #ddd; padding: 20px; background: white;"></div>
+  
+  <div class="button-group">
+    <button class="save-btn" onclick="saveToBrowser()">
+      <span>💾 ব্রাউজারে সেভ</span>
+    </button>
+    <button class="apply-btn" onclick="applyChanges()">
+      <span>🔄 ওয়েবসাইটে প্রয়োগ</span>
+    </button>
+    <button class="close-btn" onclick="closeAll()">✖️ বন্ধ করুন</button>
   </div>
   
-  <div class="form-group">
-    <label>📘 Facebook Page লিংক:</label>
-    <input type="text" id="fbPageInput" placeholder="https://www.facebook.com/your_username">
+  <div class="success-message" id="successMsg">✅ সফলভাবে সেভ হয়েছে!</div>
+  <div class="error-message" id="errorMsg">❌ এরর হয়েছে! আবার চেষ্টা করুন।</div>
+  
+  <div style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 5px; font-size: 13px;">
+    <strong>📌 GitHub আপডেট করার নিয়ম:</strong><br>
+    1. কোড এডিট করুন<br>
+    2. "HTML ডাউনলোড" বাটনে ক্লিক করুন<br>
+    3. ডাউনলোড করা ফাইল GitHub-এ আপলোড করুন
   </div>
-  
-  <div class="form-group">
-    <label>📷 Instagram লিংক:</label>
-    <input type="text" id="instaInput" placeholder="https://www.instagram.com/your_username">
-  </div>
-  
-  <div class="form-group">
-    <label>💬 WhatsApp নম্বর:</label>
-    <input type="text" id="waInput" placeholder="01XXXXXXXXX">
-  </div>
-  
-  <div class="form-group">
-    <label>🎵 TikTok লিংক:</label>
-    <input type="text" id="tiktokInput" placeholder="https://www.tiktok.com/@your_username">
-  </div>
-  
-  <div class="form-group">
-    <label>📞 ফোন নম্বর:</label>
-    <input type="text" id="callInput" placeholder="01XXXXXXXXX">
-  </div>
-  
-  <div class="form-group">
-    <label>ℹ️ About Me লিংক:</label>
-    <input type="text" id="aboutInput" placeholder="#">
-  </div>
-  
-  <div class="form-group">
-    <label>🌐 ওয়েবসাইট লিংক:</label>
-    <input type="text" id="webInput" placeholder="#">
-  </div>
-  
-  <div class="form-group">
-    <label>📝 Footer টেক্সট:</label>
-    <textarea id="footerInput">Copyright © 2026 MADE BY <br> "Your_Name". <br> All Rights Reserved.</textarea>
-  </div>
-  
-  <button onclick="saveToJSONBin()" style="background: #4CAF50;">
-    <span id="saveText">সেভ করুন</span>
-    <span id="loadingSpinner" class="loading"></span>
-  </button>
-  <button class="close-btn" onclick="closeAll()">বন্ধ করুন</button>
-  
-  <div class="success-message" id="successMsg">✅ সফলভাবে আপডেট হয়েছে! সবাই এখন নতুন তথ্য দেখতে পাবে।</div>
-  <div class="error-message" id="saveError">❌ আপডেট ব্যর্থ হয়েছে! আবার চেষ্টা করুন।</div>
 </div>
 
 <script>
 // ============ কনফিগারেশন ============
 const ADMIN_PASSWORD = "admin123"; // আপনার পাসওয়ার্ড
-const JSONBIN_ID = "67b08943ad19ca34f81046b0"; // JSONBin.io ID (আমি তৈরি করে দিয়েছি)
-const API_KEY = "$2a$10$WZzX5q5q5q5q5q5q5q5q5u"; // এটা dummy, কাজ করার জন্য
 
-// ============ ডাটা লোড ============
-async function loadData() {
-  try {
-    const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
-      headers: {
-        'X-Master-Key': API_KEY
-      }
-    });
-    
-    if (response.ok) {
-      const result = await response.json();
-      const data = result.record;
-      
-      // UI আপডেট
-      document.getElementById('userName').textContent = data.name || "Your_Name";
-      document.getElementById('userTitle').textContent = data.title || "Your_Title";
-      document.getElementById('profileImage').src = data.profileImage || "Your_Profile_Picture_Link";
-      document.getElementById('facebookBtn').href = data.facebook || "https://www.facebook.com/your_username";
-      document.getElementById('facebookPageBtn').href = data.facebookPage || "https://www.facebook.com/your_username";
-      document.getElementById('instagramBtn').href = data.instagram || "https://www.instagram.com/your_username";
-      document.getElementById('whatsappBtn').href = data.whatsapp ? `https://wa.me/${data.whatsapp}` : "#";
-      document.getElementById('tiktokBtn').href = data.tiktok || "https://www.tiktok.com/@your_username";
-      document.getElementById('callBtn').href = data.phone ? `tel:${data.phone}` : "tel:01XXXXXXXXX";
-      document.getElementById('aboutBtn').href = data.about || "#";
-      document.getElementById('websiteBtn').href = data.website || "#";
-      document.getElementById('footerText').innerHTML = data.footer || 'Copyright © 2026 MADE BY <br> "Your_Name". <br> All Rights Reserved.';
-    }
-  } catch (error) {
-    console.log('Load error, using defaults');
-  }
-}
-
-// ============ JSONBin-এ সেভ ============
-async function saveToJSONBin() {
-  // লোডিং দেখান
-  document.getElementById('saveText').style.display = 'none';
-  document.getElementById('loadingSpinner').style.display = 'inline-block';
-  document.getElementById('successMsg').style.display = 'none';
-  document.getElementById('saveError').style.display = 'none';
-  
-  // ডাটা সংগ্রহ
-  const data = {
-    name: document.getElementById('nameInput').value,
-    title: document.getElementById('titleInput').value,
-    profileImage: document.getElementById('profileInput').value,
-    facebook: document.getElementById('fbInput').value,
-    facebookPage: document.getElementById('fbPageInput').value,
-    instagram: document.getElementById('instaInput').value,
-    whatsapp: document.getElementById('waInput').value,
-    tiktok: document.getElementById('tiktokInput').value,
-    phone: document.getElementById('callInput').value,
-    about: document.getElementById('aboutInput').value,
-    website: document.getElementById('webInput').value,
-    footer: document.getElementById('footerInput').value,
-    lastUpdated: new Date().toLocaleString('bn-BD')
-  };
-  
-  try {
-    const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': API_KEY
-      },
-      body: JSON.stringify(data)
-    });
-    
-    if (response.ok) {
-      // UI আপডেট
-      document.getElementById('userName').textContent = data.name;
-      document.getElementById('userTitle').textContent = data.title;
-      document.getElementById('profileImage').src = data.profileImage;
-      document.getElementById('facebookBtn').href = data.facebook;
-      document.getElementById('facebookPageBtn').href = data.facebookPage;
-      document.getElementById('instagramBtn').href = data.instagram;
-      document.getElementById('whatsappBtn').href = `https://wa.me/${data.whatsapp}`;
-      document.getElementById('tiktokBtn').href = data.tiktok;
-      document.getElementById('callBtn').href = `tel:${data.phone}`;
-      document.getElementById('aboutBtn').href = data.about;
-      document.getElementById('websiteBtn').href = data.website;
-      document.getElementById('footerText').innerHTML = data.footer;
-      
-      // সাকসেস মেসেজ
-      document.getElementById('successMsg').style.display = 'block';
-      
-      // ২ সেকেন্ড পরে প্যানেল বন্ধ
-      setTimeout(() => {
-        closeAll();
-      }, 2000);
-    } else {
-      document.getElementById('saveError').style.display = 'block';
-    }
-  } catch (error) {
-    document.getElementById('saveError').style.display = 'block';
-  }
-  
-  // লোডিং বন্ধ
-  document.getElementById('saveText').style.display = 'inline';
-  document.getElementById('loadingSpinner').style.display = 'none';
+// ============ অরিজিনাল HTML কোড ============
+function getCurrentHTML() {
+  return document.documentElement.outerHTML;
 }
 
 // ============ লগইন ফাংশন ============
@@ -526,22 +465,7 @@ function checkPassword() {
   
   if (password === ADMIN_PASSWORD) {
     document.getElementById('loginModal').classList.remove('active');
-    document.getElementById('adminPanel').classList.add('active');
-    
-    // বর্তমান ডাটা ফর্মে লোড
-    document.getElementById('nameInput').value = document.getElementById('userName').textContent;
-    document.getElementById('titleInput').value = document.getElementById('userTitle').textContent;
-    document.getElementById('profileInput').value = document.getElementById('profileImage').src;
-    document.getElementById('fbInput').value = document.getElementById('facebookBtn').href;
-    document.getElementById('fbPageInput').value = document.getElementById('facebookPageBtn').href;
-    document.getElementById('instaInput').value = document.getElementById('instagramBtn').href;
-    document.getElementById('waInput').value = document.getElementById('whatsappBtn').href.replace('https://wa.me/', '').replace('tel:', '');
-    document.getElementById('tiktokInput').value = document.getElementById('tiktokBtn').href;
-    document.getElementById('callInput').value = document.getElementById('callBtn').href.replace('tel:', '');
-    document.getElementById('aboutInput').value = document.getElementById('aboutBtn').href;
-    document.getElementById('webInput').value = document.getElementById('websiteBtn').href;
-    document.getElementById('footerInput').value = document.getElementById('footerText').innerHTML;
-    
+    openEditorModal();
   } else {
     document.getElementById('loginError').style.display = 'block';
     document.getElementById('passwordInput').value = '';
@@ -554,17 +478,128 @@ function handleKeyPress(e) {
   }
 }
 
+// ============ এডিটর মোডাল ============
+function openEditorModal() {
+  document.getElementById('editorModal').classList.add('active');
+  
+  // ব্রাউজার স্টোরেজ থেকে HTML লোড
+  const savedHtml = localStorage.getItem('websiteHtml');
+  if (savedHtml) {
+    document.getElementById('htmlEditor').value = savedHtml;
+  } else {
+    // Current HTML দেখান
+    document.getElementById('htmlEditor').value = getCurrentHTML();
+  }
+}
+
+function switchTab(tab) {
+  const codeEditor = document.getElementById('htmlEditor');
+  const previewArea = document.getElementById('previewArea');
+  const tabs = document.querySelectorAll('.tab-btn');
+  
+  if (tab === 'code') {
+    codeEditor.style.display = 'block';
+    previewArea.style.display = 'none';
+    tabs[0].classList.add('active');
+    tabs[1].classList.remove('active');
+  } else {
+    codeEditor.style.display = 'none';
+    previewArea.style.display = 'block';
+    tabs[0].classList.remove('active');
+    tabs[1].classList.add('active');
+    previewCode();
+  }
+}
+
+function previewCode() {
+  const html = document.getElementById('htmlEditor').value;
+  const previewArea = document.getElementById('previewArea');
+  
+  // প্রিভিউ দেখান (সিকিউরিটি জন্য)
+  const safeHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '<!-- স্ক্রিপ্ট সরানো হয়েছে -->');
+  previewArea.innerHTML = safeHtml;
+}
+
+// ============ ব্রাউজারে সেভ ============
+function saveToBrowser() {
+  const html = document.getElementById('htmlEditor').value;
+  localStorage.setItem('websiteHtml', html);
+  showMessage('successMsg', 'ব্রাউজারে সেভ হয়েছে!');
+}
+
+// ============ ওয়েবসাইটে প্রয়োগ ============
+function applyChanges() {
+  if (confirm('আপনি কি নিশ্চিত? ওয়েবসাইট আপডেট হবে।')) {
+    const html = document.getElementById('htmlEditor').value;
+    
+    // একটা temporary iframe তৈরি করে দেখানো যায়
+    // কিন্তু পুরো পেজ রিপ্লেস করা risky
+    
+    showMessage('successMsg', 'এই ফিচারটি ডেমো জন্য। GitHub-এ আপডেট করতে HTML ডাউনলোড করুন।');
+  }
+}
+
+// ============ HTML ডাউনলোড ============
+function exportHtml() {
+  const html = document.getElementById('htmlEditor').value;
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'index.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  showMessage('successMsg', 'HTML ডাউনলোড শুরু হয়েছে!');
+}
+
+// ============ HTML আপলোড ============
+function importHtml() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.html,.htm';
+  
+  input.onchange = function(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+      document.getElementById('htmlEditor').value = e.target.result;
+      showMessage('successMsg', 'HTML আপলোড হয়েছে!');
+    };
+    
+    reader.readAsText(file);
+  };
+  
+  input.click();
+}
+
+// ============ হেল্পার ফাংশন ============
+function showMessage(elementId, message) {
+  const element = document.getElementById(elementId);
+  element.textContent = message;
+  element.style.display = 'block';
+  
+  setTimeout(() => {
+    element.style.display = 'none';
+  }, 3000);
+}
+
 function closeAll() {
   document.getElementById('overlay').classList.remove('active');
   document.getElementById('loginModal').classList.remove('active');
-  document.getElementById('adminPanel').classList.remove('active');
-  document.getElementById('successMsg').style.display = 'none';
-  document.getElementById('saveError').style.display = 'none';
+  document.getElementById('editorModal').classList.remove('active');
 }
 
 // ============ পেজ লোড হলে ============
 window.onload = function() {
-  loadData();
+  // ব্রাউজার স্টোরেজ থেকে HTML লোড করে দেখানোর জন্য
+  const savedHtml = localStorage.getItem('websiteHtml');
+  if (savedHtml) {
+    console.log('Saved HTML found in browser storage');
+  }
 }
 </script>
 
