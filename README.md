@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    window.location.href = "inyt444.run.place";
+    window.location.href = "www.inyt444.run.place";
   </script>
 </head>
 <body>
