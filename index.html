@@ -1,16 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Working Test</title>
+  <title>My Blank Website</title>
+  <style>
+    /* CSS এখানে লিখবেন */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      padding: 20px;
+    }
+    #app {
+      padding: 10px;
+      border: 1px solid #ccc;
+      background: #fff;
+    }
+  </style>
 </head>
 <body>
 
-<h1>HELLO TEST</h1>
+<div id="app">
+  <!-- আপনার HTML content এখানে লিখুন -->
+</div>
 
 <script>
-  document.body.style.backgroundColor = "yellow";
-  alert("JS Running");
+  // JavaScript code এখানে লিখুন
+  const app = document.getElementById("app");
+
+  // Example: HTML show করা
+  app.innerHTML = "<h1>Hello World!</h1><p>Your code will run and show here!</p>";
+
+  // Example: JS run করা
+  console.log("JS is running!");
 </script>
 
 </body>
