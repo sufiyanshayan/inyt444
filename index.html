@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Render README</title>
+</head>
+<body>
+<div id="content"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  fetch('README.md')
+    .then(response => response.text())
+    .then(text => {
+      // Convert Markdown to HTML
+      document.getElementById('content').innerHTML = marked.parse(text);
+    })
+    .catch(err => {
+      document.getElementById('content').innerHTML = "<p>README.md not found</p>";
+      console.error(err);
+    });
+</script>
+
+</body>
+</html>
