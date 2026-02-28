@@ -30,7 +30,6 @@
   fetch('README.md')
     .then(res => res.text())
     .then(md => {
-      // Convert Markdown to HTML
       document.getElementById('content').innerHTML = marked.parse(md);
     })
     .catch(err => {
