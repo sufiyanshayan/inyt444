@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+fetch("README.md")
+  .then(res => res.text())
+  .then(code => {
+    document.body.innerHTML = code;
+  });
+</script>
+
+</body>
+</html>
