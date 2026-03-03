@@ -3,49 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MD ABU SUFIYAN MRIDHA SHAYAN</title>
+<title>Your Name</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
 
 <style>
 *{
   box-sizing:border-box;
 }
 
-body{
+html,body{
   margin:0;
+  padding:0;
   font-family:"Noto Serif Bengali",serif;
-  background:#e9e9e9;
-  display:flex;
-  justify-content:center;
+  background:#f7f7f7;
+  overflow-x:hidden;
 }
 
 .wrapper{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  padding:10px 0;
+}
+
+.container{
   width:100%;
-  max-width:380px;
+  max-width:360px; /* কমানো হয়েছে */
   padding:12px;
   text-align:center;
+  display:flex;
+  flex-direction:column;
+  gap:6px; /* কম gap */
 }
 
 /* Profile */
 .profile img{
-  width:80px;
-  height:80px;
+  width:85px; /* ছোট করা হয়েছে */
+  height:85px;
   border-radius:50%;
-  border:3px solid #fff;
-  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+  border:2px solid #000;
   object-fit:cover;
-  margin-bottom:6px;
+  margin-bottom:8px;
+  box-shadow:0 0 0 4px #fff,0 0 10px rgba(0,0,0,0.25);
 }
 
+/* Name */
 .name{
-  font-size:15px;
+  font-size:16px; /* ছোট */
   font-weight:700;
+  margin-bottom:2px;
 }
 
 .title{
   font-size:11px;
-  color:#666;
+  color:#555;
   margin-bottom:10px;
 }
 
@@ -55,13 +70,13 @@ body{
   align-items:center;
   justify-content:center;
   gap:6px;
-  padding:7px;
+  padding:8px; /* height কমানো */
   border-radius:14px;
   text-decoration:none;
-  background:#f2f2f2;
+  background:#ffffff;
   color:#000;
-  font-size:12px;
-  margin:5px 0;
+  font-size:12px; /* ছোট */
+  font-weight:500;
   box-shadow:0 3px 8px rgba(0,0,0,0.08);
   transition:0.2s;
 }
@@ -73,13 +88,15 @@ body{
 
 .btn:hover{
   transform:translateY(-2px);
+  box-shadow:0 5px 14px rgba(0,0,0,0.12);
 }
 
 /* Footer */
 .footer{
-  margin-top:10px;
-  font-size:10px;
+  margin-top:12px;
+  font-size:10px; /* ছোট */
   color:#555;
+  text-align:center;
 }
 </style>
 </head>
@@ -87,32 +104,37 @@ body{
 <body>
 
 <div class="wrapper">
+  <div class="container">
 
-<div class="profile">
-<img src="Your_Profile_Picture_Link" alt="Profile">
+    <div class="profile">
+      <img src="Your_Profile_Picture_Link" alt="Profile Picture">
+    </div>
+
+    <div class="name">Your_Name</div>
+    <div class="title">Your_Title</div>
+
+    <!-- Buttons -->
+    <a class="btn" href="#"><img src="https://cdn.simpleicons.org/facebook/000000">Facebook</a>
+    <a class="btn" href="#"><img src="https://cdn.simpleicons.org/facebook/000000">Facebook Page</a>
+    <a class="btn" href="#"><img src="https://cdn.simpleicons.org/instagram/000000">Instagram</a>
+    <a class="btn" href="#"><img src="https://cdn.simpleicons.org/whatsapp/000000">WhatsApp</a>
+    <a class="btn" href="#"><img src="https://cdn.simpleicons.org/tiktok/000000">TikTok</a>
+    <a class="btn" href="#"><img src="https://cdn.simpleicons.org/telegram/000000">Telegram</a>
+    <a class="btn" href="#"><img src="https://cdn.simpleicons.org/x/000000">Twitter (X)</a>
+    <a class="btn" href="#"><img src="https://cdn.simpleicons.org/discord/000000">Discord</a>
+    <a class="btn" href="#"><img src="https://cdn.simpleicons.org/phone/000000">Call Me</a>
+    <a class="btn" href="#"><img src="https://cdn.simpleicons.org/aboutdotme/000000">About Me</a>
+    <a class="btn" href="#"><img src="https://cdn.simpleicons.org/googlechrome/000000">My Website</a>
+
+  </div>
+
+  <div class="footer">
+    Copyright © 2026 MADE BY <br>
+    "Your_Name".<br>
+    All Rights Reserved.
+  </div>
+
 </div>
 
-<div class="name">MD ABU SUFIYAN MRIDHA SHAYAN</div>
-<div class="title">MOOJ TIME</div>
-
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/facebook/000000">Facebook</a>
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/facebook/000000">Facebook Page</a>
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/instagram/000000">Instagram</a>
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/whatsapp/000000">WhatsApp</a>
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/tiktok/000000">TikTok</a>
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/telegram/000000">Telegram</a>
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/x/000000">X</a>
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/discord/000000">Discord</a>
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/phone/000000">Call Me</a>
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/aboutdotme/000000">About Me</a>
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/googlechrome/000000">My Website</a>
-
-<div class="footer">
-Copyright © 2026 MADE BY <br>
-"MD ABU SUFIYAN MRIDHA SHAYAN".<br>
-All Rights Reserved.
-</div>
-
-</div>
 </body>
 </html>
