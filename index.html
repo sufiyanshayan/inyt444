@@ -15,49 +15,48 @@
 html,body{
   margin:0;
   padding:0;
+  height:100vh;
+  overflow:hidden; /* 🔥 slide বন্ধ */
   font-family:"Noto Serif Bengali",serif;
   background:#f7f7f7;
-  overflow-x:hidden;
 }
 
 .wrapper{
-  min-height:100vh;
+  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  flex-direction:column;
 }
 
 .container{
   width:100%;
-  max-width:360px;
-  padding:14px;
+  max-width:340px;
   text-align:center;
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:5px;
 }
 
 /* Profile */
 .profile img{
-  width:85px;
-  height:85px;
+  width:75px;
+  height:75px;
   border-radius:50%;
   border:2px solid #000;
   object-fit:cover;
-  margin-bottom:8px;
-  box-shadow:0 0 0 4px #fff,0 0 12px rgba(0,0,0,0.25);
+  margin:0 auto 6px auto;
 }
 
+/* Name */
 .name{
-  font-size:16px;
+  font-size:15px;
   font-weight:700;
 }
 
 .title{
-  font-size:11px;
+  font-size:10px;
   color:#555;
-  margin-bottom:10px;
+  margin-bottom:6px;
 }
 
 /* Buttons */
@@ -65,33 +64,31 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:8px;
-  padding:8px;
+  gap:6px;
+  padding:7px;
   border-radius:14px;
   text-decoration:none;
   background:#ffffff;
   color:#000;
-  font-size:12px;
+  font-size:11px;
   box-shadow:0 3px 8px rgba(0,0,0,0.08);
   transition:0.2s;
 }
 
 .btn img{
-  width:16px;
-  height:16px;
+  width:15px;
+  height:15px;
 }
 
 .btn:hover{
   transform:translateY(-2px);
-  box-shadow:0 5px 14px rgba(0,0,0,0.12);
 }
 
 /* Footer */
 .footer{
-  margin-top:12px;
-  font-size:10px;
+  margin-top:6px;
+  font-size:9px;
   color:#555;
-  text-align:center;
 }
 </style>
 </head>
@@ -109,28 +106,24 @@ html,body{
 <div class="title">Your_Title</div>
 
 <a class="btn" href="#"><img src="https://cdn.simpleicons.org/facebook/000000">Facebook</a>
-
 <a class="btn" href="#"><img src="https://cdn.simpleicons.org/facebook/000000">Facebook Page</a>
-
 <a class="btn" href="#"><img src="https://cdn.simpleicons.org/instagram/000000">Instagram</a>
-
 <a class="btn" href="#"><img src="https://cdn.simpleicons.org/whatsapp/000000">WhatsApp</a>
-
 <a class="btn" href="#"><img src="https://cdn.simpleicons.org/tiktok/000000">TikTok</a>
-
 <a class="btn" href="#"><img src="https://cdn.simpleicons.org/telegram/000000">Telegram</a>
-
 <a class="btn" href="#"><img src="https://cdn.simpleicons.org/x/000000">Twitter (X)</a>
-
 <a class="btn" href="#"><img src="https://cdn.simpleicons.org/discord/000000">Discord</a>
 
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/phone/000000">Call Me</a>
+<!-- Fixed Icons -->
+<a class="btn" href="tel:01XXXXXXXXX">
+  <img src="https://cdn-icons-png.flaticon.com/512/597/597177.png">
+  Call Me
+</a>
 
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/aboutdotme/000000">About Me</a>
-
-<a class="btn" href="#"><img src="https://cdn.simpleicons.org/googlechrome/000000">My Website</a>
-
-</div>
+<a class="btn" href="#" >
+  <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png">
+  My Website
+</a>
 
 <div class="footer">
 Copyright © 2026 MADE BY <br>
@@ -138,6 +131,7 @@ Copyright © 2026 MADE BY <br>
 All Rights Reserved.
 </div>
 
+</div>
 </div>
 
 </body>
