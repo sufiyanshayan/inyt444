@@ -12,48 +12,35 @@
   box-sizing:border-box;
 }
 
-html,body{
+body{
   margin:0;
-  padding:0;
-  height:100%;
   font-family:"Noto Serif Bengali",serif;
   background:#e9e9e9;
-  overflow:hidden; /* 🔥 No Scroll */
+  display:flex;
+  justify-content:center;
 }
 
 .wrapper{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-}
-
-.container{
   width:100%;
-  max-width:340px; /* একটু ছোট */
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px; /* কম gap */
+  max-width:380px;
+  padding:12px;
+  text-align:center;
 }
 
 /* Profile */
 .profile img{
-  width:85px; /* ছোট করা হয়েছে */
-  height:85px;
+  width:80px;
+  height:80px;
   border-radius:50%;
   border:3px solid #fff;
   box-shadow:0 4px 12px rgba(0,0,0,0.25);
   object-fit:cover;
-  margin-bottom:8px;
+  margin-bottom:6px;
 }
 
-/* Name */
 .name{
-  font-size:16px; /* ছোট */
+  font-size:15px;
   font-weight:700;
-  text-align:center;
 }
 
 .title{
@@ -64,24 +51,24 @@ html,body{
 
 /* Buttons */
 .btn{
-  width:100%;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:8px;
-  padding:8px; /* কম height */
-  border-radius:16px;
+  gap:6px;
+  padding:7px;
+  border-radius:14px;
   text-decoration:none;
-  background:#f3f3f3;
+  background:#f2f2f2;
   color:#000;
-  font-size:12px; /* ছোট text */
-  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+  font-size:12px;
+  margin:5px 0;
+  box-shadow:0 3px 8px rgba(0,0,0,0.08);
   transition:0.2s;
 }
 
 .btn img{
-  width:15px;
-  height:15px;
+  width:14px;
+  height:14px;
 }
 
 .btn:hover{
@@ -90,10 +77,9 @@ html,body{
 
 /* Footer */
 .footer{
-  margin-top:12px;
-  font-size:11px;
+  margin-top:10px;
+  font-size:10px;
   color:#555;
-  text-align:center;
 }
 </style>
 </head>
@@ -101,26 +87,25 @@ html,body{
 <body>
 
 <div class="wrapper">
-<div class="container">
 
 <div class="profile">
-<img src="Your_Profile_Picture_Link">
+<img src="Your_Profile_Picture_Link" alt="Profile">
 </div>
 
 <div class="name">MD ABU SUFIYAN MRIDHA SHAYAN</div>
 <div class="title">MOOJ TIME</div>
 
-<a class="btn" href="#">Facebook</a>
-<a class="btn" href="#">Facebook Page</a>
-<a class="btn" href="#">Instagram</a>
-<a class="btn" href="#">WhatsApp</a>
-<a class="btn" href="#">TikTok</a>
-<a class="btn" href="#">Telegram</a>
-<a class="btn" href="#">X</a>
-<a class="btn" href="#">Discord</a>
-<a class="btn" href="#">Call Me</a>
-<a class="btn" href="#">About Me</a>
-<a class="btn" href="#">My Website</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/facebook/000000">Facebook</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/facebook/000000">Facebook Page</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/instagram/000000">Instagram</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/whatsapp/000000">WhatsApp</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/tiktok/000000">TikTok</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/telegram/000000">Telegram</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/x/000000">X</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/discord/000000">Discord</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/phone/000000">Call Me</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/aboutdotme/000000">About Me</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/googlechrome/000000">My Website</a>
 
 <div class="footer">
 Copyright © 2026 MADE BY <br>
@@ -129,7 +114,5 @@ All Rights Reserved.
 </div>
 
 </div>
-</div>
-
 </body>
 </html>
