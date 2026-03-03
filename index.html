@@ -12,36 +12,41 @@
   box-sizing:border-box;
 }
 
-body{
+html,body{
   margin:0;
+  padding:0;
   font-family:"Noto Serif Bengali",serif;
   background:#f7f7f7;
-  display:flex;
-  justify-content:center;
+  overflow-x:hidden;
 }
 
 .wrapper{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+.container{
   width:100%;
   max-width:360px;
-  padding:14px 12px;
+  padding:14px;
   text-align:center;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 }
 
 /* Profile */
-.profile{
+.profile img{
   width:85px;
   height:85px;
-  margin:0 auto 8px auto;
   border-radius:50%;
-  overflow:hidden;
   border:2px solid #000;
-  box-shadow:0 0 0 4px #fff,0 0 10px rgba(0,0,0,0.25);
-}
-
-.profile img{
-  width:100%;
-  height:100%;
   object-fit:cover;
+  margin-bottom:8px;
+  box-shadow:0 0 0 4px #fff,0 0 12px rgba(0,0,0,0.25);
 }
 
 .name{
@@ -51,7 +56,7 @@ body{
 
 .title{
   font-size:11px;
-  color:#666;
+  color:#555;
   margin-bottom:10px;
 }
 
@@ -62,24 +67,23 @@ body{
   justify-content:center;
   gap:8px;
   padding:8px;
-  border-radius:16px;
+  border-radius:14px;
   text-decoration:none;
   background:#ffffff;
   color:#000;
   font-size:12px;
-  margin:6px 0;
   box-shadow:0 3px 8px rgba(0,0,0,0.08);
   transition:0.2s;
 }
 
 .btn img{
-  width:15px;
-  height:15px;
-  filter: brightness(0); /* icon কালো */
+  width:16px;
+  height:16px;
 }
 
 .btn:hover{
   transform:translateY(-2px);
+  box-shadow:0 5px 14px rgba(0,0,0,0.12);
 }
 
 /* Footer */
@@ -87,6 +91,7 @@ body{
   margin-top:12px;
   font-size:10px;
   color:#555;
+  text-align:center;
 }
 </style>
 </head>
@@ -94,6 +99,7 @@ body{
 <body>
 
 <div class="wrapper">
+<div class="container">
 
 <div class="profile">
   <img src="Your_Profile_Picture_Link" alt="Profile">
@@ -102,17 +108,29 @@ body{
 <div class="name">Your_Name</div>
 <div class="title">Your_Title</div>
 
-<a class="btn" href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg">Facebook</a>
-<a class="btn" href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg">Facebook Page</a>
-<a class="btn" href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg">Instagram</a>
-<a class="btn" href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg">WhatsApp</a>
-<a class="btn" href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tiktok.svg">TikTok</a>
-<a class="btn" href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/telegram.svg">Telegram</a>
-<a class="btn" href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg">Twitter (X)</a>
-<a class="btn" href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg">Discord</a>
-<a class="btn" href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/phone.svg">Call Me</a>
-<a class="btn" href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/aboutdotme.svg">About Me</a>
-<a class="btn" href="#"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlechrome.svg">My Website</a>
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/facebook/000000">Facebook</a>
+
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/facebook/000000">Facebook Page</a>
+
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/instagram/000000">Instagram</a>
+
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/whatsapp/000000">WhatsApp</a>
+
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/tiktok/000000">TikTok</a>
+
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/telegram/000000">Telegram</a>
+
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/x/000000">Twitter (X)</a>
+
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/discord/000000">Discord</a>
+
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/phone/000000">Call Me</a>
+
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/aboutdotme/000000">About Me</a>
+
+<a class="btn" href="#"><img src="https://cdn.simpleicons.org/googlechrome/000000">My Website</a>
+
+</div>
 
 <div class="footer">
 Copyright © 2026 MADE BY <br>
