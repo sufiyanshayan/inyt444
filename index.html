@@ -12,96 +12,119 @@
 <link rel="icon" type="image/png" href="Your_Favicon_Link">
 
 <style>
+/* Reset & Base */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html, body {
-  margin: 0;
-  padding: 0;
+  font-family: 'Noto Serif Bengali', serif;
+  background: #f5f5f7;
+  color: #1a1a1a;
   height: 100%;
-  font-family: "Noto Serif Bengali", serif;
-  background: #f4f4f4;
   overflow-x: hidden;
 }
 
+/* Wrapper */
 .wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 24px 12px;
 }
 
+/* Container */
 .container {
   width: 100%;
   max-width: 380px;
-  padding: 16px;
-  text-align: center;
+  background: #fff;
+  padding: 24px 16px;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  gap: 12px;
 }
 
-/* Profile */
+/* Profile Picture */
 .profile img {
-  width: 95px;
-  height: 95px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
-  border: 2px solid #000;
+  border: 3px solid #fff;
   object-fit: cover;
-  margin-bottom: 10px;
-  box-shadow: 0 0 0 4px #fff, 0 0 10px rgba(0,0,0,0.25);
+  box-shadow: 0 0 0 4px #fff, 0 6px 20px rgba(0,0,0,0.15);
 }
 
-/* Name */
+/* Name & Title */
 .name {
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 700;
-  margin-bottom: 2px;
+  color: #111;
 }
 
-/* Title */
 .title {
-  font-size: 11px;
-  color: #666;
-  margin-bottom: 12px;
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 16px;
 }
 
-/* Buttons - Small & Stable */
+/* Buttons */
 .btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 8px;
-  border-radius: 10px;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 14px;
   text-decoration: none;
-  background: #ffffff;
-  color: #000;
-  font-size: 12px;
+  background: #fafafa;
+  color: #111;
+  font-size: 14px;
   font-weight: 500;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: all 0.25s ease;
 }
 
 .btn img {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  background: #f0f0f3;
 }
 
 /* Footer */
 .footer {
-  margin-top: 18px;
-  font-size: 11px;
-  color: #666;
+  margin-top: 20px;
+  font-size: 12px;
   text-align: center;
-  padding-bottom: 10px;
+  color: #888;
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media(max-width: 400px) {
+  .container {
+    padding: 20px 12px;
+  }
+  .name { font-size: 18px; }
+  .title { font-size: 12px; }
+  .btn { font-size: 13px; padding: 9px 0; }
 }
 </style>
 </head>
 
 <body>
-
 <div class="wrapper">
   <div class="container">
 
@@ -112,48 +135,55 @@ html, body {
     <div class="name">Your_Name</div>
     <div class="title">Your_Title</div>
 
-    <a class="btn" href="https://www.facebook.com/your_username" target="_blank">
-      <img src="https://cdn.simpleicons.org/facebook/000000" alt="Facebook">
-      Facebook
+    <a class="btn" href="https://www.facebook.com/your_username" target="_blank" rel="noopener noreferrer">
+      <img src="https://cdn.simpleicons.org/facebook/000000" alt="Facebook Logo">Facebook
     </a>
 
-    <a class="btn" href="https://www.facebook.com/your_page" target="_blank">
-      <img src="https://cdn.simpleicons.org/facebook/000000" alt="Facebook Page">
-      Facebook Page
+    <a class="btn" href="https://www.facebook.com/your_username" target="_blank" rel="noopener noreferrer">
+      <img src="https://cdn.simpleicons.org/facebook/000000" alt="Facebook Logo">Facebook Page
     </a>
 
-    <a class="btn" href="https://www.instagram.com/your_username" target="_blank">
-      <img src="https://cdn.simpleicons.org/instagram/000000" alt="Instagram">
-      Instagram
+    <a class="btn" href="https://www.instagram.com/your_username" target="_blank" rel="noopener noreferrer">
+      <img src="https://cdn.simpleicons.org/instagram/000000" alt="Instagram Logo">Instagram
     </a>
 
-    <a class="btn" href="https://wa.me/8801234567890" target="_blank">
-      <img src="https://cdn.simpleicons.org/whatsapp/000000" alt="WhatsApp">
-      WhatsApp
+    <a class="btn" href="https://wa.me/8801234567890" target="_blank" rel="noopener noreferrer">
+      <img src="https://cdn.simpleicons.org/whatsapp/000000" alt="WhatsApp Logo">WhatsApp
     </a>
 
-    <a class="btn" href="https://t.me/your_username" target="_blank">
-      <img src="https://cdn.simpleicons.org/telegram/000000" alt="Telegram">
-      Telegram
+    <a class="btn" href="https://www.tiktok.com/@your_username" target="_blank" rel="noopener noreferrer">
+      <img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok Logo">TikTok
     </a>
 
-    <a class="btn" href="https://x.com/your_username" target="_blank">
-      <img src="https://cdn.simpleicons.org/x/000000" alt="X">
-      Twitter (X)
+    <a class="btn" href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">
+      <img src="https://cdn.simpleicons.org/telegram/000000" alt="Telegram Logo">Telegram
+    </a>
+
+    <a class="btn" href="https://x.com/your_username" target="_blank" rel="noopener noreferrer">
+      <img src="https://cdn.simpleicons.org/x/000000" alt="X Logo">Twitter (X)
+    </a>
+
+    <a class="btn" href="https://discord.gg/your_invite_link" target="_blank" rel="noopener noreferrer">
+      <img src="https://cdn.simpleicons.org/discord/000000" alt="Discord Logo">Discord
     </a>
 
     <a class="btn" href="tel:01234567890">
-      <img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" alt="Call">
-      Call Me
+      <img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" alt="Phone Logo">Call Me
+    </a>
+
+    <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+      <img src="https://cdn.simpleicons.org/aboutdotme/000000" alt="About Logo">About Me
+    </a>
+
+    <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+      <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Website Logo">My Website
     </a>
 
   </div>
 
   <div class="footer">
-    © 2026 MADE BY <br> "Your_Name" <br> All Rights Reserved.
+    © 2026 MADE BY <br> "Your_Name". <br> All Rights Reserved.
   </div>
-
 </div>
-
 </body>
 </html>
