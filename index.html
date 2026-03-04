@@ -10,110 +10,107 @@
 
 <style>
 /* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
 
 /* Body */
 body {
   font-family: 'Inter', sans-serif;
   background: #f0f2f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
 }
 
 /* Card */
 .card {
-  background: #fff;
-  border-radius: 24px;
-  padding: 32px 24px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 14px 40px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background:#fff;
+  border-radius:24px;
+  padding:32px 24px;
+  width:100%;
+  max-width:400px;
+  box-shadow:0 16px 40px rgba(0,0,0,0.08);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+  transform:translateY(-4px);
+  box-shadow:0 20px 50px rgba(0,0,0,0.12);
 }
 
 /* Profile */
 .profile img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #fff;
-  box-shadow: 0 0 0 6px #f0f2f5, 0 10px 25px rgba(0,0,0,0.15);
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #fff;
+  box-shadow:0 0 0 6px #f0f2f5, 0 10px 25px rgba(0,0,0,0.15);
 }
 
 /* Name & Title */
 .name {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: #111;
+  font-family:'Playfair Display', serif;
+  font-size:24px;
+  font-weight:700;
+  color:#111;
 }
 
 .title {
-  font-size: 14px;
-  color: #777;
-  letter-spacing: 0.5px;
+  font-size:14px;
+  color:#777;
+  letter-spacing:0.5px;
 }
 
 /* Buttons */
 .btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 12px 0;
-  border-radius: 16px;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 14px;
-  background: #fafafa;
-  color: #111;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  transition: all 0.25s ease;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+  padding:12px 0;
+  border-radius:16px;
+  text-decoration:none;
+  font-weight:500;
+  font-size:14px;
+  background:#fafafa;
+  color:#111;
+  box-shadow:0 6px 18px rgba(0,0,0,0.06);
+  transition:all 0.25s ease;
 }
 
 .btn img {
-  width: 18px;
-  height: 18px;
+  width:20px;
+  height:20px;
 }
 
+/* Hover Effect */
 .btn:hover {
-  background: linear-gradient(90deg, #6a11cb, #2575fc);
-  color: #fff;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-  transform: translateY(-2px);
+  background:linear-gradient(90deg,#6a11cb,#2575fc);
+  color:#fff;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
+  transform:translateY(-2px);
 }
 
 /* Footer */
 .footer {
-  margin-top: 24px;
-  font-size: 12px;
-  color: #999;
-  text-align: center;
-  line-height: 1.5;
+  margin-top:24px;
+  font-size:12px;
+  color:#999;
+  text-align:center;
+  line-height:1.5;
 }
 
 /* Responsive */
-@media(max-width: 420px) {
-  .card { padding: 28px 16px; }
-  .name { font-size: 22px; }
-  .title { font-size: 13px; }
-  .btn { font-size: 13px; padding: 10px 0; }
+@media(max-width:420px){
+  .card{padding:28px 16px;}
+  .name{font-size:22px;}
+  .title{font-size:13px;}
+  .btn{font-size:13px;padding:10px 0;}
 }
 </style>
 </head>
@@ -129,47 +126,47 @@ body {
   <div class="name">Your_Name</div>
   <div class="title">Your_Title</div>
 
-  <a class="btn" href="https://www.facebook.com/your_username" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn.simpleicons.org/facebook/ffffff" alt="Facebook Logo">Facebook
+  <a class="btn" href="https://www.facebook.com/your_username" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook Logo">Facebook
   </a>
 
-  <a class="btn" href="https://www.facebook.com/your_username" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn.simpleicons.org/facebook/ffffff" alt="Facebook Logo">Facebook Page
+  <a class="btn" href="https://www.facebook.com/your_username" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook Page Logo">Facebook Page
   </a>
 
-  <a class="btn" href="https://www.instagram.com/your_username" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn.simpleicons.org/instagram/ffffff" alt="Instagram Logo">Instagram
+  <a class="btn" href="https://www.instagram.com/your_username" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram Logo">Instagram
   </a>
 
-  <a class="btn" href="https://wa.me/8801234567890" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn.simpleicons.org/whatsapp/ffffff" alt="WhatsApp Logo">WhatsApp
+  <a class="btn" href="https://wa.me/8801234567890" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp Logo">WhatsApp
   </a>
 
-  <a class="btn" href="https://www.tiktok.com/@your_username" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok Logo">TikTok
+  <a class="btn" href="https://www.tiktok.com/@your_username" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tiktok.svg" alt="TikTok Logo">TikTok
   </a>
 
-  <a class="btn" href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn.simpleicons.org/telegram/ffffff" alt="Telegram Logo">Telegram
+  <a class="btn" href="https://t.me/your_username" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/telegram.svg" alt="Telegram Logo">Telegram
   </a>
 
-  <a class="btn" href="https://x.com/your_username" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn.simpleicons.org/x/ffffff" alt="X Logo">Twitter (X)
+  <a class="btn" href="https://x.com/your_username" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg" alt="Twitter (X) Logo">Twitter (X)
   </a>
 
-  <a class="btn" href="https://discord.gg/your_invite_link" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn.simpleicons.org/discord/ffffff" alt="Discord Logo">Discord
+  <a class="btn" href="https://discord.gg/your_invite_link" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord Logo">Discord
   </a>
 
   <a class="btn" href="tel:01234567890">
     <img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" alt="Phone Logo">Call Me
   </a>
 
-  <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn.simpleicons.org/aboutdotme/ffffff" alt="About Logo">About Me
+  <a class="btn" href="#" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/aboutdotme.svg" alt="About Logo">About Me
   </a>
 
-  <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+  <a class="btn" href="#" target="_blank">
     <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Website Logo">My Website
   </a>
 
