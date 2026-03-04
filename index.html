@@ -15,31 +15,32 @@
 /* Body */
 body {
   font-family: 'Inter', sans-serif;
-  background: #f0f2f5;
+  background: linear-gradient(135deg, #e0f7fa, #fce4ec);
   display:flex;
   justify-content:center;
   align-items:center;
   min-height:100vh;
 }
 
-/* Card */
+/* Glassmorphism Card */
 .card {
-  background:#fff;
-  border-radius:24px;
-  padding:32px 24px;
-  width:100%;
-  max-width:400px;
-  box-shadow:0 16px 40px rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(15px);
+  border-radius: 28px;
+  padding: 32px 24px;
+  width: 100%;
+  max-width: 400px;
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:16px;
-  transition:transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform:translateY(-4px);
-  box-shadow:0 20px 50px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
 }
 
 /* Profile */
@@ -48,8 +49,8 @@ body {
   height:120px;
   border-radius:50%;
   object-fit:cover;
-  border:3px solid #fff;
-  box-shadow:0 0 0 6px #f0f2f5, 0 10px 25px rgba(0,0,0,0.15);
+  border:3px solid rgba(255,255,255,0.5);
+  box-shadow:0 0 0 6px rgba(255,255,255,0.2),0 10px 25px rgba(0,0,0,0.12);
 }
 
 /* Name & Title */
@@ -62,7 +63,7 @@ body {
 
 .title {
   font-size:14px;
-  color:#777;
+  color:#555;
   letter-spacing:0.5px;
 }
 
@@ -73,34 +74,33 @@ body {
   gap:10px;
   width:100%;
   padding:12px 0;
-  border-radius:16px;
+  border-radius:18px;
   text-decoration:none;
   font-weight:500;
   font-size:14px;
-  background:#fafafa;
-  color:#111;
-  box-shadow:0 6px 18px rgba(0,0,0,0.06);
-  transition:all 0.25s ease;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  color:#fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
 }
 
 .btn img {
   width:20px;
   height:20px;
+  filter: brightness(0) invert(1);
 }
 
-/* Hover Effect */
 .btn:hover {
-  background:linear-gradient(90deg,#6a11cb,#2575fc);
-  color:#fff;
-  box-shadow:0 10px 25px rgba(0,0,0,0.12);
-  transform:translateY(-2px);
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
 /* Footer */
 .footer {
   margin-top:24px;
   font-size:12px;
-  color:#999;
+  color:#555;
   text-align:center;
   line-height:1.5;
 }
@@ -151,7 +151,7 @@ body {
   </a>
 
   <a class="btn" href="https://x.com/your_username" target="_blank">
-    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg" alt="Twitter (X) Logo">Twitter (X)
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg" alt="X Logo">Twitter (X)
   </a>
 
   <a class="btn" href="https://discord.gg/your_invite_link" target="_blank">
