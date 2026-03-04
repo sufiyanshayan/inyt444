@@ -9,30 +9,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-/* Reset & Base */
+/* Reset */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
+/* Body */
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #f0f2f5, #ffffff);
+  background: #f0f2f5;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
 }
 
-/* Card Container */
+/* Card */
 .card {
   background: #fff;
   border-radius: 24px;
   padding: 32px 24px;
   width: 100%;
-  max-width: 380px;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+  max-width: 400px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,7 +43,7 @@ body {
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
 }
 
 /* Profile */
@@ -50,9 +51,9 @@ body {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 3px solid #fff;
   object-fit: cover;
-  box-shadow: 0 0 0 6px #f0f2f5, 0 10px 25px rgba(0,0,0,0.12);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 6px #f0f2f5, 0 10px 25px rgba(0,0,0,0.15);
 }
 
 /* Name & Title */
@@ -73,22 +74,22 @@ body {
 .btn {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
   padding: 12px 0;
   border-radius: 16px;
   text-decoration: none;
   font-weight: 500;
   font-size: 14px;
-  background: #f7f7f7;
+  background: #fafafa;
   color: #111;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: all 0.25s ease;
 }
 
 .btn img {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 
 .btn:hover {
@@ -108,7 +109,7 @@ body {
 }
 
 /* Responsive */
-@media(max-width: 400px){
+@media(max-width: 420px) {
   .card { padding: 28px 16px; }
   .name { font-size: 22px; }
   .title { font-size: 13px; }
@@ -132,12 +133,20 @@ body {
     <img src="https://cdn.simpleicons.org/facebook/ffffff" alt="Facebook Logo">Facebook
   </a>
 
+  <a class="btn" href="https://www.facebook.com/your_username" target="_blank" rel="noopener noreferrer">
+    <img src="https://cdn.simpleicons.org/facebook/ffffff" alt="Facebook Logo">Facebook Page
+  </a>
+
   <a class="btn" href="https://www.instagram.com/your_username" target="_blank" rel="noopener noreferrer">
     <img src="https://cdn.simpleicons.org/instagram/ffffff" alt="Instagram Logo">Instagram
   </a>
 
   <a class="btn" href="https://wa.me/8801234567890" target="_blank" rel="noopener noreferrer">
     <img src="https://cdn.simpleicons.org/whatsapp/ffffff" alt="WhatsApp Logo">WhatsApp
+  </a>
+
+  <a class="btn" href="https://www.tiktok.com/@your_username" target="_blank" rel="noopener noreferrer">
+    <img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok Logo">TikTok
   </a>
 
   <a class="btn" href="https://t.me/your_username" target="_blank" rel="noopener noreferrer">
@@ -148,8 +157,20 @@ body {
     <img src="https://cdn.simpleicons.org/x/ffffff" alt="X Logo">Twitter (X)
   </a>
 
+  <a class="btn" href="https://discord.gg/your_invite_link" target="_blank" rel="noopener noreferrer">
+    <img src="https://cdn.simpleicons.org/discord/ffffff" alt="Discord Logo">Discord
+  </a>
+
   <a class="btn" href="tel:01234567890">
     <img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" alt="Phone Logo">Call Me
+  </a>
+
+  <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+    <img src="https://cdn.simpleicons.org/aboutdotme/ffffff" alt="About Logo">About Me
+  </a>
+
+  <a class="btn" href="#" target="_blank" rel="noopener noreferrer">
+    <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Website Logo">My Website
   </a>
 
 </div>
