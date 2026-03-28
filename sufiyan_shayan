@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MD ABU SUFIYAN MRIDHA</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(145deg, #0a0a0f, #1a1a2e);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .app {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #0f0f17;
+            min-height: 100vh;
+            position: relative;
+            border-left: 1px solid rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 50, 100, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(80, 200, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(200, 100, 255, 0.15) 0%, transparent 50%),
+                linear-gradient(145deg, #0a0a0f, #1a1a2e);
+            z-index: -2;
+        }
+
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            from { transform: translateY(100vh) translateX(0); }
+            to { transform: translateY(-100vh) translateX(100px); }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            background: rgba(20,20,30,0.95);
+            border-bottom: 1px solid rgba(255,100,200,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, #fff, #ffa0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            font-size: 1.2rem;
+            color: #ffa0ff;
+            -webkit-text-fill-color: initial;
+        }
+
+        .menu-btn {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            border-radius: 40px;
+            background: rgba(30,30,42,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+
+        .menu-btn:hover {
+            background: rgba(42,42,58,0.9);
+            border-color: rgba(255,200,255,0.3);
+        }
+
+        .menu-btn .line {
+            width: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, #ffa0ff, #a0a0ff);
+            border-radius: 4px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            z-index: 200;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .sidebar {
+            position: fixed;
+            right: -300px;
+            top: 0;
+            width: 280px;
+            height: 100%;
+            background: linear-gradient(180deg, #151520, #0f0f18);
+            box-shadow: -5px 0 30px rgba(0,0,0,0.6);
+            transition: right 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            z-index: 300;
+            padding: 1.8rem 1.2rem;
+            border-left: 1px solid rgba(255,100,255,0.3);
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .close-btn {
+            text-align: right;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-btn i {
+            font-size: 1.5rem;
+            color: rgba(255,200,255,0.8);
+            transition: transform 0.3s;
+        }
+
+        .close-btn:hover i {
+            transform: rotate(90deg);
+        }
+
+        .profile-sidebar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,100,255,0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar-sidebar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff50a0, #a050ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .avatar-sidebar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* যখন ইমেজ লোড না হয় তখন আইকন দেখাবে */
+        .avatar-sidebar .fallback-icon {
+            font-size: 1.6rem;
+            color: white;
+        }
+
+        .profile-text-sidebar h4 {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+            color: #fff;
+        }
+
+        .profile-text-sidebar p {
+            font-size: 0.7rem;
+            color: rgba(200,200,255,0.7);
+        }
+
+        .sidebar-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1rem;
+            background: rgba(30,30,45,0.6);
+            border-radius: 14px;
+            text-decoration: none;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,100,200,0.2);
+            cursor: pointer;
+        }
+
+        .sidebar-link i {
+            width: 28px;
+            font-size: 1.2rem;
+            color: #ffa0ff;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(55,55,80,0.8);
+            transform: translateX(5px);
+            border-color: rgba(255,100,255,0.5);
+        }
+
+        .sidebar-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,100,255,0.3), transparent);
+            margin: 0.8rem 0;
+        }
+
+        .main-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: calc(100vh - 70px);
+        }
+
+        .profile-main {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff50a0, #a050ff, #50a0ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 0 30px rgba(255,100,255,0.5);
+            overflow: hidden;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-main h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #ffa0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.3rem;
+        }
+
+        .profile-main .title {
+            font-size: 0.85rem;
+            color: rgba(200,200,255,0.8);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .bio-text {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 280px;
+            margin: 0.5rem auto 0;
+        }
+
+        .links-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: rgba(30,30,45,0.7);
+            border-radius: 60px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,100,200,0.3);
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+        }
+
+        .link-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(50,50,75,0.9);
+            border-color: rgba(255,100,255,0.6);
+            box-shadow: 0 5px 20px rgba(255,100,255,0.2);
+        }
+
+        .link-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .link-left img {
+            width: 22px;
+            height: 22px;
+            filter: brightness(0) invert(1);
+        }
+
+        .link-right i {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .about-section {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 1.2rem;
+            background: rgba(20,20,35,0.6);
+            border-radius: 24px;
+            border: 1px solid rgba(255,100,200,0.2);
+            text-align: center;
+        }
+
+        .about-section h3 {
+            font-size: 0.9rem;
+            color: #ffa0ff;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .about-section p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.5;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer p {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.5;
+        }
+
+        .footer p i {
+            color: #ffa0ff;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a12;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 400;
+        }
+
+        .loader.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,100,255,0.2);
+            border-top: 3px solid #ffa0ff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .link-btn {
+            animation: fadeInUp 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        .link-btn:nth-child(1) { animation-delay: 0.05s; }
+        .link-btn:nth-child(2) { animation-delay: 0.1s; }
+        .link-btn:nth-child(3) { animation-delay: 0.15s; }
+        .link-btn:nth-child(4) { animation-delay: 0.2s; }
+        .link-btn:nth-child(5) { animation-delay: 0.25s; }
+        .link-btn:nth-child(6) { animation-delay: 0.3s; }
+        .link-btn:nth-child(7) { animation-delay: 0.35s; }
+        .link-btn:nth-child(8) { animation-delay: 0.4s; }
+        .link-btn:nth-child(9) { animation-delay: 0.45s; }
+        .link-btn:nth-child(10) { animation-delay: 0.5s; }
+
+        .profile-main, .about-section {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-bg"></div>
+    
+    <div class="app">
+        <header>
+            <div class="logo">
+                <i class="fas fa-crown"></i> MD ABU SUFIYAN MRIDHA SHAYAN
+            </div>
+            <div class="menu-btn" onclick="openMenu()">
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </header>
+
+        <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="close-btn" onclick="closeMenu()">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="profile-sidebar">
+                <div class="avatar-sidebar" id="sidebarAvatar">
+                    <i class="fas fa-user-astronaut fallback-icon"></i>
+                </div>
+                <div class="profile-text-sidebar">
+                    <h4>MD ABU SUFIYAN MRIDHA SHAYAN</h4>
+                    <p>MR INYT444</p>
+                </div>
+            </div>
+            <div class="sidebar-buttons">
+                <a class="sidebar-link" onclick="goToPage('home')">
+                    <i class="fas fa-home"></i> HOME
+                </a>
+                <a class="sidebar-link" onclick="goToPage('ABU SUFIYAN')">
+                    <i class="fas fa-flask"></i> ABU SUFIYAN
+                </a>
+                <a class="sidebar-link" onclick="goToPage('about')">
+                    <i class="fas fa-atom"></i> ABOUT
+                </a>
+                <a class="sidebar-link" onclick="goToPage('orbit')">
+                    <i class="fas fa-satellite"></i> ORBIT
+                </a>
+                <div class="sidebar-divider"></div>
+                <a class="sidebar-link" onclick="goToPage('settings')">
+                    <i class="fas fa-sliders"></i> SETTINGS
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="profile-main">
+                <div class="profile-image" id="mainProfileImage">
+                    <img src="" alt="Profile Picture" id="mainProfileImg" style="display: none;">
+                    <i class="fas fa-user-astronaut" style="font-size: 3rem; color: white;"></i>
+                </div>
+                <h2>MD ABU SUFIYAN MRIDHA SHAYAN</h2>
+                <div class="title">MR INYT444</div>
+                <div class="bio-text">Creative Developer | Digital Creator |</div>
+            </div>
+
+            <div class="links-container">
+                <!-- Facebook -->
+                <a class="link-btn" href="https://www.facebook.com/abusufiyanmridhashayan" target="_blank">
+                    <div class="link-left">
+                        <img src="https://cdn.simpleicons.org/facebook/ffffff" alt="Facebook">
+                        <span>Facebook</span>
+                    </div>
+                    <div class="link-right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Facebook Page -->
+                <a class="link-btn" href="https://www.facebook.com/moojtime" target="_blank">
+                    <div class="link-left">
+                        <img src="https://cdn.simpleicons.org/facebook/ffffff" alt="Facebook Page">
+                        <span>Facebook Page</span>
+                    </div>
+                    <div class="link-right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Instagram -->
+                <a class="link-btn" href="https://www.instagram.com/sufiyan_shayan1" target="_blank">
+                    <div class="link-left">
+                        <img src="https://cdn.simpleicons.org/instagram/ffffff" alt="Instagram">
+                        <span>Instagram</span>
+                    </div>
+                    <div class="link-right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- WhatsApp -->
+                <a class="link-btn" href="https://wa.me/8801234567890" target="_blank">
+                    <div class="link-left">
+                        <img src="https://cdn.simpleicons.org/whatsapp/ffffff" alt="WhatsApp">
+                        <span>WhatsApp</span>
+                    </div>
+                    <div class="link-right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- TikTok -->
+                <a class="link-btn" href="https://www.tiktok.com/@sufiyan_shayan" target="_blank">
+                    <div class="link-left">
+                        <img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok">
+                        <span>TikTok</span>
+                    </div>
+                    <div class="link-right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Telegram -->
+                <a class="link-btn" href="https://t.me/sufiyan_shayan" target="_blank">
+                    <div class="link-left">
+                        <img src="https://cdn.simpleicons.org/telegram/ffffff" alt="Telegram">
+                        <span>Telegram</span>
+                    </div>
+                    <div class="link-right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Twitter (X) -->
+                <a class="link-btn" href="https://x.com/sufiyan_shayan" target="_blank">
+                    <div class="link-left">
+                        <img src="https://cdn.simpleicons.org/x/ffffff" alt="Twitter X">
+                        <span>Twitter (X)</span>
+                    </div>
+                    <div class="link-right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Call Me -->
+                <a class="link-btn" href="tel:01234567890">
+                    <div class="link-left">
+                        <img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" alt="Call Me" style="filter: brightness(0) invert(1);">
+                        <span>Call Me</span>
+                    </div>
+                    <div class="link-right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- About Me -->
+                <a class="link-btn" href="#" onclick="alert('About Me section coming soon!'); return false;">
+                    <div class="link-left">
+                        <img src="https://cdn.simpleicons.org/aboutdotme/ffffff" alt="About Me">
+                        <span>About Me</span>
+                    </div>
+                    <div class="link-right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- My Website -->
+                <a class="link-btn" href="#" onclick="alert('My Website coming soon!'); return false;">
+                    <div class="link-left">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Website" style="filter: brightness(0) invert(1);">
+                        <span>My Website</span>
+                    </div>
+                    <div class="link-right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="about-section">
+                <h3><i class="fas fa-star"></i> About Me <i class="fas fa-star"></i></h3>
+                <p>Hi! I'm INYT444, a passionate creator sharing my journey, content, and connections. Feel free to reach out through any of my social platforms above!</p>
+            </div>
+
+            <div class="footer">
+                <p>Copyright © 2026 MADE BY <br> "MD ABU SUFIYAN MRIDHA SHAYAN". <br> All Rights Reserved.</p>
+            </div>
+        </div>
+
+        <div class="loader" id="loader">
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== আপনার প্রোফাইল পিকচারের URL এখানে দিন ====================
+        // 👇👇👇 এই লাইনটিতে আপনার ইমেজ URL লিখুন 👇👇👇
+        const MY_PROFILE_PICTURE_URL = "https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg";
+        
+        // যদি আপনার ইমেজ URL থাকে, তাহলে উপরের লাইনটি Replace করুন
+        // উদাহরণ: const MY_PROFILE_PICTURE_URL = "https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg";
+        // ============================================================================
+        
+        // প্রোফাইল পিকচার সেট করার ফাংশন
+        function setProfilePicture(imageUrl) {
+            if (!imageUrl || imageUrl === "") {
+                console.log("No image URL provided");
+                return;
+            }
+            
+            console.log("Setting profile picture:", imageUrl);
+            
+            // 1. মেইন প্রোফাইল ইমেজ সেট করা
+            const mainProfileDiv = document.getElementById('mainProfileImage');
+            const mainImg = document.getElementById('mainProfileImg');
+            const mainIcon = mainProfileDiv.querySelector('i');
+            
+            if (mainImg && mainProfileDiv) {
+                mainImg.src = imageUrl;
+                mainImg.onload = function() {
+                    // ইমেজ লোড হলে আইকন hide করে ইমেজ show করবে
+                    mainImg.style.display = 'block';
+                    if (mainIcon) mainIcon.style.display = 'none';
+                    console.log("Main profile image loaded successfully");
+                };
+                mainImg.onerror = function() {
+                    console.log("Failed to load main profile image");
+                    mainImg.style.display = 'none';
+                    if (mainIcon) mainIcon.style.display = 'flex';
+                };
+            }
+            
+            // 2. সাইডবার প্রোফাইল ইমেজ সেট করা
+            const sidebarAvatar = document.getElementById('sidebarAvatar');
+            if (sidebarAvatar) {
+                // পুরনো কন্টেন্ট ক্লিয়ার করে নতুন ইমেজ অ্যাড করা
+                sidebarAvatar.innerHTML = '';
+                const newImg = document.createElement('img');
+                newImg.src = imageUrl;
+                newImg.alt = "Profile Picture";
+                newImg.onload = function() {
+                    console.log("Sidebar profile image loaded successfully");
+                };
+                newImg.onerror = function() {
+                    console.log("Failed to load sidebar image, showing fallback icon");
+                    sidebarAvatar.innerHTML = '<i class="fas fa-user-astronaut fallback-icon"></i>';
+                };
+                sidebarAvatar.appendChild(newImg);
+            }
+        }
+        
+        // পেজ সম্পূর্ণ লোড হলে প্রোফাইল পিকচার সেট করবে
+        window.addEventListener('load', function() {
+            // একটু delay দিয়ে set করছি确保 DOM পুরোপুরি ready
+            setTimeout(function() {
+                setProfilePicture(MY_PROFILE_PICTURE_URL);
+            }, 100);
+        });
+        
+        // URL ক্লিন করার ফাংশন - GLITCH ফ্রি
+        (function() {
+            let currentPath = window.location.pathname;
+            let currentUrl = window.location.href;
+            
+            // index.html সরানো
+            if (currentPath === '/index.html') {
+                window.location.replace('/');
+                return;
+            }
+            
+            // অন্য .html সরানো
+            if (currentPath.includes('.html') && !currentPath.includes('index.html')) {
+                let cleanUrl = currentUrl.replace(/\.html$/, '');
+                window.location.replace(cleanUrl);
+                return;
+            }
+        })();
+        
+        // মেনু খোলা/বন্ধ করার ফাংশন
+        function openMenu() {
+            document.getElementById('sidebar').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        function closeMenu() {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        // বর্তমান পেজ চেক করার ফাংশন
+        function getCurrentPage() {
+            let currentPath = window.location.pathname;
+            
+            if (currentPath === '/' || currentPath === '/index.html') {
+                return 'home';
+            } else if (currentPath === '/test' || currentPath.includes('test.html')) {
+                return 'test';
+            } else if (currentPath === '/about' || currentPath.includes('about.html')) {
+                return 'about';
+            } else if (currentPath === '/orbit' || currentPath.includes('orbit.html')) {
+                return 'orbit';
+            } else if (currentPath === '/settings' || currentPath.includes('settings.html')) {
+                return 'settings';
+            }
+            return '';
+        }
+
+        // পেজ রিফ্রেশ করার ফাংশন
+        function refreshCurrentPage() {
+            let currentPage = getCurrentPage();
+            if (currentPage === 'home') {
+                window.location.href = '/';
+            } else if (currentPage === 'test') {
+                window.location.href = '/test';
+            } else if (currentPage === 'about') {
+                window.location.href = '/about';
+            } else if (currentPage === 'orbit') {
+                window.location.href = '/orbit';
+            } else if (currentPage === 'settings') {
+                window.location.href = '/settings';
+            } else {
+                window.location.reload();
+            }
+        }
+
+        // পেজে নিয়ে যাওয়ার ফাংশন
+        function goToPage(pageName) {
+            let currentPage = getCurrentPage();
+            
+            if (currentPage === pageName) {
+                closeMenu();
+                showLoader();
+                setTimeout(function() {
+                    refreshCurrentPage();
+                }, 200);
+                return;
+            }
+            
+            showLoader();
+            
+            setTimeout(function() {
+                if (pageName === 'home') {
+                    window.location.href = '/';
+                } 
+                else if (pageName === 'test') {
+                    window.location.href = '/test';
+                }
+                else if (pageName === 'about') {
+                    window.location.href = '/about';
+                }
+                else if (pageName === 'orbit') {
+                    window.location.href = '/orbit';
+                }
+                else if (pageName === 'settings') {
+                    window.location.href = '/settings';
+                }
+                else {
+                    alert('পেজটি পাওয়া যায়নি');
+                    hideLoader();
+                    closeMenu();
+                    return;
+                }
+                
+                hideLoader();
+                closeMenu();
+            }, 300);
+        }
+
+        function showLoader() {
+            document.getElementById('loader').classList.add('active');
+        }
+
+        function hideLoader() {
+            document.getElementById('loader').classList.remove('active');
+        }
+
+        // ESC কী প্রেস করলে মেনু বন্ধ হবে
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeMenu();
+        });
+
+        // টাচ সুইপ দিয়ে মেনু খোলা/বন্ধ
+        let touchStart = 0;
+        document.addEventListener('touchstart', function(e) {
+            touchStart = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', function(e) {
+            const touchEnd = e.changedTouches[0].screenX;
+            const diff = touchEnd - touchStart;
+            if (diff > 50 && !document.getElementById('sidebar').classList.contains('active')) {
+                openMenu();
+            } else if (diff < -50 && document.getElementById('sidebar').classList.contains('active')) {
+                closeMenu();
+            }
+        });
+
+        // পার্টিকেল ইফেক্ট তৈরি
+        for (let i = 0; i < 12; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 20 + 's';
+            p.style.animationDuration = 15 + Math.random() * 25 + 's';
+            p.style.width = 2 + Math.random() * 6 + 'px';
+            p.style.height = p.style.width;
+            p.style.background = `hsl(${Math.random() * 60 + 280}, 80%, 65%)`;
+            document.body.appendChild(p);
+        }
+    </script>
+</body>
+</html>
