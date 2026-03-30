@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INYT444</title>
-    <!-- favicon link - replace YOUR_FAVICON_LINK with your favicon URL -->
+    <title>INYT 444</title>
     <link rel="icon" href="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* আপনার সমস্ত CSS আগের মতোই থাকবে */
         * {
             margin: 0;
             padding: 0;
@@ -23,7 +23,6 @@
             min-height: 100vh;
         }
 
-        /* main app container - NO BLUR */
         .app {
             max-width: 480px;
             margin: 0 auto;
@@ -36,7 +35,6 @@
             overflow: hidden;
         }
 
-        /* animated gradient background - NO BLUR */
         .cyber-bg {
             position: fixed;
             top: 0;
@@ -57,7 +55,6 @@
             50% { opacity: 1; }
         }
 
-        /* floating particles - CRISP */
         .particle {
             position: fixed;
             width: 4px;
@@ -74,7 +71,6 @@
             to { transform: translateY(-100vh) translateX(100px); }
         }
 
-        /* header — NO BLUR, solid */
         header {
             display: flex;
             justify-content: space-between;
@@ -139,7 +135,6 @@
             transition: 0.2s;
         }
 
-        /* overlay — NO BLUR, solid color */
         .overlay {
             position: fixed;
             top: 0;
@@ -158,7 +153,6 @@
             pointer-events: all;
         }
 
-        /* sidebar — SOLID, NO BLUR */
         .sidebar {
             position: fixed;
             right: -360px;
@@ -194,7 +188,6 @@
             transform: rotate(180deg) scale(1.1);
         }
 
-        /* profile — SOLID with image support */
         .profile {
             display: flex;
             align-items: center;
@@ -231,7 +224,6 @@
             transform: scale(1.05);
         }
 
-        /* Fallback icon when no image */
         .avatar .fallback-icon {
             font-size: 2.2rem;
             color: white;
@@ -260,7 +252,6 @@
             text-shadow: 0 0 10px rgba(100,100,255,0.5);
         }
 
-        /* menu items — SOLID */
         .sidebar a {
             display: flex;
             align-items: center;
@@ -314,7 +305,6 @@
             }
         }
 
-        /* main content — SOLID card */
         .main {
             display: flex;
             flex-direction: column;
@@ -343,7 +333,6 @@
             overflow: hidden;
         }
 
-        /* animated hologram overlay - but NO BLUR */
         .card::before {
             content: '';
             position: absolute;
@@ -426,7 +415,6 @@
             filter: drop-shadow(0 0 8px #ffa0ff);
         }
 
-        /* colorful gesture hint */
         .gesture-hint {
             margin-top: 2.5rem;
             font-size: 0.8rem;
@@ -452,7 +440,6 @@
             50% { transform: translateX(5px); }
         }
 
-        /* neon loader - NO BLUR */
         .loader {
             position: fixed;
             top: 0;
@@ -490,7 +477,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* cyber divider */
         .divider {
             width: 80px;
             height: 2px;
@@ -498,7 +484,6 @@
             margin: 1.5rem auto;
         }
 
-        /* status text */
         .cyber-status {
             font-size: 0.7rem;
             color: rgba(200,200,255,0.5);
@@ -513,7 +498,6 @@
             50% { opacity: 1; }
         }
 
-        /* colorful particle variations */
         .particle:nth-child(1) { background: #ff50a0; left: 10%; animation-duration: 15s; }
         .particle:nth-child(2) { background: #50ffa0; left: 30%; animation-duration: 25s; width: 6px; height: 6px; }
         .particle:nth-child(3) { background: #a050ff; left: 50%; animation-duration: 20s; }
@@ -523,10 +507,8 @@
     </style>
 </head>
 <body>
-    <!-- animated background -->
     <div class="cyber-bg"></div>
     
-    <!-- floating particles -->
     <div class="particle"></div>
     <div class="particle"></div>
     <div class="particle"></div>
@@ -537,7 +519,7 @@
     <div class="app">
         <header>
             <div class="logo">
-                <i class="fa-regular fa-crystal"></i> INYT444
+                <i class="fa-regular fa-crystal"></i> INYT 444
             </div>
             <div class="hologram-btn" onclick="openMenu()">
                 <div class="line"></div>
@@ -545,10 +527,8 @@
             </div>
         </header>
 
-        <!-- Overlay - SOLID BLACK -->
         <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-        <!-- Sidebar — SOLID, NO BLUR with Profile Picture -->
         <div class="sidebar" id="sidebar">
             <div class="close-btn" onclick="closeMenu()">
                 <i class="fa-regular fa-xmark"></i>
@@ -556,13 +536,11 @@
 
             <div class="profile">
                 <div class="avatar" id="profileAvatar">
-                    <!-- Profile Image - Replace YOUR_PROFILE_IMAGE_URL with actual image URL -->
                     <img id="profileImg" src="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg" alt="Profile" onerror="handleImageError()">
-                    <!-- Fallback icon if image fails to load -->
                     <i id="fallbackIcon" class="fa-regular fa-robot fallback-icon" style="display: none; position: absolute;"></i>
                 </div>
                 <div class="profile-text">
-                    <h3>INYT444</h3>
+                    <h3>INYT 444</h3>
                     <p>TRIPLE FOUR</p>
                 </div>
             </div>
@@ -587,10 +565,9 @@
             </a>
         </div>
 
-        <!-- Main Content -->
         <div class="main">
             <div class="card">
-                <h2>INYT444<br>LINK IN BIO</h2>
+                <h2>INYT 444<br>LINK IN BIO</h2>
                 <p>MD ABU SUFIYAN MRIDHA SHAYAN</p>
                 
                 <div class="economy-chip">
@@ -601,11 +578,10 @@
                     <i class="fa-regular fa-hand-back-point-right"></i> DRAG FROM LEFT TO RIGHT
                     <i class="fa-regular fa-hand-back-point-left"></i>
                 </div>
-                <div class="cyber-status">✦ MR INYT 444 ✦</div>
+                <div class="cyber-status">✦ INYT 444 ✦</div>
             </div>
         </div>
 
-        <!-- Loader - SOLID -->
         <div class="loader" id="loader">
             <div class="neon-spinner"></div>
         </div>
@@ -614,17 +590,8 @@
     <script>
         let touchStartX = 0;
 
-        // Profile Image Configuration
-        // ===========================
-        // REPLACE THIS URL WITH YOUR ACTUAL PROFILE IMAGE URL
-        const PROFILE_IMAGE_URL = "https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg";
+        const PROFILE_IMAGE_URL = "https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg"
         
-        // If you want to use a local image, use something like:
-        // const PROFILE_IMAGE_URL = "images/profile.jpg";
-        // Or for online image:
-        // const PROFILE_IMAGE_URL = "https://example.com/your-photo.jpg";
-        
-        // Handle image load error - shows fallback icon
         function handleImageError() {
             const img = document.getElementById('profileImg');
             const fallbackIcon = document.getElementById('fallbackIcon');
@@ -638,15 +605,12 @@
             fallbackIcon.style.fontSize = '2.2rem';
         }
         
-        // Set profile image on page load
         document.addEventListener('DOMContentLoaded', function() {
             const profileImg = document.getElementById('profileImg');
             
-            // If URL is not the default placeholder, set the image
             if (PROFILE_IMAGE_URL && PROFILE_IMAGE_URL !== "YOUR_PROFILE_IMAGE_URL") {
                 profileImg.src = PROFILE_IMAGE_URL;
             } else {
-                // If no custom URL provided, show fallback icon
                 handleImageError();
             }
         });
@@ -661,64 +625,64 @@
             document.getElementById('overlay').classList.remove('active');
         }
 
-        // Get current page name from URL
+        // Get current page URL
         function getCurrentPage() {
+            const currentUrl = window.location.href;
             const path = window.location.pathname;
-            // Check if it's home page (index.html or /)
+            
+            // Check if it's home page
             if (path === '/' || path === '/index.html' || path === '') {
                 return 'home';
             }
-            // Remove leading slash and get first part
-            let pageName = path.replace('/', '').split('/')[0];
+            
+            // Get the page name from URL (remove .html if exists)
+            let pageName = path.substring(1);
+            if (pageName.endsWith('.html')) {
+                pageName = pageName.replace('.html', '');
+            }
+            
             return pageName;
         }
 
-        // Show loader and navigate
-        function showLoaderAndNavigate(url) {
+        // Show loader
+        function showLoader() {
             const loader = document.getElementById('loader');
             loader.classList.add('active');
             setTimeout(() => {
-                window.location.href = url;
-            }, 600);
+                loader.classList.remove('active');
+            }, 500);
         }
 
-        // Main navigation function with your requirements
+        // Navigation function - ঠিক করা হয়েছে
         function navigateTo(page) {
+            closeMenu();
             const currentPage = getCurrentPage();
             
-            // TEST PAGE LOGIC
-            if (page === 'test') {
-                // If already on test page, refresh the page
-                if (currentPage === 'test') {
+            console.log('Current Page:', currentPage);
+            console.log('Target Page:', page);
+            
+            // If same page, just refresh
+            if (currentPage === page) {
+                showLoader();
+                setTimeout(() => {
                     window.location.reload();
-                    return;
-                }
-                // Otherwise navigate to test page
-                showLoaderAndNavigate('/test');
+                }, 300);
                 return;
             }
             
-            // HOME PAGE LOGIC  
-            if (page === 'home') {
-                // If already on home page, go to main domain (yourdomain.com)
-                if (currentPage === 'home') {
-                    // Get the base domain (yourdomain.com)
-                    const baseUrl = window.location.protocol + '//' + window.location.host;
-                    window.location.href = baseUrl;
-                    return;
+            // Different page - navigate to that page
+            showLoader();
+            setTimeout(() => {
+                if (page === 'home') {
+                    window.location.href = '/';
+                } else {
+                    // For other pages, create the full URL
+                    window.location.href = '/' + page;
                 }
-                // Otherwise navigate to home page (main domain)
-                const baseUrl = window.location.protocol + '//' + window.location.host;
-                window.location.href = baseUrl;
-                return;
-            }
-            
-            // FOR ALL OTHER PAGES (about, orbit, settings)
-            // Normal navigation with loader
-            showLoaderAndNavigate('/' + page);
+            }, 300);
         }
 
-        // colorful swipe gesture
+        // Swipe gestures
         document.addEventListener('touchstart', e => {
             touchStartX = e.changedTouches[0].screenX;
         }, { passive: true });
@@ -727,19 +691,18 @@
             const touchEndX = e.changedTouches[0].screenX;
             const diff = touchEndX - touchStartX;
 
-            if (diff > 50) { // swipe right
+            if (diff > 50) {
                 openMenu();
-            } else if (diff < -50) { // swipe left
+            } else if (diff < -50) {
                 closeMenu();
             }
         }, { passive: true });
 
-        // keyboard close
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') closeMenu();
         });
 
-        // create more particles dynamically
+        // Create particles
         for (let i = 0; i < 10; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
