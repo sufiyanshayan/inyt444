@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>MD ABU SUFIYAN MRIDHA</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
@@ -202,7 +202,6 @@
             object-fit: cover;
         }
 
-        /* যখন ইমেজ লোড না হয় তখন আইকন দেখাবে */
         .avatar-sidebar .fallback-icon {
             font-size: 1.6rem;
             color: white;
@@ -499,14 +498,14 @@
                 </div>
                 <div class="profile-text-sidebar">
                     <h4>MD ABU SUFIYAN MRIDHA SHAYAN</h4>
-                    <p>MR INYT444</p>
+                    <p>INYT 444</p>
                 </div>
             </div>
             <div class="sidebar-buttons">
                 <a class="sidebar-link" onclick="goToPage('home')">
                     <i class="fas fa-home"></i> HOME
                 </a>
-                <a class="sidebar-link" onclick="goToPage('ABU SUFIYAN')">
+                <a class="sidebar-link" onclick="goToPage('sufiyan_shayan')">
                     <i class="fas fa-flask"></i> ABU SUFIYAN
                 </a>
                 <a class="sidebar-link" onclick="goToPage('about')">
@@ -525,11 +524,11 @@
         <div class="main-content">
             <div class="profile-main">
                 <div class="profile-image" id="mainProfileImage">
-                    <img src="" alt="Profile Picture" id="mainProfileImg" style="display: none;">
+                    <img src="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg" alt="Profile Picture" id="mainProfileImg" style="display: none;">
                     <i class="fas fa-user-astronaut" style="font-size: 3rem; color: white;"></i>
                 </div>
                 <h2>MD ABU SUFIYAN MRIDHA SHAYAN</h2>
-                <div class="title">MR INYT444</div>
+                <div class="title">INYT 444</div>
                 <div class="bio-text">Creative Developer | Digital Creator |</div>
             </div>
 
@@ -647,11 +646,11 @@
 
             <div class="about-section">
                 <h3><i class="fas fa-star"></i> About Me <i class="fas fa-star"></i></h3>
-                <p>Hi! I'm INYT444, a passionate creator sharing my journey, content, and connections. Feel free to reach out through any of my social platforms above!</p>
+                <p>Hi! I'm INYT 444, a passionate creator sharing my journey, content, and connections. Feel free to reach out through any of my social platforms above!</p>
             </div>
 
             <div class="footer">
-                <p>Copyright © 2026 MADE BY <br> "MD ABU SUFIYAN MRIDHA SHAYAN". <br> All Rights Reserved.</p>
+                <p>Copyright © 2026 MADE BY <br> "MR INYT 444". <br> All Rights Reserved.</p>
             </div>
         </div>
 
@@ -686,7 +685,6 @@
             if (mainImg && mainProfileDiv) {
                 mainImg.src = imageUrl;
                 mainImg.onload = function() {
-                    // ইমেজ লোড হলে আইকন hide করে ইমেজ show করবে
                     mainImg.style.display = 'block';
                     if (mainIcon) mainIcon.style.display = 'none';
                     console.log("Main profile image loaded successfully");
@@ -701,7 +699,6 @@
             // 2. সাইডবার প্রোফাইল ইমেজ সেট করা
             const sidebarAvatar = document.getElementById('sidebarAvatar');
             if (sidebarAvatar) {
-                // পুরনো কন্টেন্ট ক্লিয়ার করে নতুন ইমেজ অ্যাড করা
                 sidebarAvatar.innerHTML = '';
                 const newImg = document.createElement('img');
                 newImg.src = imageUrl;
@@ -719,24 +716,21 @@
         
         // পেজ সম্পূর্ণ লোড হলে প্রোফাইল পিকচার সেট করবে
         window.addEventListener('load', function() {
-            // একটু delay দিয়ে set করছি确保 DOM পুরোপুরি ready
             setTimeout(function() {
                 setProfilePicture(MY_PROFILE_PICTURE_URL);
             }, 100);
         });
         
-        // URL ক্লিন করার ফাংশন - GLITCH ফ্রি
+        // URL ক্লিন করার ফাংশন
         (function() {
             let currentPath = window.location.pathname;
             let currentUrl = window.location.href;
             
-            // index.html সরানো
             if (currentPath === '/index.html') {
                 window.location.replace('/');
                 return;
             }
             
-            // অন্য .html সরানো
             if (currentPath.includes('.html') && !currentPath.includes('index.html')) {
                 let cleanUrl = currentUrl.replace(/\.html$/, '');
                 window.location.replace(cleanUrl);
@@ -744,7 +738,6 @@
             }
         })();
         
-        // মেনু খোলা/বন্ধ করার ফাংশন
         function openMenu() {
             document.getElementById('sidebar').classList.add('active');
             document.getElementById('overlay').classList.add('active');
@@ -755,7 +748,6 @@
             document.getElementById('overlay').classList.remove('active');
         }
 
-        // বর্তমান পেজ চেক করার ফাংশন
         function getCurrentPage() {
             let currentPath = window.location.pathname;
             
@@ -773,7 +765,6 @@
             return '';
         }
 
-        // পেজ রিফ্রেশ করার ফাংশন
         function refreshCurrentPage() {
             let currentPage = getCurrentPage();
             if (currentPage === 'home') {
@@ -791,7 +782,6 @@
             }
         }
 
-        // পেজে নিয়ে যাওয়ার ফাংশন
         function goToPage(pageName) {
             let currentPage = getCurrentPage();
             
@@ -842,12 +832,10 @@
             document.getElementById('loader').classList.remove('active');
         }
 
-        // ESC কী প্রেস করলে মেনু বন্ধ হবে
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeMenu();
         });
 
-        // টাচ সুইপ দিয়ে মেনু খোলা/বন্ধ
         let touchStart = 0;
         document.addEventListener('touchstart', function(e) {
             touchStart = e.changedTouches[0].screenX;
@@ -863,7 +851,6 @@
             }
         });
 
-        // পার্টিকেল ইফেক্ট তৈরি
         for (let i = 0; i < 12; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
