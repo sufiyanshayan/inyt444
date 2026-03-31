@@ -1,12 +1,10 @@
-# ইন্ডেক্স পেজ সেট করা
-DirectoryIndex index.html
-
-# URL থেকে .html এক্সটেনশন লুকানো
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
+
+# HTML extension সরিয়ে ফেলা (URL থেকে)
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
-# index.html সরানো
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index\.html($|\ |\?)
-RewriteRule ^ /%1 [R=301,L]
+# ইউজার যখন pagename.html টাইপ করে, তখন pagename দেখানো
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?]
+RewriteRule ^ /%1 [R=302,L,NE]
