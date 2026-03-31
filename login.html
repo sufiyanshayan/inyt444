@@ -157,24 +157,93 @@ if(localStorage.getItem("auth") === "true"){
 </html>
 
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+</head>
+<body>
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyD5mDY4i5INFDTQGE4koBi1oT0PjW8Tbqs",
-  authDomain: "link-in-bio-1.firebaseapp.com",
-  projectId: "link-in-bio-1",
-  storageBucket: "link-in-bio-1.firebasestorage.app",
-  messagingSenderId: "490986484338",
-  appId: "1:490986484338:web:8b96905764df93f58a08eb",
-  measurementId: "G-ZBCJLRNSEE"
-};
+<h2>Login Page</h2>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button onclick="login(document.getElementById('email').value, document.getElementById('password').value)">Login</button>
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+<hr>
+
+<h3>Save Links</h3>
+<input type="text" id="link1" placeholder="Link 1">
+<input type="text" id="link2" placeholder="Link 2">
+<button onclick="saveUserLinks()">Save Links</button>
+
+<script type="module">
+  // ===== Firebase SDK =====
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+  // ===== Firebase Config (Change to YOUR Project Config) =====
+  const firebaseConfig = {
+    apiKey: "AIzaSyD5mDY4i5INFDTQGE4koBi1oT0PjW8Tbqs",
+    authDomain: "link-in-bio-1.firebaseapp.com",
+    projectId: "link-in-bio-1",
+    storageBucket: "link-in-bio-1.firebasestorage.app",
+    messagingSenderId: "490986484338",
+    appId: "1:490986484338:web:8b96905764df93f58a08eb"
+  };
+
+  // ===== Initialize Firebase =====
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // ===== Login Function =====
+  async function login(email, password) {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      alert("Login Successful!");
+      console.log("Logged in user:", userCredential.user.uid);
+    } catch (e) {
+      alert("Login Failed: " + e.message);
+      console.error(e);
+    }
+  }
+
+  // ===== Save User Links =====
+  async function saveUserLinks() {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Please login first!");
+      return;
+    }
+
+    const links = [
+      document.getElementById('link1').value,
+      document.getElementById('link2').value
+    ];
+
+    try {
+      await setDoc(doc(db, "users", user.uid), { links });
+      alert("Links saved successfully!");
+      console.log("Saved links for user:", user.uid);
+    } catch (e) {
+      alert("Error saving links: " + e.message);
+      console.error(e);
+    }
+  }
+
+  // ===== Check login state =====
+  onAuthStateChanged(auth, (user) => {
+    if(user) {
+      console.log("User is logged in:", user.uid);
+    } else {
+      console.log("User is logged out");
+    }
+  });
+
+</script>
+
+</body>
+</html>
