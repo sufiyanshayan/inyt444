@@ -2,713 +2,242 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INYT 444</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Launching Soon | INYT 444</title>
     <link rel="icon" href="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* আপনার সমস্ত CSS আগের মতোই থাকবে */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Space Grotesk', sans-serif;
             background: linear-gradient(145deg, #0a0a0f, #1a1a2e);
             color: #fff;
-            overflow-x: hidden;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .app {
-            max-width: 480px;
-            margin: 0 auto;
-            background: #0f0f17;
-            min-height: 100vh;
-            position: relative;
-            border-left: 1px solid rgba(255,255,255,0.05);
-            border-right: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-            overflow: hidden;
-        }
-
         .cyber-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 50, 100, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(80, 200, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(200, 100, 255, 0.15) 0%, transparent 50%),
-                linear-gradient(145deg, #0a0a0f, #1a1a2e);
-            z-index: -1;
+            background: radial-gradient(circle at 20% 50%, rgba(255,50,100,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(80,200,255,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(200,100,255,0.15) 0%, transparent 50%),
+                        linear-gradient(145deg, #0a0a0f, #1a1a2e);
+            z-index: -2;
             animation: breathe 10s ease-in-out infinite;
         }
-
-        @keyframes breathe {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-
+        @keyframes breathe { 0%,100%{opacity:0.8;} 50%{opacity:1;} }
         .particle {
             position: fixed;
-            width: 4px;
-            height: 4px;
+            width: 3px; height: 3px;
             background: rgba(255,255,255,0.3);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 0;
+            z-index: -1;
             animation: float 20s linear infinite;
         }
-
         @keyframes float {
             from { transform: translateY(100vh) translateX(0); }
             to { transform: translateY(-100vh) translateX(100px); }
         }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 1.8rem;
-            background: #14141e;
-            border-bottom: 1px solid rgba(255,100,200,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-weight: 700;
-            font-size: 1.4rem;
-            background: linear-gradient(135deg, #fff, #a0a0ff, #ffa0ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: -0.02em;
-            text-shadow: 0 0 20px rgba(255,160,255,0.3);
-        }
-
-        .logo i {
-            font-size: 1.2rem;
-            color: #ffa0ff;
-            -webkit-text-fill-color: initial;
-            background: none;
-            filter: drop-shadow(0 0 8px #ffa0ff);
-        }
-
-        .hologram-btn {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            border-radius: 40px;
-            background: #1e1e2a;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: 0.3s;
-            box-shadow: 0 0 15px rgba(255,100,200,0.2);
-        }
-
-        .hologram-btn:hover {
-            background: #2a2a3a;
-            border-color: rgba(255,200,255,0.3);
-            box-shadow: 0 0 25px rgba(255,100,255,0.4);
-        }
-
-        .hologram-btn .line {
-            width: 22px;
-            height: 2px;
-            background: linear-gradient(90deg, #ffa0ff, #a0a0ff);
-            border-radius: 4px;
-            transition: 0.2s;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s;
-            z-index: 200;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .sidebar {
-            position: fixed;
-            right: -360px;
-            top: 0;
-            width: 340px;
-            height: 100%;
-            background: #1a1a26;
-            box-shadow: -25px 0 50px rgba(0,0,0,0.5);
-            transition: right 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            z-index: 300;
-            padding: 2.2rem 1.5rem;
-            border-left: 1px solid rgba(255,100,255,0.3);
-        }
-
-        .sidebar.active {
-            right: 0;
-        }
-
-        .close-btn {
-            text-align: right;
-            margin-bottom: 1.5rem;
-            cursor: pointer;
-        }
-
-        .close-btn i {
-            font-size: 1.6rem;
-            color: rgba(255,200,255,0.8);
-            text-shadow: 0 0 15px #ffa0ff;
-            transition: transform 0.3s;
-        }
-
-        .close-btn:hover i {
-            transform: rotate(180deg) scale(1.1);
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid rgba(255,100,255,0.2);
-            margin-bottom: 2rem;
-        }
-
-        .avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff50a0, #a050ff);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid rgba(255,255,255,0.5);
-            box-shadow: 0 0 30px rgba(255,100,255,0.5);
-            animation: avatarPulse 3s infinite;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .avatar img:hover {
-            transform: scale(1.05);
-        }
-
-        .avatar .fallback-icon {
-            font-size: 2.2rem;
-            color: white;
-        }
-
-        @keyframes avatarPulse {
-            0%, 100% { box-shadow: 0 0 30px rgba(255,100,255,0.5); }
-            50% { box-shadow: 0 0 50px rgba(100,200,255,0.8); }
-        }
-
-        .profile-text h3 {
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin-bottom: 0.2rem;
-            background: linear-gradient(135deg, #fff, #ffa0ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .profile-text p {
-            font-size: 0.8rem;
-            color: rgba(200,200,255,0.7);
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(100,100,255,0.5);
-        }
-
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            padding: 1.1rem 1.2rem;
-            color: rgba(255,255,255,0.9);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            border-radius: 16px;
-            margin: 0.5rem 0;
-            transition: all 0.3s;
-            background: #252535;
-            border: 1px solid rgba(255,100,255,0.2);
-            opacity: 0;
-            transform: translateX(30px);
-            animation: neonSlide 0.5s forwards;
-            text-shadow: 0 0 8px rgba(255,255,255,0.3);
-            cursor: pointer;
-        }
-
-        .sidebar a:nth-child(4) { animation-delay: 0.07s; }
-        .sidebar a:nth-child(5) { animation-delay: 0.14s; }
-        .sidebar a:nth-child(6) { animation-delay: 0.21s; }
-        .sidebar a:nth-child(7) { animation-delay: 0.28s; }
-
-        .sidebar a i {
-            font-size: 1.4rem;
-            width: 30px;
-            color: #ffa0ff;
-            filter: drop-shadow(0 0 8px #ffa0ff);
-            transition: 0.2s;
-        }
-
-        .sidebar a:hover {
-            background: #353549;
-            border-color: rgba(255,100,255,0.5);
-            transform: translateX(10px) scale(1.02);
-            box-shadow: 0 0 30px rgba(255,100,255,0.3);
-        }
-
-        .sidebar a:hover i {
-            color: #fff;
-            filter: drop-shadow(0 0 12px #fff);
-        }
-
-        @keyframes neonSlide {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 80vh;
-            padding: 1.8rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .card {
-            background: #1e1e2c;
+        .container { max-width: 550px; width: 90%; margin: 2rem auto; position: relative; z-index: 2; }
+        .launch-card {
+            background: rgba(30,30,44,0.75);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255,100,255,0.3);
-            border-radius: 40px;
+            border-radius: 48px;
             padding: 3rem 2rem;
-            width: 100%;
-            max-width: 380px;
-            box-shadow: 
-                0 30px 50px -20px rgba(0,0,0,0.8),
-                0 0 0 1px rgba(255,100,255,0.2) inset,
-                0 0 50px rgba(255,100,255,0.2);
             text-align: center;
-            animation: hologram 1s ease-out;
+            box-shadow: 0 30px 50px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,100,255,0.2) inset, 0 0 50px rgba(255,100,255,0.2);
+            animation: fadeIn 0.8s ease-out;
             position: relative;
             overflow: hidden;
         }
-
-        .card::before {
+        .launch-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(
-                from 0deg,
-                transparent,
-                rgba(255,100,255,0.1),
-                rgba(100,200,255,0.1),
-                rgba(255,100,200,0.1),
-                transparent 70%
-            );
-            animation: rotate 10s linear infinite;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,100,255,0.05), rgba(100,200,255,0.05), rgba(255,100,200,0.05), transparent 70%);
+            animation: rotate 12s linear infinite;
             pointer-events: none;
         }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
-
-        @keyframes hologram {
-            0% { 
-                opacity: 0; 
-                transform: translateY(30px) scale(0.95);
-            }
-            100% { 
-                opacity: 1; 
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .card h2 {
-            font-weight: 700;
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff, #ffa0ff, #a0ffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-            position: relative;
-            text-shadow: 0 0 30px rgba(255,160,255,0.3);
-        }
-
-        .card p {
-            color: rgba(255,255,255,0.8);
-            font-weight: 400;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 2.2rem;
-            max-width: 280px;
-            margin-left: auto;
-            margin-right: auto;
-            text-shadow: 0 0 10px rgba(255,255,255,0.2);
-        }
-
-        .economy-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: #2a2a3e;
-            padding: 0.7rem 1.8rem;
-            border-radius: 60px;
-            border: 1px solid rgba(255,100,255,0.4);
-            font-size: 0.9rem;
-            color: #fff;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 20px rgba(255,100,255,0.3);
-            text-transform: uppercase;
-        }
-
-        .economy-chip i {
-            color: #ffa0ff;
-            font-size: 1.2rem;
-            filter: drop-shadow(0 0 8px #ffa0ff);
-        }
-
-        .gesture-hint {
-            margin-top: 2.5rem;
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 2px;
-        }
-
-        .gesture-hint i {
-            font-size: 1.2rem;
-            color: #ffa0ff;
-            filter: drop-shadow(0 0 10px #ffa0ff);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(5px); }
-        }
-
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0a12;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s;
-            z-index: 400;
-        }
-
-        .loader.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .neon-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255,100,255,0.2);
-            border-top: 4px solid #ffa0ff;
-            border-right: 4px solid #a0ffff;
+        .logo-container { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+        .logo-wrapper {
+            width: 120px; height: 120px;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff50a0, #a050ff);
             box-shadow: 0 0 30px rgba(255,100,255,0.5);
+            animation: floatIcon 3s ease-in-out infinite;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes floatIcon { 0%,100%{transform:translateY(0px);} 50%{transform:translateY(-8px);} }
+        .logo-img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+        .fallback-logo { font-size: 4rem; color: white; filter: drop-shadow(0 0 20px rgba(255,255,255,0.5)); }
+        h1 {
+            font-size: 2.2rem; font-weight: 800;
+            background: linear-gradient(135deg, #fff, #ffa0ff, #a0ffff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 0.3rem;
         }
-
-        .divider {
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ffa0ff, #a0ffff, transparent);
-            margin: 1.5rem auto;
+        .subtitle { color: rgba(255,255,255,0.7); font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; }
+        .launch-date-box {
+            background: transparent; border: 1px solid rgba(255,100,255,0.4);
+            border-radius: 80px; padding: 0.8rem 1.5rem;
+            display: inline-block; margin: 1.5rem 0;
         }
-
-        .cyber-status {
-            font-size: 0.7rem;
-            color: rgba(200,200,255,0.5);
-            margin-top: 0.8rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            animation: blink 3s infinite;
+        .date-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: #ffa0ff; font-weight: 600; }
+        .big-date { font-size: 1.2rem; font-weight: 600; margin-top: 0.2rem; color: #fff; text-shadow: 0 0 10px rgba(255,160,255,0.3); }
+        .countdown { display: flex; justify-content: center; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
+        .time-box {
+            background: rgba(10,10,18,0.6); backdrop-filter: blur(4px);
+            border-radius: 24px; padding: 1rem 0.8rem; min-width: 85px;
+            border: 1px solid rgba(255,100,255,0.3); box-shadow: 0 0 20px rgba(255,100,255,0.1);
         }
-
-        @keyframes blink {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+        .time-number {
+            font-size: 2.2rem; font-weight: 800;
+            background: linear-gradient(135deg, #fff, #ffa0ff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            line-height: 1; font-family: 'Space Grotesk', monospace;
         }
-
-        .particle:nth-child(1) { background: #ff50a0; left: 10%; animation-duration: 15s; }
-        .particle:nth-child(2) { background: #50ffa0; left: 30%; animation-duration: 25s; width: 6px; height: 6px; }
-        .particle:nth-child(3) { background: #a050ff; left: 50%; animation-duration: 20s; }
-        .particle:nth-child(4) { background: #ffa050; left: 70%; animation-duration: 18s; width: 3px; height: 3px; }
-        .particle:nth-child(5) { background: #50a0ff; left: 90%; animation-duration: 22s; }
-        .particle:nth-child(6) { background: #ff50ff; left: 20%; animation-duration: 30s; width: 8px; height: 8px; }
+        .time-label { font-size: 0.7rem; text-transform: uppercase; color: rgba(200,200,255,0.7); letter-spacing: 2px; margin-top: 0.4rem; }
+        .status { margin-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .status i { color: #ffa0ff; }
+        .cyber-footer { font-size: 0.65rem; color: rgba(200,200,255,0.3); margin-top: 2rem; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
+        hr { width: 60px; margin: 1rem auto; border: none; height: 1px; background: linear-gradient(90deg, transparent, #ffa0ff, transparent); }
+        .live-message { background: linear-gradient(135deg, #ff50a0, #a050ff); padding: 15px 25px; border-radius: 60px; color: white; font-weight: 700; letter-spacing: 2px; }
     </style>
 </head>
 <body>
     <div class="cyber-bg"></div>
-    
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-
-    <div class="app">
-        <header>
-            <div class="logo">
-                <i class="fa-regular fa-crystal"></i> INYT 444
-            </div>
-            <div class="hologram-btn" onclick="openMenu()">
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
-        </header>
-
-        <div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-        <div class="sidebar" id="sidebar">
-            <div class="close-btn" onclick="closeMenu()">
-                <i class="fa-regular fa-xmark"></i>
-            </div>
-
-            <div class="profile">
-                <div class="avatar" id="profileAvatar">
-                    <img id="profileImg" src="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg" alt="Profile" onerror="handleImageError()">
-                    <i id="fallbackIcon" class="fa-regular fa-robot fallback-icon" style="display: none; position: absolute;"></i>
-                </div>
-                <div class="profile-text">
-                    <h3>INYT 444</h3>
-                    <p>TRIPLE FOUR</p>
+    <div class="container">
+        <div class="launch-card">
+            <div class="logo-container">
+                <div class="logo-wrapper">
+                    <div id="logoDisplay"><i class="fa-regular fa-crystal fallback-logo"></i></div>
                 </div>
             </div>
-
-            <a onclick="navigateTo('home')">
-                <i class="fa-regular fa-crystal"></i> HOME
-            </a>
-            <a onclick="navigateTo('sufiyan_shayan')">
-                <i class="fa-regular fa-flask"></i> ABU SUFIYAN
-            </a>
-            <a onclick="navigateTo('about')">
-                <i class="fa-regular fa-atom"></i> ABOUT
-            </a>
-            <a onclick="navigateTo('orbit')">
-                <i class="fa-regular fa-satellite"></i> ORBIT
-            </a>
-
-            <div class="divider"></div>
-
-            <a onclick="navigateTo('login')">
-                <i class="fa-regular fa-sliders"></i> LOGIN NOW
-            </a>
-        </div>
-
-        <div class="main">
-            <div class="card">
-                <h2>INYT 444<br>LINK IN BIO</h2>
-                <p>MD ABU SUFIYAN MRIDHA SHAYAN</p>
-                
-                <div class="economy-chip">
-                    <i class="fa-regular fa-bolt"></i> WELCOME
-                </div>
-
-                <div class="gesture-hint">
-                    <i class="fa-regular fa-hand-back-point-right"></i> DRAG FROM LEFT TO RIGHT
-                    <i class="fa-regular fa-hand-back-point-left"></i>
-                </div>
-                <div class="cyber-status">✦ INYT 444 ✦</div>
+            <h1>INYT 444</h1>
+            <div class="subtitle">COMING SOON</div>
+            <div class="launch-date-box">
+                <div class="date-label">OFFICIAL LAUNCH</div>
+                <div class="big-date" id="displayDate"></div>
             </div>
-        </div>
-
-        <div class="loader" id="loader">
-            <div class="neon-spinner"></div>
+            <div id="countdownContainer">
+                <div class="countdown" id="countdown">
+                    <div class="time-box"><div class="time-number" id="days">00</div><div class="time-label">DAYS</div></div>
+                    <div class="time-box"><div class="time-number" id="hours">00</div><div class="time-label">HOURS</div></div>
+                    <div class="time-box"><div class="time-number" id="minutes">00</div><div class="time-label">MINUTES</div></div>
+                    <div class="time-box"><div class="time-number" id="seconds">00</div><div class="time-label">SECONDS</div></div>
+                </div>
+            </div>
+            <div class="status"><i class="fa-regular fa-clock"></i> <span id="liveStatus">COUNTDOWN TO LAUNCH</span></div>
+            <hr>
+            <div class="cyber-footer"> READY FOR TAKEOFF</div>
         </div>
     </div>
 
     <script>
-        let touchStartX = 0;
-
-        const PROFILE_IMAGE_URL = "https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg"
+        // ========================================
+        // ⭐ শুধু এখানে তারিখ ও সময় লিখুন ⭐
+        // Format: "DD/MM/YYYY HH:MM:SS"
+        // ========================================
         
-        function handleImageError() {
-            const img = document.getElementById('profileImg');
-            const fallbackIcon = document.getElementById('fallbackIcon');
-            
-            img.style.display = 'none';
-            fallbackIcon.style.display = 'flex';
-            fallbackIcon.style.alignItems = 'center';
-            fallbackIcon.style.justifyContent = 'center';
-            fallbackIcon.style.width = '100%';
-            fallbackIcon.style.height = '100%';
-            fallbackIcon.style.fontSize = '2.2rem';
+        const launchDateString = "01/05/2026 22:00:00";
+        
+        // উদাহরণ:
+        // "25/12/2026 20:30:00" = 25 ডিসেম্বর 2026, রাত 8:30 PM
+        // "15/08/2025 10:00:00" = 15 আগস্ট 2025, সকাল 10:00 AM
+        
+        // ========================================
+        
+        // Parse function (DD/MM/YYYY HH:MM:SS)
+        function parseDate(dateString) {
+            const [datePart, timePart] = dateString.split(' ');
+            const [day, month, year] = datePart.split('/');
+            const [hours, minutes, seconds] = timePart.split(':');
+            return new Date(year, month - 1, day, hours, minutes, seconds);
         }
         
-        document.addEventListener('DOMContentLoaded', function() {
-            const profileImg = document.getElementById('profileImg');
-            
-            if (PROFILE_IMAGE_URL && PROFILE_IMAGE_URL !== "YOUR_PROFILE_IMAGE_URL") {
-                profileImg.src = PROFILE_IMAGE_URL;
-            } else {
-                handleImageError();
+        const launchDate = parseDate(launchDateString);
+        
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        
+        function format12HourTime(date) {
+            let hours = date.getHours();
+            const minutes = date.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const minuteStr = minutes < 10 ? '0' + minutes : minutes;
+            return `${hours}:${minuteStr} ${ampm}`;
+        }
+        
+        function formatDisplayDate(date) {
+            const dayName = dayNames[date.getDay()];
+            const monthName = monthNames[date.getMonth()];
+            const day = date.getDate();
+            const year = date.getFullYear();
+            const timeStr = format12HourTime(date);
+            return `${dayName}, ${monthName} ${day}, ${year} — ${timeStr}`;
+        }
+        
+        document.getElementById('displayDate').innerText = formatDisplayDate(launchDate);
+        
+        // Logo
+        const logoImageUrl = "https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg";
+        function displayLogo() {
+            const logoDisplay = document.getElementById('logoDisplay');
+            if (logoImageUrl && logoImageUrl !== "YOUR_LOGO_LINK" && logoImageUrl !== "") {
+                logoDisplay.innerHTML = `<img src="${logoImageUrl}" class="logo-img" alt="Logo" onerror="this.parentElement.innerHTML = '<i class=\'fa-regular fa-crystal fallback-logo\'></i>'">`;
             }
-        });
-
-        function openMenu() {
-            document.getElementById('sidebar').classList.add('active');
-            document.getElementById('overlay').classList.add('active');
         }
-
-        function closeMenu() {
-            document.getElementById('sidebar').classList.remove('active');
-            document.getElementById('overlay').classList.remove('active');
-        }
-
-        // Get current page URL
-        function getCurrentPage() {
-            const currentUrl = window.location.href;
-            const path = window.location.pathname;
-            
-            // Check if it's home page
-            if (path === '/' || path === '/index.html' || path === '') {
-                return 'home';
-            }
-            
-            // Get the page name from URL (remove .html if exists)
-            let pageName = path.substring(1);
-            if (pageName.endsWith('.html')) {
-                pageName = pageName.replace('.html', '');
-            }
-            
-            return pageName;
-        }
-
-        // Show loader
-        function showLoader() {
-            const loader = document.getElementById('loader');
-            loader.classList.add('active');
-            setTimeout(() => {
-                loader.classList.remove('active');
-            }, 500);
-        }
-
-        // Navigation function - ঠিক করা হয়েছে
-        function navigateTo(page) {
-            closeMenu();
-            const currentPage = getCurrentPage();
-            
-            console.log('Current Page:', currentPage);
-            console.log('Target Page:', page);
-            
-            // If same page, just refresh
-            if (currentPage === page) {
-                showLoader();
-                setTimeout(() => {
-                    window.location.reload();
-                }, 300);
+        displayLogo();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = launchDate.getTime() - now;
+            if (distance < 0) {
+                document.getElementById('countdownContainer').innerHTML = `<div class="live-message">🚀 WE ARE LIVE! 🚀</div>`;
+                document.getElementById('liveStatus').innerHTML = 'website launched successfully';
                 return;
             }
-            
-            // Different page - navigate to that page
-            showLoader();
-            setTimeout(() => {
-                if (page === 'home') {
-                    window.location.href = '/';
-                } else {
-                    // For other pages, create the full URL
-                    window.location.href = '/' + page;
-                }
-            }, 300);
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
         }
-
-        // Swipe gestures
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-
-        document.addEventListener('touchend', e => {
-            const touchEndX = e.changedTouches[0].screenX;
-            const diff = touchEndX - touchStartX;
-
-            if (diff > 50) {
-                openMenu();
-            } else if (diff < -50) {
-                closeMenu();
-            }
-        }, { passive: true });
-
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') closeMenu();
-        });
-
-        // Create particles
-        for (let i = 0; i < 10; i++) {
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        for (let i = 0; i < 20; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
             particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDuration = (15 + Math.random() * 20) + 's';
-            particle.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+            particle.style.animationDuration = (10 + Math.random() * 20) + 's';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.width = (Math.random() * 4 + 2) + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.background = `hsl(${Math.random() * 60 + 280}, 100%, 65%)`;
+            particle.style.opacity = Math.random() * 0.5 + 0.2;
             document.body.appendChild(particle);
         }
     </script>
