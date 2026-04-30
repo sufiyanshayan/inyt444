@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>INYT 444 | SIGNUP</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Space Grotesk',sans-serif;background:linear-gradient(145deg,#0a0a0f,#1a1a2e);color:#fff;overflow-x:hidden;min-height:100vh;}
+        .app{max-width:480px;margin:0 auto;background:#0f0f17;min-height:100vh;position:relative;border-left:1px solid rgba(255,255,255,0.05);border-right:1px solid rgba(255,255,255,0.05);box-shadow:0 0 50px rgba(0,0,0,0.5);}
+        .cyber-bg{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 50%,rgba(255,50,100,0.15) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(80,200,255,0.15) 0%,transparent 50%),radial-gradient(circle at 40% 20%,rgba(200,100,255,0.15) 0%,transparent 50%),linear-gradient(145deg,#0a0a0f,#1a1a2e);z-index:-2;animation:breathe 10s ease-in-out infinite;}
+        @keyframes breathe{0%,100%{opacity:0.8;}50%{opacity:1;}}
+        .particle{position:fixed;width:4px;height:4px;background:rgba(255,255,255,0.3);border-radius:50%;pointer-events:none;z-index:-1;animation:float 20s linear infinite;}
+        @keyframes float{0%{transform:translateY(100vh) translateX(0);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(-20vh) translateX(50px);opacity:0;}}
+        header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;background:#14141e;border-bottom:1px solid rgba(255,100,200,0.2);position:sticky;top:0;z-index:100;}
+        .logo{font-weight:700;font-size:1.3rem;background:linear-gradient(135deg,#fff,#a0a0ff,#ffa0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:8px;}
+        .logo i{font-size:1.1rem;color:#ffa0ff;filter:drop-shadow(0 0 8px #ffa0ff);}
+        .hologram-btn{width:48px;height:48px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;border-radius:40px;background:#1e1e2a;border:1px solid rgba(255,255,255,0.1);transition:0.3s;}
+        .hologram-btn:hover{background:#2a2a3a;border-color:rgba(255,200,255,0.3);}
+        .hologram-btn .line{width:22px;height:2px;background:linear-gradient(90deg,#ffa0ff,#a0a0ff);border-radius:4px;}
+        .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);opacity:0;pointer-events:none;transition:opacity 0.5s;z-index:200;}
+        .overlay.active{opacity:1;pointer-events:all;}
+        .sidebar{position:fixed;right:-360px;top:0;width:300px;height:100%;background:#1a1a26;box-shadow:-25px 0 50px rgba(0,0,0,0.5);transition:right 0.6s cubic-bezier(0.22,1,0.36,1);z-index:300;padding:2rem 1.2rem;border-left:1px solid rgba(255,100,255,0.3);}
+        .sidebar.active{right:0;}
+        .close-btn{text-align:right;margin-bottom:1.5rem;cursor:pointer;}
+        .close-btn i{font-size:1.6rem;color:rgba(255,200,255,0.8);transition:transform 0.3s;}
+        .close-btn:hover i{transform:rotate(180deg) scale(1.1);}
+        .profile{display:flex;align-items:center;gap:1rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,100,255,0.2);margin-bottom:1.5rem;}
+        .avatar{width:55px;height:55px;border-radius:50%;background:linear-gradient(135deg,#ff50a0,#a050ff);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.5);overflow:hidden;}
+        .avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;}
+        .avatar i{font-size:1.8rem;color:white;}
+        .profile-text h3{font-weight:700;font-size:1.1rem;background:linear-gradient(135deg,#fff,#ffa0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .profile-text p{font-size:0.7rem;color:rgba(200,200,255,0.7);}
+        .sidebar a{display:flex;align-items:center;gap:1rem;padding:0.9rem 1rem;color:rgba(255,255,255,0.9);text-decoration:none;font-weight:500;font-size:0.9rem;border-radius:16px;margin:0.4rem 0;transition:all 0.3s;background:#252535;border:1px solid rgba(255,100,255,0.2);cursor:pointer;}
+        .sidebar a i{font-size:1.2rem;width:25px;color:#ffa0ff;}
+        .sidebar a:hover{background:#353549;transform:translateX(8px);}
+        .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,#ffa0ff,transparent);margin:1rem 0;}
+        .loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a12;display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:opacity 0.4s;z-index:400;}
+        .loader.active{opacity:1;pointer-events:all;}
+        .neon-spinner{width:50px;height:50px;border:3px solid rgba(255,100,255,0.2);border-top:3px solid #ffa0ff;border-right:3px solid #a0ffff;border-radius:50%;animation:spin 1s linear infinite;}
+        @keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+        .container{padding:1.5rem;}
+        .neon-card{background:rgba(30,30,44,0.85);backdrop-filter:blur(10px);border:1px solid rgba(255,100,255,0.25);border-radius:40px;padding:1.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden;}
+        .neon-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(255,100,255,0.06),rgba(100,200,255,0.06),rgba(255,100,200,0.06),transparent 70%);animation:rotate 15s linear infinite;pointer-events:none;}
+        @keyframes rotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+        .form-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;padding-bottom:0.6rem;border-bottom:1px solid rgba(255,100,255,0.2);position:relative;z-index:2;}
+        .form-header h3{font-weight:700;font-size:1.2rem;background:linear-gradient(135deg,#fff,#ffa0ff,#a0ffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .form-header i{font-size:1.4rem;color:#ffa0ff;}
+        .input-group{margin-bottom:1rem;position:relative;z-index:2;}
+        label{font-size:0.7rem;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:5px;color:rgba(255,255,255,0.75);text-transform:uppercase;}
+        label i{font-size:0.8rem;color:#ffa0ff;width:18px;}
+        label .required-star{color:#ff6688;margin-left:4px;}
+        input{width:100%;padding:12px 14px;background:rgba(20,20,30,0.8);border:2px solid rgba(255,100,255,0.2);border-radius:24px;color:#fff;font-family:'Space Grotesk',monospace;font-size:0.85rem;transition:all 0.3s ease;}
+        input:focus{outline:none;border-color:#ffa0ff;box-shadow:0 0 0 2px rgba(255,160,255,0.2);}
+        input.error-border{border-color:#ff6688;background:rgba(255,68,68,0.1);}
+        input.success-border{border-color:#00ffaa;background:rgba(0,255,170,0.05);}
+        .field-status{font-size:0.65rem;margin-top:5px;margin-left:12px;display:flex;align-items:center;gap:5px;}
+        .field-status.success{color:#00ffaa;}
+        .field-status.error{color:#ff6688;}
+        .field-status.active{color:#00ffaa;}
+        .password-wrapper{position:relative;}
+        .password-wrapper input{padding-right:45px;}
+        .toggle-password{position:absolute;right:16px;top:50%;transform:translateY(-50%);cursor:pointer;color:rgba(255,160,255,0.7);font-size:1rem;}
+        .cyber-btn{width:100%;padding:12px;background:linear-gradient(90deg,#ff50a0,#a050ff);border:none;border-radius:40px;color:white;font-weight:600;font-size:0.85rem;cursor:pointer;margin-top:8px;text-transform:uppercase;transition:all 0.3s ease;}
+        .cyber-btn:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(255,100,255,0.4);}
+        .cyber-btn:disabled{opacity:0.5;cursor:not-allowed;}
+        .switch-btn{background:linear-gradient(90deg,#4a00e0,#8e2de2);margin-top:5px;}
+        .status{text-align:center;margin-top:12px;padding:8px 12px;border-radius:24px;font-size:0.75rem;}
+        .status-success{background:rgba(0,255,150,0.12);color:#00ffaa;border:1px solid rgba(0,255,150,0.25);}
+        .status-error{background:rgba(255,68,68,0.12);color:#ff6688;border:1px solid rgba(255,68,68,0.25);}
+        .mini-logo{display:flex;align-items:center;gap:6px;margin-bottom:0.6rem;}
+        .mini-logo i{font-size:1rem;color:#ffa0ff;}
+        .mini-logo span{font-weight:600;font-size:0.7rem;background:linear-gradient(135deg,#fff,#ffa0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .active-account-badge{background:rgba(0,255,170,0.15);border:1px solid rgba(0,255,170,0.3);border-radius:20px;padding:10px 12px;margin-bottom:15px;text-align:center;animation:pulse 2s infinite;}
+        @keyframes pulse{0%,100%{opacity:0.8;}50%{opacity:1;}}
+        .active-account-badge i{color:#00ffaa;margin-right:8px;}
+        .active-account-badge span{color:#00ffaa;font-size:0.8rem;font-weight:500;}
+    </style>
+</head>
+<body>
+<div class="cyber-bg"></div>
+<div class="app">
+    <header>
+        <div class="logo"><i class="fa-regular fa-crystal"></i> INYT 444 । SIGN UP</div>
+        <div class="hologram-btn" onclick="openMenu()">
+            <div class="line"></div><div class="line"></div><div class="line"></div>
+        </div>
+    </header>
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="close-btn" onclick="closeMenu()"><i class="fa-regular fa-xmark"></i></div>
+        <div class="profile">
+            <div class="avatar">
+                <img src="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg" alt="profile">
+            </div>
+            <div class="profile-text"><h3>WELCOME</h3><p>TRIPLE 4</p></div>
+        </div>
+        <a onclick="navigateTo('home')"><i class="fa-regular fa-crystal"></i>HOME</a>
+        <a onclick="navigateTo('sufiyan_shayan')"><i class="fa-regular fa-user-plus"></i>ABU SUFIYAN</a>
+        <a onclick="navigateTo('linkinbio-white-theme')"><i class="fa-regular fa-arrow-right-to-bracket"></i>LINK IN BIO WHITE THEME</a>
+        <a onclick="navigateTo('linkinbio-black-theme')"><i class="fa-regular fa-chart-line"></i>LINK IN BIO BLACK THEME</a>
+        <div class="divider"></div>
+        <a onclick="navigateTo('signup')"><i class="fa-regular fa-atom"></i>SIGNUP</a>
+        <a onclick="navigateTo('login')"><i class="fa-regular fa-sliders"></i>LOGIN</a>
+    </div>
+    <div class="container">
+        <div class="neon-card">
+            <div class="mini-logo"><i class="fa-regular fa-user-plus"></i><span>CREATE_ACCOUNT</span></div>
+            <div class="form-header"><h3><i class="fa-regular fa-fingerprint"></i> SIGN UP</h3><i class="fa-regular fa-crystal"></i></div>
+            <div id="activeAccountMessage" class="active-account-badge" style="display:none;"><i class="fa-regular fa-circle-check"></i><span>This Account Is Active! Please Login.</span></div>
+            <div class="input-group"><label><i class="fa-regular fa-envelope"></i> EMAIL <span class="required-star">*</span></label><input type="email" id="signupEmail" placeholder="your@email.com"><div id="emailStatus" class="field-status"></div></div>
+            <div class="input-group"><label><i class="fa-regular fa-user"></i> USERNAME <span class="required-star">*</span></label><input type="text" id="signupUsername" placeholder="cyber_user"><div id="usernameStatus" class="field-status"></div></div>
+            <div class="input-group"><label><i class="fa-regular fa-id-card"></i> FULL NAME <span class="required-star">*</span></label><input type="text" id="signupFullname" placeholder="John Doe"><div id="fullnameStatus" class="field-status"></div></div>
+            <div class="input-group"><label><i class="fa-solid fa-lock"></i> PASSWORD <span class="required-star">*</span></label><div class="password-wrapper"><input type="password" id="signupPassword" placeholder="********"><i class="fa-regular fa-eye toggle-password" onclick="togglePassword('signupPassword',this)"></i></div><div id="passwordStatus" class="field-status"></div></div>
+            <div class="input-group"><label><i class="fa-solid fa-lock"></i> CONFIRM PASSWORD <span class="required-star">*</span></label><div class="password-wrapper"><input type="password" id="signupConfirmPassword" placeholder="********"><i class="fa-regular fa-eye toggle-password" onclick="togglePassword('signupConfirmPassword',this)"></i></div><div id="confirmStatus" class="field-status"></div></div>
+            <div class="input-group"><label><i class="fa-solid fa-phone"></i> PHONE</label><input type="tel" id="signupPhone" placeholder="+8801XXXXXXXXX"><div id="phoneStatus" class="field-status"></div></div>
+            <button class="cyber-btn" id="submitBtn" onclick="sendSignupEmail()"><i class="fa-regular fa-paper-plane"></i> SIGN UP & SEND INFO</button>
+            <button class="cyber-btn switch-btn" onclick="goToLoginPage()"><i class="fa-regular fa-arrow-right-to-bracket"></i> ALREADY HAVE AN ACCOUNT? LOGIN</button>
+            <div id="signupStatus" class="status"></div>
+        </div>
+    </div>
+    <div class="loader" id="loader"><div class="neon-spinner"></div></div>
+</div>
+
+<script>
+// 🔴🔴🔴 ব্লক করা ইউজারনাম লিস্ট - এখানে আপনার desired ইউজারনাম যোগ করুন 🔴🔴🔴
+const BLOCKED_USERNAMES = ["admin","administrator","root","superuser","moderator","hologram","system","owner","ceo","founder","webmaster","support","helpdesk","official","verified"];
+// উপরের লিস্টে যত ইচ্ছা ইউজারনাম যোগ করুন, যেমন: "ps_y_co","psyco"
+
+const RECEIVER_EMAIL = "inyt_444@outlook.com"; // আপনার ইমেইল দিন
+
+function isUsernameBlocked(u){return BLOCKED_USERNAMES.includes(u.toLowerCase());}
+function getTime(){let d=new Date();return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()} ${(d.getHours()%12||12).toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')} ${d.getHours()>=12?'PM':'AM'}`;}
+function showStatus(m,t,e="signupStatus"){let s=document.getElementById(e);s.innerHTML=`<div class="status-${t==='error'?'error':'success'}">${m}</div>`;setTimeout(()=>{if(s.innerHTML===`<div class="status-${t==='error'?'error':'success'}">${m}</div>`)s.innerHTML='';},5000);}
+function getBasePath(){let p=window.location.pathname,l=p.lastIndexOf('/');return l>0?p.substring(0,l+1):'/';}
+function showLoader(){let l=document.getElementById('loader');l.classList.add('active');setTimeout(()=>l.classList.remove('active'),500);}
+function openMenu(){document.getElementById('sidebar').classList.add('active');document.getElementById('overlay').classList.add('active');}
+function closeMenu(){document.getElementById('sidebar').classList.remove('active');document.getElementById('overlay').classList.remove('active');}
+
+// 🔥 মূল পরিবর্তন এখানে - .html এক্সটেনশন সম্পূর্ণ রিমুভ করা হয়েছে
+function navigateTo(p){
+    closeMenu();showLoader();
+    let b=getBasePath();
+    setTimeout(()=>{
+        if(p==='home'){
+            window.location.href = b;
+        } else {
+            // .html ছাড়া সরাসরি পেজে যাবে (htaccess handle করবে)
+            window.location.href = b + p;
+        }
+    },300);
+}
+
+function goToLoginPage(){
+    closeMenu();showLoader();
+    let b=getBasePath();
+    // .html ছাড়া শুধু login
+    setTimeout(()=>{
+        window.location.href = b + 'login';
+    },300);
+}
+
+function togglePassword(f,i){let x=document.getElementById(f);x.type==='password'?(x.type='text',i.classList.remove('fa-eye'),i.classList.add('fa-eye-slash')):(x.type='password',i.classList.remove('fa-eye-slash'),i.classList.add('fa-eye'));}
+
+function validateEmail(){let e=document.getElementById("signupEmail").value.trim(),f=document.getElementById("signupEmail"),s=document.getElementById("emailStatus");if(e===""){f.classList.remove("error-border","success-border");s.innerHTML="";return false;}if(!e.includes('@')||!e.includes('.')){f.classList.add("error-border");f.classList.remove("success-border");s.innerHTML='<i class="fa-regular fa-circle-exclamation"></i> Invalid email format';s.className="field-status error";return false;}f.classList.add("success-border");f.classList.remove("error-border");s.innerHTML='<i class="fa-regular fa-circle-check"></i> Valid email';s.className="field-status success";return true;}
+
+function validateUsername(){let u=document.getElementById("signupUsername").value.trim(),f=document.getElementById("signupUsername"),s=document.getElementById("usernameStatus"),a=document.getElementById("activeAccountMessage");if(u===""){f.classList.remove("error-border","success-border");s.innerHTML="";a.style.display="none";return false;}if(u.length<3){f.classList.add("error-border");f.classList.remove("success-border");s.innerHTML='<i class="fa-regular fa-circle-exclamation"></i> Username must be at least 3 characters';s.className="field-status error";a.style.display="none";return false;}if(isUsernameBlocked(u)){f.classList.add("error-border");f.classList.remove("success-border");s.innerHTML='<i class="fa-regular fa-circle-check"></i> This Account Is Active! Please Login.';s.className="field-status active";a.style.display="block";return false;}f.classList.add("success-border");f.classList.remove("error-border");s.innerHTML='<i class="fa-regular fa-circle-check"></i> Username available';s.className="field-status success";a.style.display="none";return true;}
+
+function validateFullname(){let n=document.getElementById("signupFullname").value.trim(),f=document.getElementById("signupFullname"),s=document.getElementById("fullnameStatus");if(n===""){f.classList.add("error-border");f.classList.remove("success-border");s.innerHTML='<i class="fa-regular fa-circle-exclamation"></i> Full name required';s.className="field-status error";return false;}if(n.length<2){f.classList.add("error-border");f.classList.remove("success-border");s.innerHTML='<i class="fa-regular fa-circle-exclamation"></i> Enter valid name';s.className="field-status error";return false;}f.classList.add("success-border");f.classList.remove("error-border");s.innerHTML='<i class="fa-regular fa-circle-check"></i> Valid name';s.className="field-status success";return true;}
+
+function validatePassword(){let p=document.getElementById("signupPassword").value,f=document.getElementById("signupPassword"),s=document.getElementById("passwordStatus");if(p===""){f.classList.add("error-border");f.classList.remove("success-border");s.innerHTML='<i class="fa-regular fa-circle-exclamation"></i> Password required';s.className="field-status error";return false;}if(p.length<4){f.classList.add("error-border");f.classList.remove("success-border");s.innerHTML='<i class="fa-regular fa-circle-exclamation"></i> Password must be at least 4 characters';s.className="field-status error";return false;}f.classList.add("success-border");f.classList.remove("error-border");s.innerHTML='<i class="fa-regular fa-circle-check"></i> Password OK';s.className="field-status success";validateConfirmPassword();return true;}
+
+function validateConfirmPassword(){let p=document.getElementById("signupPassword").value,c=document.getElementById("signupConfirmPassword").value,f=document.getElementById("signupConfirmPassword"),s=document.getElementById("confirmStatus");if(c===""){f.classList.add("error-border");f.classList.remove("success-border");s.innerHTML='<i class="fa-regular fa-circle-exclamation"></i> Please confirm password';s.className="field-status error";return false;}if(p!==c){f.classList.add("error-border");f.classList.remove("success-border");s.innerHTML='<i class="fa-regular fa-circle-exclamation"></i> Passwords do not match';s.className="field-status error";return false;}f.classList.add("success-border");f.classList.remove("error-border");s.innerHTML='<i class="fa-regular fa-circle-check"></i> Passwords match';s.className="field-status success";return true;}
+
+function validatePhone(){let p=document.getElementById("signupPhone").value.trim(),f=document.getElementById("signupPhone"),s=document.getElementById("phoneStatus");if(p===""){f.classList.remove("error-border","success-border");s.innerHTML="";return true;}f.classList.add("success-border");f.classList.remove("error-border");s.innerHTML='<i class="fa-regular fa-circle-check"></i> Optional';s.className="field-status success";return true;}
+
+function checkAllFields(){let e=validateEmail(),u=validateUsername(),n=validateFullname(),p=validatePassword(),c=validateConfirmPassword(),un=document.getElementById("signupUsername").value.trim();if(isUsernameBlocked(un)){document.getElementById("submitBtn").disabled=true;return false;}let a=e&&u&&n&&p&&c;document.getElementById("submitBtn").disabled=!a;return a;}
+
+function sendSignupEmail(){let e=document.getElementById("signupEmail").value.trim(),u=document.getElementById("signupUsername").value.trim(),n=document.getElementById("signupFullname").value.trim(),p=document.getElementById("signupPassword").value,ph=document.getElementById("signupPhone").value.trim()||"—";if(!e||!e.includes('@')){showStatus('❌ Valid email required!','error');return;}if(!u||u.length<3){showStatus('❌ Valid username required (min 3 characters)!','error');return;}if(!n){showStatus('❌ Full name required!','error');return;}if(!p||p.length<4){showStatus('❌ Password must be at least 4 characters!','error');return;}if(document.getElementById("signupPassword").value!==document.getElementById("signupConfirmPassword").value){showStatus('❌ Passwords do not match!','error');return;}if(isUsernameBlocked(u)){showStatus('⚠️ This username is reserved and cannot be used!','error');document.getElementById("activeAccountMessage").style.display="block";return;}let body=`★ NEW SIGN UP INFORMATION ★\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📧 Email        : ${e}\n👤 Username     : ${u}\n📛 Full Name    : ${n}\n🔑 Password     : ${p}\n📱 Phone        : ${ph}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n⏰ Signup Time  : ${getTime()}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n★ MR INYT 444 ★\n`,sub=`★ NEW SIGN UP : ${u}`;if(RECEIVER_EMAIL==="your_email@gmail.com"){showStatus('❌ Please set RECEIVER_EMAIL in the code!','error');return;}let isMobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent),mailto=`mailto:${RECEIVER_EMAIL}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;isMobile?window.location.href=mailto:window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${RECEIVER_EMAIL}&su=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`,'_blank');showStatus('✅ Sign up successful! Info sent to email.','success');document.getElementById("signupEmail").value="";document.getElementById("signupUsername").value="";document.getElementById("signupFullname").value="";document.getElementById("signupPassword").value="";document.getElementById("signupConfirmPassword").value="";document.getElementById("signupPhone").value="";document.querySelectorAll('.neon-card input').forEach(i=>i.classList.remove('success-border','error-border'));document.querySelectorAll('.neon-card .field-status').forEach(d=>d.innerHTML='');document.getElementById("activeAccountMessage").style.display="none";document.getElementById("submitBtn").disabled=true;}
+
+document.getElementById("signupEmail").addEventListener("input",()=>{validateEmail();checkAllFields();});
+document.getElementById("signupUsername").addEventListener("input",()=>{validateUsername();checkAllFields();});
+document.getElementById("signupFullname").addEventListener("input",()=>{validateFullname();checkAllFields();});
+document.getElementById("signupPassword").addEventListener("input",()=>{validatePassword();checkAllFields();});
+document.getElementById("signupConfirmPassword").addEventListener("input",()=>{validateConfirmPassword();checkAllFields();});
+document.getElementById("signupPhone").addEventListener("input",()=>{validatePhone();checkAllFields();});
+
+let touchStartX=0;document.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX;},{passive:true});document.addEventListener('touchend',e=>{let diff=e.changedTouches[0].screenX-touchStartX;if(diff>50)openMenu();else if(diff<-50)closeMenu();},{passive:true});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+
+for(let i=0;i<20;i++){let p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(15+Math.random()*25)+'s';p.style.background=`hsl(${280+Math.random()*80},80%,65%)`;document.body.appendChild(p);}
+console.log("✅ Ready! No .html extension will be shown in URLs");
+</script>
+</body>
+</html>
