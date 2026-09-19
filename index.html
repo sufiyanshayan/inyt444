@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MR INYT 444</title>
+    
+    <!-- ENTER_YOUR_FAVICON_LINK -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #f7f7f7;
+            color: #000;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .app {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #ffffff;
+            min-height: 100vh;
+            position: relative;
+            border-left: 1px solid rgba(0,0,0,0.06);
+            border-right: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 0 40px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f7f7f7;
+            z-index: -1;
+        }
+
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(0,0,0,0.12);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh) translateX(0);
+            }
+            to {
+                transform: translateY(-100vh) translateX(100px);
+            }
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            padding: 1.8rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 40px;
+            padding: 3rem 2rem;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 20px 40px -20px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.04) inset;
+            text-align: center;
+            animation: hologram 1s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes hologram {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .card h2 {
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: #000;
+            line-height: 1.2;
+            position: relative;
+        }
+
+        .card p {
+            color: #555;
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2.2rem;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .economy-chip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            background: #ffffff;
+            padding: 0 1rem;
+            height: 48px;
+            border-radius: 60px;
+            border: 1px solid rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+            color: #000;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .economy-chip:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            border-color: rgba(0,0,0,0.2);
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            z-index: 400;
+        }
+
+        .loader.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .neon-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(0,0,0,0.1);
+            border-top: 4px solid #000;
+            border-right: 4px solid #555;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .divider {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ccc, #ccc, transparent);
+            margin: 1.5rem auto;
+        }
+
+        .cyber-status {
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: blink 3s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.8rem;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .button-group .economy-chip {
+            width: 100%;
+            min-width: 0;
+        }
+
+        .economy-chip.danger-btn {
+            grid-column: 1 / -1;
+        }
+
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 500;
+            padding: 1.5rem;
+        }
+
+        .password-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .password-box {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 2rem 1.8rem;
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            transform: translateY(10px);
+            transition: transform 0.3s;
+        }
+
+        .password-overlay.active .password-box {
+            transform: translateY(0);
+        }
+
+        .danger-label {
+            color: #e03131;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .password-field-wrap {
+            position: relative;
+            margin-bottom: 0.8rem;
+        }
+
+        .password-box input {
+            width: 100%;
+            padding: 0.7rem 2.6rem 0.7rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.15);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .password-box input:focus {
+            border-color: #e03131;
+        }
+
+        .eye-btn {
+            position: absolute;
+            right: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #888;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.2rem;
+        }
+
+        .eye-btn:hover {
+            color: #000;
+        }
+
+        .password-actions {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .password-actions button {
+            flex: 1;
+            padding: 0.6rem;
+            border-radius: 12px;
+            border: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .password-actions .unlock-btn {
+            background: #e03131;
+            color: #fff;
+        }
+
+        .password-actions .cancel-btn {
+            background: #f0f0f0;
+            color: #000;
+        }
+
+        .password-error {
+            color: #e03131;
+            font-size: 0.8rem;
+            margin-top: 0.6rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-bg"></div>
+    
+    <div class="app">
+        <div class="main">
+            <div class="card">
+                <h2>𝐌𝐑 𝐈𝐍𝐘𝐓 𝟒𝟒𝟒</h2>
+                <p>𝙈𝘿 𝘼𝘽𝙐 𝙎𝙐𝙁𝙄𝙔𝘼𝙉 𝙈𝙍𝙄𝘿𝙃𝘼 𝙎𝙃𝘼𝙔𝘼𝙉</p>
+                
+                <div class="button-group">
+                    <div class="economy-chip" onclick="navigateTo('sufiyan_shayan')">SUFIYAN</div>
+                    <div class="economy-chip" onclick="navigateTo('')">HOW TO USE ?</div>
+                    <div class="economy-chip" onclick="navigateTo('')">SIGN UP</div>
+                    <div class="economy-chip" onclick="navigateTo('cpanel')">CPANEL</div>
+                    <div class="economy-chip danger-btn" onclick="openPasswordModal('userm')">DANGER ZONE</div>
+                </div>
+                
+                <div class="cyber-status">★ MR INYT 444 ★</div>
+            </div>
+        </div>
+
+        <div class="password-overlay" id="passwordOverlay">
+            <div class="password-box">
+                <div class="danger-label">DANGER ZONE</div>
+                <div class="password-field-wrap">
+                    <input type="password" id="passwordInput" placeholder="Enter Password" autocomplete="off">
+                    <button type="button" class="eye-btn" id="eyeBtn" onclick="togglePasswordVisibility()">
+                        <i class="fa-regular fa-eye" id="eyeIcon"></i>
+                    </button>
+                </div>
+                <div class="password-actions">
+                    <button class="cancel-btn" onclick="closePasswordModal()">Cancel</button>
+                    <button class="unlock-btn" onclick="submitPassword()">Unlock</button>
+                </div>
+                <div class="password-error" id="passwordError" style="display:none;">LEAVE THIS PAGE, IT IS NOT FOR YOU</div>
+            </div>
+        </div>
+
+        <div class="loader" id="loader">
+            <div class="neon-spinner"></div>
+        </div>
+    </div>
+
+    <script>
+        // ENTER_YOUR_PASSWORD_HERE
+        const DANGER_ZONE_PASSWORD = "UM75";
+        
+        let dangerZoneTargetPage = 'home';
+
+        // Toggle password visibility
+        function togglePasswordVisibility() {
+            const input = document.getElementById('passwordInput');
+            const icon = document.getElementById('eyeIcon');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Open password modal
+        function openPasswordModal(targetPage) {
+            dangerZoneTargetPage = targetPage;
+            const overlay = document.getElementById('passwordOverlay');
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            const icon = document.getElementById('eyeIcon');
+            
+            input.value = '';
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+            error.style.display = 'none';
+            
+            overlay.classList.add('active');
+            setTimeout(() => input.focus(), 100);
+        }
+
+        // Close password modal
+        function closePasswordModal() {
+            document.getElementById('passwordOverlay').classList.remove('active');
+        }
+
+        // Submit password
+        function submitPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            
+            if (input.value === DANGER_ZONE_PASSWORD) {
+                closePasswordModal();
+                navigateTo(dangerZoneTargetPage);
+            } else {
+                error.style.display = 'block';
+                input.focus();
+                input.select();
+            }
+        }
+
+        // Enter key event for password input
+        document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') submitPassword();
+        });
+
+        // Get current page name
+        function getCurrentPage() {
+            const path = window.location.pathname;
+            
+            if (path === '/' || path === '/index.html' || path === '') {
+                return 'home';
+            }
+            
+            let pageName = path.substring(1);
+            if (pageName.endsWith('.html')) {
+                pageName = pageName.replace('.html', '');
+            }
+            
+            return pageName;
+        }
+
+        // Show loader animation
+        function showLoader() {
+            const loader = document.getElementById('loader');
+            loader.classList.add('active');
+            setTimeout(() => {
+                loader.classList.remove('active');
+            }, 500);
+        }
+
+        // Navigate to different pages
+        function navigateTo(page) {
+            const currentPage = getCurrentPage();
+            
+            console.log('Current Page:', currentPage);
+            console.log('Target Page:', page);
+            
+            // If already on the same page, reload
+            if (currentPage === page) {
+                showLoader();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 300);
+                return;
+            }
+            
+            showLoader();
+            setTimeout(() => {
+                if (page === 'home') {
+                    window.location.href = '/';
+                } else {
+                    window.location.href = '/' + page;
+                }
+            }, 300);
+        }
+
+        // Auto-fit text inside buttons
+        function fitChipText() {
+            document.querySelectorAll('.economy-chip').forEach(chip => {
+                chip.style.fontSize = '';
+                let size = parseFloat(window.getComputedStyle(chip).fontSize);
+                const minSize = 9;
+                
+                while (chip.scrollWidth > chip.clientWidth && size > minSize) {
+                    size -= 0.5;
+                    chip.style.fontSize = size + 'px';
+                }
+            });
+        }
+
+        // Run on load and resize
+        window.addEventListener('load', fitChipText);
+        window.addEventListener('resize', fitChipText);
+        fitChipText();
+
+        // Create floating particles
+        for (let i = 0; i < 10; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (15 + Math.random() * 20) + 's';
+            document.body.appendChild(particle);
+        }
+    </script>
+</body>
+</html>

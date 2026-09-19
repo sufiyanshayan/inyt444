@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | Link-In-Bio</title>
+<link id="dynamicFavicon" rel="icon" type="image/png" href="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Serif Bengali",serif;background:#f4f6f9;padding:20px;color:#333}
+.container{width:100%;max-width:500px;margin:auto}
+.card{background:#fff;border-radius:24px;padding:2rem;box-shadow:0 10px 25px rgba(0,0,0,0.05)}
+.input-group{margin-bottom:1.2rem;text-align:left}
+label{font-size:0.75rem;font-weight:700;display:flex;align-items:center;gap:6px;margin-bottom:6px;color:#555;text-transform:uppercase}
+input,textarea,select{width:100%;padding:12px 15px;border-radius:12px;border:1px solid #ddd;outline:none;font-size:0.9rem;font-family:inherit;transition:0.3s}
+input:focus,select:focus,textarea:focus{border-color:#000;box-shadow:0 0 0 3px rgba(0,0,0,0.05)}
+input.error{border-color:#cc0000;background:#fff5f5}
+.password-wrapper{position:relative;display:flex;align-items:center}
+.eye-btn{position:absolute;right:15px;cursor:pointer;color:#888;font-size:1.1rem;z-index:10;padding:5px}
+.smart-input{display:flex;align-items:center;background:#fff;border:1px solid #ddd;border-radius:12px;overflow:hidden}
+.prefix{padding-left:12px;font-size:0.8rem;color:#777;font-family:monospace;white-space:nowrap;pointer-events:none}
+.smart-input input{border:none;flex:1}
+.btn-row{display:flex;gap:10px;margin-top:15px}
+.btn{flex:1;padding:14px 8px;border:none;border-radius:12px;color:#fff;font-weight:700;cursor:pointer;font-size:0.8rem;transition:0.3s;font-family:inherit;text-align:center;white-space:nowrap}
+.btn:hover{opacity:0.85;transform:translateY(-1px)}
+.btn:disabled{background:#999;cursor:not-allowed;transform:none}
+.btn-update{background:#000}
+.btn-clear{background:#f59e0b;color:#000}
+.btn-logout{background:#cc0000}
+.btn-login{width:100%;padding:14px;border:none;border-radius:12px;background:#000;color:#fff;font-weight:700;cursor:pointer;font-size:1rem;margin-top:10px;transition:0.3s;font-family:inherit}
+.btn-login:hover{background:#222}
+.btn-login:disabled{background:#999;cursor:not-allowed}
+.hidden{display:none}
+.form-scroll{max-height:85vh;overflow-y:auto;padding-right:10px}
+.status{margin-top:15px;padding:12px;border-radius:12px;font-size:0.85rem;text-align:center;display:none}
+.status-error{display:block;background:#fee2e2;color:#b91c1c;border:1px solid #fecaca}
+.status-success{display:block;background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+.status-warning{display:block;background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid #fff;border-top:2px solid transparent;border-radius:50%;animation:spin 0.8s linear infinite;margin-right:8px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.validation-error{color:#cc0000;font-size:0.7rem;margin-top:4px;display:none}
+.validation-error.show{display:block}
+.user-info{background:#f0f4ff;padding:10px 15px;border-radius:12px;margin-bottom:20px;font-size:0.85rem;color:#333;border:1px solid #d0dfff}
+
+/* Drag & Drop Styles - Compact Version */
+.drop-zone{width:100%;border:2px dashed #ddd;border-radius:12px;padding:12px 15px;text-align:center;cursor:pointer;transition:0.3s;background:#fafafa;position:relative;display:flex;align-items:center;justify-content:center;gap:12px;min-height:60px}
+.drop-zone:hover{background:#f0f0f0;border-color:#999}
+.drop-zone.dragover{background:#e8f0fe;border-color:#000;border-style:solid}
+.drop-zone .icon{font-size:1.2rem;color:#888}
+.drop-zone .text{font-size:0.75rem;color:#666}
+.drop-zone .subtext{font-size:0.6rem;color:#999}
+.drop-zone img{max-height:40px;border-radius:6px}
+.drop-zone .file-name{font-size:0.7rem;color:#333;font-weight:700;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drop-zone .remove-btn{background:#cc0000;color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:0.6rem;display:none;align-items:center;justify-content:center;flex-shrink:0}
+.drop-zone.has-image .remove-btn{display:flex}
+.drop-zone.has-image{padding:8px 12px;border-color:#22c55e;background:#f0fdf4}
+.drop-zone .upload-progress{width:80px;height:3px;background:#e5e7eb;border-radius:4px;overflow:hidden;display:none}
+.drop-zone .upload-progress .bar{height:100%;background:#000;width:0%;transition:width 0.3s}
+.drop-zone.uploading .upload-progress{display:block}
+
+/* Crop Modal */
+.crop-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
+.crop-modal.show{display:flex}
+.crop-modal .modal-content{background:#fff;border-radius:16px;padding:20px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto}
+.crop-modal .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.crop-modal .modal-header h3{font-size:1rem}
+.crop-modal .modal-header .close-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:#888}
+.crop-modal .crop-container{position:relative;width:100%;aspect-ratio:1/1;background:#f0f0f0;border-radius:8px;overflow:hidden;margin-bottom:15px;touch-action:none;user-select:none}
+.crop-modal .crop-container img{width:100%;height:100%;object-fit:contain;cursor:crosshair}
+.crop-modal .crop-controls{display:flex;gap:10px;flex-wrap:wrap}
+.crop-modal .crop-controls button{flex:1;padding:10px;border:none;border-radius:8px;font-weight:700;cursor:pointer;transition:0.3s;font-family:inherit;font-size:0.8rem;min-width:60px}
+.crop-modal .crop-controls .btn-crop{background:#000;color:#fff}
+.crop-modal .crop-controls .btn-crop:hover{background:#222}
+.crop-modal .crop-controls .btn-cancel{background:#e5e7eb;color:#333}
+.crop-modal .crop-controls .btn-cancel:hover{background:#d1d5db}
+.crop-modal .crop-controls .btn-rotate{background:#f59e0b;color:#000}
+.crop-modal .crop-controls .btn-rotate:hover{background:#d97706}
+.crop-rectangle{position:absolute;border:2px solid #fff;background:rgba(0,0,0,0.3);pointer-events:none;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);display:none}
+.crop-rectangle .resize-handle{position:absolute;width:12px;height:12px;background:#fff;border:1px solid #000;border-radius:2px;pointer-events:auto;cursor:pointer}
+.crop-rectangle .resize-handle.nw{top:-6px;left:-6px;cursor:nw-resize}
+.crop-rectangle .resize-handle.ne{top:-6px;right:-6px;cursor:ne-resize}
+.crop-rectangle .resize-handle.sw{bottom:-6px;left:-6px;cursor:sw-resize}
+.crop-rectangle .resize-handle.se{bottom:-6px;right:-6px;cursor:se-resize}
+.crop-rectangle .resize-handle.n{top:-6px;left:50%;transform:translateX(-50%);cursor:n-resize}
+.crop-rectangle .resize-handle.s{bottom:-6px;left:50%;transform:translateX(-50%);cursor:s-resize}
+.crop-rectangle .resize-handle.e{right:-6px;top:50%;transform:translateY(-50%);cursor:e-resize}
+.crop-rectangle .resize-handle.w{left:-6px;top:50%;transform:translateY(-50%);cursor:w-resize}
+</style>
+</head>
+<body>
+
+<div class="container">
+<div class="card" id="loginCard">
+<h2 style="text-align:center;margin-bottom:1.5rem">CPANEL | INYT 444</h2>
+<div class="input-group"><label>Email Address</label><input type="email" id="logEmail" placeholder="ENTER YOUR EMAIL" autocomplete="email"><div class="validation-error" id="emailError">⚠️ Valid email address required!</div></div>
+<div class="input-group"><label>Password</label><div class="password-wrapper"><input type="password" id="logPass" placeholder="ENTER YOUR PASSWORD" autocomplete="current-password"><i class="fa-regular fa-eye eye-btn" id="eyeIcon"></i></div><div class="validation-error" id="passError">⚠️ Password is required!</div></div>
+<button class="btn-login" onclick="handleLogin()" id="logBtn">LOGIN</button>
+<div id="logStatus" class="status"></div>
+</div>
+
+<div class="card hidden form-scroll" id="formCard">
+<div class="user-info"><strong>👤 Logged in as:</strong> <span id="displayEmail"></span></div>
+<h3 style="margin-bottom:1.5rem;border-bottom:2px solid #eee;padding-bottom:10px">📝 UPDATE INFORMATION</h3>
+<div class="input-group"><label>1. WEBSITE TITLE</label><input type="text" id="f1" placeholder="Your_Name"></div>
+
+<!-- 2. Profile Picture - Drag & Drop Compact -->
+<div class="input-group">
+<label>2. PROFILE PICTURE</label>
+<div class="drop-zone" id="dropZone">
+<div class="icon"><i class="fa-regular fa-image"></i></div>
+<div class="text">Drop or Click</div>
+<div class="subtext" id="sizeInfo">Max 10MB</div>
+<img id="previewImage" style="display:none" alt="Profile Preview">
+<div class="file-name" id="fileName"></div>
+<div class="upload-progress"><div class="bar" id="uploadBar"></div></div>
+<button class="remove-btn" id="removeImageBtn"><i class="fa-solid fa-times"></i></button>
+<input type="file" id="fileInput" accept="image/*" style="display:none">
+</div>
+<div id="profilePicUrl" style="display:none"></div>
+</div>
+
+<!-- Crop Modal -->
+<div class="crop-modal" id="cropModal">
+<div class="modal-content">
+<div class="modal-header">
+<h3>✂️ Crop Image</h3>
+<button class="close-btn" onclick="closeCropModal()">&times;</button>
+</div>
+<div class="crop-container" id="cropContainer">
+<img id="cropImage" src="" alt="Crop">
+<div class="crop-rectangle" id="cropRectangle">
+<div class="resize-handle nw" data-dir="nw"></div>
+<div class="resize-handle n" data-dir="n"></div>
+<div class="resize-handle ne" data-dir="ne"></div>
+<div class="resize-handle e" data-dir="e"></div>
+<div class="resize-handle se" data-dir="se"></div>
+<div class="resize-handle s" data-dir="s"></div>
+<div class="resize-handle sw" data-dir="sw"></div>
+<div class="resize-handle w" data-dir="w"></div>
+</div>
+</div>
+<div class="crop-controls">
+<button class="btn-rotate" onclick="rotateImage()"><i class="fa-solid fa-rotate"></i> Rotate</button>
+<button class="btn-cancel" onclick="closeCropModal()">Cancel</button>
+<button class="btn-crop" onclick="applyCrop()"><i class="fa-solid fa-crop"></i> Apply</button>
+</div>
+</div>
+</div>
+
+<div class="input-group"><label>3. NAME</label><input type="text" id="f3" placeholder="Your_Name"></div>
+<div class="input-group"><label>4. TITLE</label><input type="text" id="f4" placeholder="Your_Title"></div>
+<div class="input-group"><label>5. FACEBOOK</label><div class="smart-input"><span class="prefix">https://www.facebook.com/</span><input type="text" id="f5"></div></div>
+<div class="input-group"><label>6. FACEBOOK PAGE LINK</label><div class="smart-input"><span class="prefix">https://www.facebook.com/</span><input type="text" id="f6"></div></div>
+<div class="input-group"><label>7. INSTAGRAM</label><div class="smart-input"><span class="prefix">https://www.instagram.com/</span><input type="text" id="f7"></div></div>
+<div class="input-group"><label>8. WHATSAPP</label><input type="text" id="f8" placeholder="+8801XXXXXXXXX"></div>
+<div class="input-group"><label>9. TIKTOK</label><div class="smart-input"><span class="prefix">https://www.tiktok.com/@</span><input type="text" id="f9"></div></div>
+<div class="input-group"><label>10. TELEGRAM</label><div class="smart-input"><span class="prefix">https://t.me/</span><input type="text" id="f10"></div></div>
+<div class="input-group"><label>11. TWITTER</label><div class="smart-input"><span class="prefix">https://x.com/</span><input type="text" id="f11"></div></div>
+<div class="input-group"><label>12. PHONE</label><input type="text" id="f12" placeholder="+8801XXXXXXXXX"></div>
+<div class="input-group"><label>13. ABOUT</label><textarea id="f13" rows="3"></textarea></div>
+<div class="input-group"><label>14. WEBSITE</label><input type="url" id="f14"></div>
+<div class="input-group"><label>15. COPYRIGHT LINE</label><input type="text" id="f15" placeholder="Copyright © 2026 MADE BY"></div>
+<div class="input-group"><label>16. MADE BY NAME</label><input type="text" id="f16" placeholder="Your_Name"></div>
+<div class="input-group"><label>17. ALL RIGHTS RESERVED</label><input type="text" id="f17" placeholder="All Rights Reserved."></div>
+<div class="btn-row">
+<button class="btn btn-update" onclick="updateData()" id="upBtn">UPDATE</button>
+<button class="btn btn-clear" onclick="clearAllFields()">CLEAR ALL</button>
+<button class="btn btn-logout" onclick="handleLogout()">LOGOUT</button>
+</div>
+<div id="fStatus" class="status"></div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_PROJECT_URL = "https://ovzyjnoqnbpwwlqtkwit.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92enlqbm9xbmJwd3dscXRrd2l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MzA2MDIsImV4cCI6MjA5NjUwNjYwMn0.UgGC9Bvjeud6v29CjUVrnfRWBuf7jDTxmCOW0u62NRw";
+const AUTO_LOGOUT_TIME = 60;
+const TAB_CHANGE_LOGOUT_TIME = 60;
+
+const USER_TABLE_MAPPING = {
+    "sufiyanmridha191@outlook.com": "linkinbio_sufiyan",
+    "sordarariyan259@gmail.com": "linkinbio_ariyan",
+    "user3@example.com": "linkinbi0_user3"
+};
+
+function getUserTableName(email) {
+    return USER_TABLE_MAPPING[email] || null;
+}
+
+const sb = supabase.createClient(SUPABASE_PROJECT_URL, SUPABASE_ANON_KEY);
+let CURRENT_USER_TABLE = null;
+let CURRENT_USER_EMAIL = null;
+let activityCheckInterval = null;
+let tabChangeTimer = null;
+let tabHiddenTime = null;
+let uploadedImageUrl = null;
+let isUploading = false;
+let cropImageData = null;
+let currentRotation = 0;
+
+// ===== DRAG & DROP SYSTEM =====
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const previewImage = document.getElementById('previewImage');
+const fileName = document.getElementById('fileName');
+const removeBtn = document.getElementById('removeImageBtn');
+const uploadBar = document.getElementById('uploadBar');
+
+// Click to browse
+dropZone.addEventListener('click', function() {
+    if (!isUploading) fileInput.click();
+});
+
+// File input change
+fileInput.addEventListener('change', function(e) {
+    if (e.target.files.length > 0) {
+        handleFile(e.target.files[0]);
+    }
+});
+
+// Drag & Drop events
+dropZone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+});
+
+dropZone.addEventListener('dragleave', function() {
+    dropZone.classList.remove('dragover');
+});
+
+dropZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    if (e.dataTransfer.files.length > 0) {
+        handleFile(e.dataTransfer.files[0]);
+    }
+});
+
+// Remove image
+removeBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    clearImage();
+});
+
+function handleFile(file) {
+    if (!file.type.startsWith('image/')) {
+        showStatus('❌ Please select an image file!', 'error');
+        return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+        showStatus('❌ Image size must be less than 10MB!', 'error');
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        cropImageData = e.target.result;
+        openCropModal(e.target.result);
+    };
+    reader.readAsDataURL(file);
+}
+
+// ===== CROP SYSTEM =====
+const cropModal = document.getElementById('cropModal');
+const cropImage = document.getElementById('cropImage');
+const cropContainer = document.getElementById('cropContainer');
+const cropRect = document.getElementById('cropRectangle');
+
+let isDragging = false;
+let isResizing = false;
+let resizeDir = null;
+let startX = 0,
+    startY = 0;
+let rect = { x: 10, y: 10, w: 80, h: 80 };
+let containerWidth = 1,
+    containerHeight = 1;
+
+function openCropModal(imageSrc) {
+    cropImage.src = imageSrc;
+    currentRotation = 0;
+    cropModal.classList.add('show');
+    cropImage.style.transform = 'rotate(0deg)';
+    cropRect.style.display = 'none';
+    // Reset rect after image loads
+    cropImage.onload = function() {
+        const containerRect = cropContainer.getBoundingClientRect();
+        containerWidth = containerRect.width;
+        containerHeight = containerRect.height;
+        rect = { x: 10, y: 10, w: 80, h: 80 };
+        updateCropRect();
+    };
+    if (cropImage.complete) {
+        cropImage.onload();
+    }
+}
+
+function closeCropModal() {
+    cropModal.classList.remove('show');
+    cropImage.src = '';
+    cropImageData = null;
+    fileInput.value = '';
+    cropRect.style.display = 'none';
+}
+
+function rotateImage() {
+    currentRotation = (currentRotation + 90) % 360;
+    cropImage.style.transform = 'rotate(' + currentRotation + 'deg)';
+}
+
+function updateCropRect() {
+    const container = cropContainer.getBoundingClientRect();
+    const imgRect = cropImage.getBoundingClientRect();
+    const scaleX = imgRect.width / containerWidth;
+    const scaleY = imgRect.height / containerHeight;
+    const offsetX = (imgRect.left - container.left);
+    const offsetY = (imgRect.top - container.top);
+
+    cropRect.style.display = 'block';
+    cropRect.style.left = (rect.x * scaleX + offsetX / container.width * 100) + '%';
+    cropRect.style.top = (rect.y * scaleY + offsetY / container.height * 100) + '%';
+    cropRect.style.width = (rect.w * scaleX) + '%';
+    cropRect.style.height = (rect.h * scaleY) + '%';
+}
+
+// Mouse events for crop
+cropContainer.addEventListener('mousedown', function(e) {
+    var target = e.target;
+    if (target.classList.contains('resize-handle')) {
+        isResizing = true;
+        resizeDir = target.dataset.dir;
+        startX = e.clientX;
+        startY = e.clientY;
+        e.preventDefault();
+        return;
+    }
+    if (target === cropContainer || target === cropImage || target === cropRect) {
+        isDragging = true;
+        var containerRect = cropContainer.getBoundingClientRect();
+        startX = e.clientX - (containerRect.left + (rect.x / 100) * containerRect.width);
+        startY = e.clientY - (containerRect.top + (rect.y / 100) * containerRect.height);
+        e.preventDefault();
+    }
+});
+
+document.addEventListener('mousemove', function(e) {
+    if (!isDragging && !isResizing) return;
+    var containerRect = cropContainer.getBoundingClientRect();
+    var percentX = (e.clientX - containerRect.left) / containerRect.width * 100;
+    var percentY = (e.clientY - containerRect.top) / containerRect.height * 100;
+
+    if (isDragging) {
+        rect.x = Math.max(0, Math.min(100 - rect.w, percentX - (rect.w * startX / (containerRect.width))));
+        rect.y = Math.max(0, Math.min(100 - rect.h, percentY - (rect.h * startY / (containerRect.height))));
+        updateCropRect();
+    }
+    if (isResizing) {
+        var dx = (e.clientX - startX) / containerRect.width * 100;
+        var dy = (e.clientY - startY) / containerRect.height * 100;
+        var minSize = 5;
+        var newX = rect.x,
+            newY = rect.y,
+            newW = rect.w,
+            newH = rect.h;
+        if (resizeDir.indexOf('e') !== -1) { newW = Math.max(minSize, rect.w + dx); }
+        if (resizeDir.indexOf('w') !== -1) { newW = Math.max(minSize, rect.w - dx);
+            newX = rect.x + rect.w - newW; }
+        if (resizeDir.indexOf('s') !== -1) { newH = Math.max(minSize, rect.h + dy); }
+        if (resizeDir.indexOf('n') !== -1) { newH = Math.max(minSize, rect.h - dy);
+            newY = rect.y + rect.h - newH; }
+        if (newX + newW > 100) { newW = 100 - newX; }
+        if (newY + newH > 100) { newH = 100 - newY; }
+        if (newW < minSize) { newW = minSize; }
+        if (newH < minSize) { newH = minSize; }
+        rect = { x: Math.max(0, newX), y: Math.max(0, newY), w: newW, h: newH };
+        startX = e.clientX;
+        startY = e.clientY;
+        updateCropRect();
+    }
+});
+
+document.addEventListener('mouseup', function() {
+    isDragging = false;
+    isResizing = false;
+    resizeDir = null;
+});
+
+// Touch support
+cropContainer.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    var touch = e.touches[0];
+    var target = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (target && target.classList.contains('resize-handle')) {
+        isResizing = true;
+        resizeDir = target.dataset.dir;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        return;
+    }
+    isDragging = true;
+    var containerRect = cropContainer.getBoundingClientRect();
+    startX = touch.clientX - (containerRect.left + (rect.x / 100) * containerRect.width);
+    startY = touch.clientY - (containerRect.top + (rect.y / 100) * containerRect.height);
+}, { passive: false });
+
+document.addEventListener('touchmove', function(e) {
+    if (!isDragging && !isResizing) return;
+    e.preventDefault();
+    var touch = e.touches[0];
+    var containerRect = cropContainer.getBoundingClientRect();
+    var percentX = (touch.clientX - containerRect.left) / containerRect.width * 100;
+    var percentY = (touch.clientY - containerRect.top) / containerRect.height * 100;
+
+    if (isDragging) {
+        rect.x = Math.max(0, Math.min(100 - rect.w, percentX - (rect.w * startX / (containerRect.width))));
+        rect.y = Math.max(0, Math.min(100 - rect.h, percentY - (rect.h * startY / (containerRect.height))));
+        updateCropRect();
+    }
+    if (isResizing) {
+        var dx = (touch.clientX - startX) / containerRect.width * 100;
+        var dy = (touch.clientY - startY) / containerRect.height * 100;
+        var minSize = 5;
+        var newX = rect.x,
+            newY = rect.y,
+            newW = rect.w,
+            newH = rect.h;
+        if (resizeDir.indexOf('e') !== -1) { newW = Math.max(minSize, rect.w + dx); }
+        if (resizeDir.indexOf('w') !== -1) { newW = Math.max(minSize, rect.w - dx);
+            newX = rect.x + rect.w - newW; }
+        if (resizeDir.indexOf('s') !== -1) { newH = Math.max(minSize, rect.h + dy); }
+        if (resizeDir.indexOf('n') !== -1) { newH = Math.max(minSize, rect.h - dy);
+            newY = rect.y + rect.h - newH; }
+        if (newX + newW > 100) { newW = 100 - newX; }
+        if (newY + newH > 100) { newH = 100 - newY; }
+        if (newW < minSize) { newW = minSize; }
+        if (newH < minSize) { newH = minSize; }
+        rect = { x: Math.max(0, newX), y: Math.max(0, newY), w: newW, h: newH };
+        startX = touch.clientX;
+        startY = touch.clientY;
+        updateCropRect();
+    }
+}, { passive: false });
+
+document.addEventListener('touchend', function() {
+    isDragging = false;
+    isResizing = false;
+    resizeDir = null;
+});
+
+function applyCrop() {
+    var img = new Image();
+    img.onload = function() {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        var imgWidth = img.naturalWidth;
+        var imgHeight = img.naturalHeight;
+        var cropX = (rect.x / 100) * imgWidth;
+        var cropY = (rect.y / 100) * imgHeight;
+        var cropW = (rect.w / 100) * imgWidth;
+        var cropH = (rect.h / 100) * imgHeight;
+
+        if (currentRotation === 90 || currentRotation === 270) {
+            canvas.width = cropH;
+            canvas.height = cropW;
+        } else {
+            canvas.width = cropW;
+            canvas.height = cropH;
+        }
+        ctx.save();
+        if (currentRotation === 90) {
+            ctx.translate(cropH, 0);
+            ctx.rotate(Math.PI / 2);
+            ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+        } else if (currentRotation === 180) {
+            ctx.translate(cropW, cropH);
+            ctx.rotate(Math.PI);
+            ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+        } else if (currentRotation === 270) {
+            ctx.translate(0, cropW);
+            ctx.rotate(-Math.PI / 2);
+            ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+        } else {
+            ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+        }
+        ctx.restore();
+        var croppedDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+        uploadCroppedImage(croppedDataUrl);
+    };
+    img.src = cropImageData;
+    closeCropModal();
+}
+
+function uploadCroppedImage(dataUrl) {
+    isUploading = true;
+    dropZone.classList.add('uploading');
+    dropZone.classList.remove('has-image');
+    uploadBar.style.width = '0%';
+    var progress = 0;
+    var interval = setInterval(function() {
+        progress += 5;
+        if (progress <= 90) {
+            uploadBar.style.width = progress + '%';
+        }
+    }, 50);
+    setTimeout(function() {
+        uploadBar.style.width = '100%';
+        setTimeout(function() {
+            clearInterval(interval);
+            dropZone.classList.remove('uploading');
+            dropZone.classList.add('has-image');
+            isUploading = false;
+            previewImage.src = dataUrl;
+            previewImage.style.display = 'block';
+            fileName.textContent = 'Cropped Image';
+            uploadedImageUrl = dataUrl;
+            document.getElementById('profilePicUrl').textContent = 'cropped_image';
+            showStatus('✅ Image cropped & uploaded successfully!', 'success');
+        }, 300);
+    }, 1000);
+}
+
+function clearImage() {
+    previewImage.style.display = 'none';
+    previewImage.src = '';
+    fileName.textContent = '';
+    dropZone.classList.remove('has-image');
+    uploadedImageUrl = null;
+    document.getElementById('profilePicUrl').textContent = '';
+    uploadBar.style.width = '0%';
+    fileInput.value = '';
+    cropImageData = null;
+}
+
+function setImageFromUrl(url) {
+    if (url && url.trim() !== '') {
+        previewImage.src = url;
+        previewImage.style.display = 'block';
+        dropZone.classList.add('has-image');
+        uploadedImageUrl = url;
+        fileName.textContent = 'Image from URL';
+        document.getElementById('profilePicUrl').textContent = 'url';
+    }
+}
+
+// ===== END DRAG & DROP =====
+
+// ===== EYE BUTTON =====
+document.getElementById('eyeIcon').addEventListener('click', function() {
+    var passInput = document.getElementById('logPass');
+    if (passInput.type === 'password') {
+        passInput.type = 'text';
+        this.classList.remove('fa-eye');
+        this.classList.add('fa-eye-slash');
+    } else {
+        passInput.type = 'password';
+        this.classList.remove('fa-eye-slash');
+        this.classList.add('fa-eye');
+    }
+});
+
+// Enter key press for login
+document.getElementById('logPass').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') handleLogin();
+});
+document.getElementById('logEmail').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') handleLogin();
+});
+
+function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function validateLoginForm(email, pass) {
+    var valid = true;
+    var emailError = document.getElementById('emailError');
+    var logEmail = document.getElementById('logEmail');
+    if (!email || email.trim() === '') {
+        emailError.textContent = '⚠️ Email address is required!';
+        emailError.classList.add('show');
+        logEmail.classList.add('error');
+        valid = false;
+    } else if (!validateEmail(email)) {
+        emailError.textContent = '⚠️ Please enter a valid email address!';
+        emailError.classList.add('show');
+        logEmail.classList.add('error');
+        valid = false;
+    } else {
+        emailError.classList.remove('show');
+        logEmail.classList.remove('error');
+    }
+    var passError = document.getElementById('passError');
+    var logPass = document.getElementById('logPass');
+    if (!pass || pass.trim() === '') {
+        passError.textContent = '⚠️ Password is required!';
+        passError.classList.add('show');
+        logPass.classList.add('error');
+        valid = false;
+    } else if (pass.length < 6) {
+        passError.textContent = '⚠️ Password must be at least 6 characters!';
+        passError.classList.add('show');
+        logPass.classList.add('error');
+        valid = false;
+    } else {
+        passError.classList.remove('show');
+        logPass.classList.remove('error');
+    }
+    return valid;
+}
+
+document.getElementById('logEmail').addEventListener('focus', function() {
+    this.classList.remove('error');
+    document.getElementById('emailError').classList.remove('show');
+});
+document.getElementById('logPass').addEventListener('focus', function() {
+    this.classList.remove('error');
+    document.getElementById('passError').classList.remove('show');
+});
+
+function showStatus(msg, type) {
+    var el = document.getElementById('fStatus');
+    el.innerText = msg;
+    el.className = 'status status-' + type;
+    setTimeout(function() {
+        el.className = 'status';
+        el.innerText = '';
+    }, 4000);
+}
+
+function clearAllFields() {
+    document.getElementById('f1').value = 'Your_Name';
+    clearImage();
+    document.getElementById('f3').value = 'Your_Name';
+    document.getElementById('f4').value = 'Your_Title';
+    document.getElementById('f5').value = '';
+    document.getElementById('f6').value = '';
+    document.getElementById('f7').value = '';
+    document.getElementById('f8').value = '';
+    document.getElementById('f9').value = '';
+    document.getElementById('f10').value = '';
+    document.getElementById('f11').value = '';
+    document.getElementById('f12').value = '';
+    document.getElementById('f13').value = '';
+    document.getElementById('f14').value = '';
+    document.getElementById('f15').value = 'Copyright © 2026 MADE BY';
+    document.getElementById('f16').value = 'Your_Name';
+    document.getElementById('f17').value = 'All Rights Reserved.';
+    showStatus('✅ All fields have been cleared to default!', 'success');
+}
+
+function startInactivityTimer() {
+    resetInactivityTimer();
+    var lastActivity = Date.now();
+    var updateActivity = function() { lastActivity = Date.now(); };
+    var events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click', 'input', 'focus'];
+    events.forEach(function(evt) {
+        document.addEventListener(evt, updateActivity);
+    });
+    activityCheckInterval = setInterval(function() {
+        if ((Date.now() - lastActivity) / 1000 >= AUTO_LOGOUT_TIME) {
+            clearInterval(activityCheckInterval);
+            events.forEach(function(evt) {
+                document.removeEventListener(evt, updateActivity);
+            });
+            autoLogout();
+        }
+    }, 1000);
+}
+
+function resetInactivityTimer() {
+    if (activityCheckInterval) {
+        clearInterval(activityCheckInterval);
+        activityCheckInterval = null;
+    }
+}
+
+function autoLogout() {
+    resetInactivityTimer();
+    var statusEl = document.getElementById('fStatus');
+    if (statusEl && !document.getElementById('formCard').classList.contains('hidden')) {
+        statusEl.innerText = '⏰ inactivity এর কারণে অটো লগআউট হয়েছে!';
+        statusEl.className = "status status-warning";
+    }
+    setTimeout(function() { handleLogout(); }, 2000);
+}
+
+function startTabChangeDetection() {
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+}
+
+function stopTabChangeDetection() {
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
+    if (tabChangeTimer) {
+        clearTimeout(tabChangeTimer);
+        tabChangeTimer = null;
+    }
+    tabHiddenTime = null;
+}
+
+function handleVisibilityChange() {
+    if (document.hidden) {
+        tabHiddenTime = Date.now();
+        tabChangeTimer = setTimeout(function() { tabChangeLogout(); }, TAB_CHANGE_LOGOUT_TIME * 1000);
+    } else {
+        if (tabHiddenTime) {
+            var elapsed = (Date.now() - tabHiddenTime) / 1000;
+            if (elapsed >= TAB_CHANGE_LOGOUT_TIME) {
+                return;
+            } else {
+                if (tabChangeTimer) {
+                    clearTimeout(tabChangeTimer);
+                    tabChangeTimer = null;
+                }
+                tabHiddenTime = null;
+            }
+        }
+    }
+}
+
+function tabChangeLogout() {
+    stopTabChangeDetection();
+    var statusEl = document.getElementById('fStatus');
+    if (statusEl && !document.getElementById('formCard').classList.contains('hidden')) {
+        statusEl.innerText = '⏰ 1 মিনিট অন্য ট্যাবে থাকার কারণে অটো লগআউট হয়েছে!';
+        statusEl.className = "status status-warning";
+    }
+    setTimeout(function() { handleLogout(); }, 2000);
+}
+
+async function handleLogin() {
+    var email = document.getElementById('logEmail').value.trim();
+    var pass = document.getElementById('logPass').value;
+    var statusEl = document.getElementById('logStatus');
+    var btn = document.getElementById('logBtn');
+
+    if (!validateLoginForm(email, pass)) {
+        statusEl.innerText = "❌ Please fill in all required fields correctly!";
+        statusEl.className = "status status-error";
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Checking...';
+    statusEl.className = "status";
+    statusEl.innerText = "";
+
+    try {
+        var result = await sb.auth.signInWithPassword({ email: email, password: pass });
+        var data = result.data;
+        var error = result.error;
+
+        if (error) {
+            var msg = error.message;
+            if (error.message.includes('Invalid login credentials')) {
+                msg = '❌ Incorrect email or password!';
+            } else if (error.message.includes('Email not confirmed')) {
+                msg = '❌ Email not verified. Please check your inbox!';
+            } else if (error.message.includes('rate limit')) {
+                msg = '⚠️ Too many attempts. Please try again later!';
+            }
+            statusEl.innerText = msg;
+            statusEl.className = "status status-error";
+            btn.disabled = false;
+            btn.innerHTML = 'LOGIN';
+            return;
+        }
+
+        if (!data || !data.user) {
+            statusEl.innerText = "❌ Login failed! Please try again.";
+            statusEl.className = "status status-error";
+            btn.disabled = false;
+            btn.innerHTML = 'LOGIN';
+            return;
+        }
+
+        var tableName = getUserTableName(data.user.email);
+        if (!tableName) {
+            statusEl.innerHTML = "THIS USER IS CURRENTLY UNDER CONSTRUCTION,<br>PLEASE TRY AGAIN LATER AND<br>CONTACT THE ADMIN.";
+            statusEl.className = "status status-warning";
+            await sb.auth.signOut();
+            btn.disabled = false;
+            btn.innerHTML = 'LOGIN';
+            return;
+        }
+
+        CURRENT_USER_TABLE = tableName;
+        CURRENT_USER_EMAIL = data.user.email;
+        statusEl.className = "status";
+        statusEl.innerText = "";
+
+        document.getElementById('loginCard').classList.add('hidden');
+        document.getElementById('formCard').classList.remove('hidden');
+        document.getElementById('displayEmail').textContent = CURRENT_USER_EMAIL;
+        document.getElementById('logEmail').value = '';
+        document.getElementById('logPass').value = '';
+        document.getElementById('emailError').classList.remove('show');
+        document.getElementById('passError').classList.remove('show');
+        document.getElementById('logEmail').classList.remove('error');
+        document.getElementById('logPass').classList.remove('error');
+
+        startInactivityTimer();
+        startTabChangeDetection();
+        await loadExistingData();
+
+    } catch (err) {
+        console.error('Login error:', err);
+        statusEl.innerText = "❌ Network error! Please check your connection.";
+        statusEl.className = "status status-error";
+        btn.disabled = false;
+        btn.innerHTML = 'LOGIN';
+    }
+}
+
+async function loadExistingData() {
+    try {
+        var result = await sb.from(CURRENT_USER_TABLE).select('*').order('created_at', { ascending: false }).limit(1).maybeSingle();
+        var data = result.data;
+        var error = result.error;
+        if (error) {
+            console.error('Data load error:', error);
+            return;
+        }
+        if (data) {
+            document.getElementById('f1').value = data.website_title || '';
+            if (data.profile_pic) {
+                setImageFromUrl(data.profile_pic);
+            }
+            document.getElementById('f3').value = data.name || '';
+            document.getElementById('f4').value = data.title || '';
+            document.getElementById('f5').value = extractUsername(data.facebook, 'facebook.com/');
+            document.getElementById('f6').value = extractUsername(data.fb_page, 'facebook.com/');
+            document.getElementById('f7').value = extractUsername(data.instagram, 'instagram.com/');
+            document.getElementById('f9').value = extractUsername(data.tiktok, 'tiktok.com/@');
+            document.getElementById('f10').value = extractUsername(data.telegram, 't.me/');
+            document.getElementById('f11').value = extractUsername(data.twitter, 'x.com/');
+            document.getElementById('f8').value = extractWhatsApp(data.whatsapp);
+            document.getElementById('f12').value = data.phone || '';
+            document.getElementById('f13').value = data.about || '';
+            document.getElementById('f14').value = data.website || '';
+            document.getElementById('f15').value = data.copyright_line || '';
+            document.getElementById('f16').value = data.made_by || '';
+            document.getElementById('f17').value = data.all_rights || '';
+            updatePageFavicon(data.favicon);
+        }
+    } catch (err) {
+        console.error('Error loading data:', err);
+    }
+}
+
+function extractUsername(url, domain) {
+    if (!url) return '';
+    if (url.includes(domain)) {
+        return url.split(domain)[1].replace(/\/$/, '');
+    }
+    return url;
+}
+
+function extractWhatsApp(url) {
+    if (!url) return '';
+    var match = url.match(/wa\.me\/(\+?\d+)/);
+    return match ? match[1] : url;
+}
+
+function updatePageFavicon(url) {
+    var favicon = document.getElementById('dynamicFavicon');
+    if (url && url.trim() !== '') {
+        favicon.href = url;
+    } else {
+        favicon.href = 'YOUR_FAVICON_LINK';
+    }
+}
+
+async function updateData() {
+    var btn = document.getElementById('upBtn');
+    var statusEl = document.getElementById('fStatus');
+    var whatsappVal = document.getElementById('f8').value.trim();
+    var fbVal = document.getElementById('f5').value.trim();
+    var fbPageVal = document.getElementById('f6').value.trim();
+    var instaVal = document.getElementById('f7').value.trim();
+    var tiktokVal = document.getElementById('f9').value.trim();
+    var telegramVal = document.getElementById('f10').value.trim();
+    var twitterVal = document.getElementById('f11').value.trim();
+
+    var profilePicValue = '';
+    if (uploadedImageUrl) {
+        profilePicValue = uploadedImageUrl;
+    }
+
+    var updateDataObj = {
+        website_title: document.getElementById('f1').value.trim(),
+        profile_pic: profilePicValue,
+        name: document.getElementById('f3').value.trim(),
+        title: document.getElementById('f4').value.trim(),
+        facebook: fbVal ? 'https://www.facebook.com/' + fbVal : '',
+        fb_page: fbPageVal ? 'https://www.facebook.com/' + fbPageVal : '',
+        instagram: instaVal ? 'https://www.instagram.com/' + instaVal : '',
+        whatsapp: whatsappVal ? 'https://wa.me/' + whatsappVal.replace(/\D/g, '') : '',
+        tiktok: tiktokVal ? 'https://www.tiktok.com/@' + tiktokVal : '',
+        telegram: telegramVal ? 'https://t.me/' + telegramVal : '',
+        twitter: twitterVal ? 'https://x.com/' + twitterVal : '',
+        phone: document.getElementById('f12').value.trim(),
+        about: document.getElementById('f13').value.trim(),
+        website: document.getElementById('f14').value.trim(),
+        copyright_line: document.getElementById('f15').value.trim(),
+        made_by: document.getElementById('f16').value.trim(),
+        all_rights: document.getElementById('f17').value.trim()
+    };
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>';
+
+    try {
+        var selectResult = await sb.from(CURRENT_USER_TABLE).select('id').order('created_at', { ascending: false }).limit(1).maybeSingle();
+        var existingData = selectResult.data;
+        var selectError = selectResult.error;
+        if (selectError) throw selectError;
+
+        var updateResult;
+        if (existingData && existingData.id) {
+            updateResult = await sb.from(CURRENT_USER_TABLE).update(updateDataObj).eq('id', existingData.id);
+        } else {
+            updateResult = await sb.from(CURRENT_USER_TABLE).insert([updateDataObj]);
+        }
+        if (updateResult.error) throw updateResult.error;
+
+        statusEl.innerText = "✅ Success: Data Updated Successfully!";
+        statusEl.className = "status status-success";
+        setTimeout(function() {
+            statusEl.className = "status";
+            statusEl.innerText = "";
+        }, 4000);
+    } catch (err) {
+        console.error('Update error:', err);
+        statusEl.innerText = "❌ Error: " + (err.message || 'Something went wrong');
+        statusEl.className = "status status-error";
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'UPDATE';
+    }
+}
+
+async function handleLogout() {
+    resetInactivityTimer();
+    stopTabChangeDetection();
+    await sb.auth.signOut();
+    CURRENT_USER_TABLE = null;
+    CURRENT_USER_EMAIL = null;
+    document.getElementById('formCard').classList.add('hidden');
+    document.getElementById('loginCard').classList.remove('hidden');
+    document.querySelectorAll('#formCard input, #formCard textarea').forEach(function(el) { el.value = ''; });
+    document.getElementById('logEmail').value = '';
+    document.getElementById('logPass').value = '';
+    document.getElementById('logStatus').className = 'status';
+    document.getElementById('logStatus').innerText = '';
+    document.getElementById('emailError').classList.remove('show');
+    document.getElementById('passError').classList.remove('show');
+    document.getElementById('logEmail').classList.remove('error');
+    document.getElementById('logPass').classList.remove('error');
+    var btn = document.getElementById('logBtn');
+    btn.disabled = false;
+    btn.innerHTML = 'LOGIN';
+    var statusEl = document.getElementById('fStatus');
+    if (statusEl) {
+        statusEl.className = 'status';
+        statusEl.innerText = '';
+    }
+    clearImage();
+    updatePageFavicon('');
+}
+
+function init() {
+    showLoginPage();
+}
+
+function showLoginPage() {
+    document.getElementById('formCard').classList.add('hidden');
+    document.getElementById('loginCard').classList.remove('hidden');
+    resetInactivityTimer();
+    stopTabChangeDetection();
+    CURRENT_USER_TABLE = null;
+    CURRENT_USER_EMAIL = null;
+    var btn = document.getElementById('logBtn');
+    if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = 'LOGIN';
+    }
+}
+
+init();
+</script>
+</body>
+</html>

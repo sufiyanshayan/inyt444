@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Your_Name</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Noto Serif Bengali", serif;
+  background: #f7f7f7;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  padding: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Profile Picture */
+.profile img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  object-fit: cover;
+  margin-bottom: 12px;
+  box-shadow: 0 0 0 4px #fff, 0 0 14px rgba(0,0,0,0.35);
+}
+
+/* Name */
+.name {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* Title */
+.title {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 14px;
+}
+
+/* Buttons */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 12px;
+  text-decoration: none;
+  background: #ffffff;
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
+}
+
+.btn img {
+  width: 16px;
+  height: 16px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* Disabled Button Style */
+.btn.disabled {
+  background: #e0e0e0;
+  color: #999;
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.btn.disabled img {
+  opacity: 0.4;
+}
+
+.btn.disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Footer */
+.footer {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #555;
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+  <div class="container" id="contentContainer">
+    <!-- Default content immediately visible -->
+    <div class="profile">
+      <img src="Your_Profile_Picture_Link" alt="Profile Picture" id="profileImg">
+    </div>
+    <div class="name" id="displayName">Your_Name</div>
+    <div class="title" id="displayTitle">Your_Title</div>
+
+    <span class="btn disabled" id="btn-facebook"><img src="https://cdn.simpleicons.org/facebook/000000" alt="Facebook Logo">Facebook</span>
+    <span class="btn disabled" id="btn-fbpage"><img src="https://cdn.simpleicons.org/facebook/000000" alt="Facebook Logo">Facebook Page</span>
+    <span class="btn disabled" id="btn-instagram"><img src="https://cdn.simpleicons.org/instagram/000000" alt="Instagram Logo">Instagram</span>
+    <span class="btn disabled" id="btn-whatsapp"><img src="https://cdn.simpleicons.org/whatsapp/000000" alt="WhatsApp Logo">WhatsApp</span>
+    <span class="btn disabled" id="btn-tiktok"><img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok Logo">TikTok</span>
+    <span class="btn disabled" id="btn-telegram"><img src="https://cdn.simpleicons.org/telegram/000000" alt="Telegram Logo">Telegram</span>
+    <span class="btn disabled" id="btn-twitter"><img src="https://cdn.simpleicons.org/x/000000" alt="Twitter (X) Logo">Twitter (X)</span>
+    <span class="btn disabled" id="btn-phone"><img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" alt="Phone Logo">Call Me</span>
+    <span class="btn disabled" id="btn-about"><img src="https://cdn.simpleicons.org/aboutdotme/000000" alt="About Logo">About Me</span>
+    <span class="btn disabled" id="btn-website"><img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Website Logo">My Website</span>
+  </div>
+
+  <div class="footer" id="footerContent">
+    Copyright © 2026 MADE BY <br> "Your_Name". <br> All Rights Reserved.
+  </div>
+</div>
+
+<!-- Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+// ==================== SUPABASE CONFIGURATION ====================
+const SUPABASE_PROJECT_URL = "https://ovzyjnoqnbpwwlqtkwit.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92enlqbm9xbmJwd3dscXRrd2l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MzA2MDIsImV4cCI6MjA5NjUwNjYwMn0.UgGC9Bvjeud6v29CjUVrnfRWBuf7jDTxmCOW0u62NRw";
+const SUPABASE_TABLE_NAME = "linkinbio_sufiyan";
+// ================================================================
+
+const sb = supabase.createClient(SUPABASE_PROJECT_URL, SUPABASE_ANON_KEY);
+
+// Real-time subscription
+function setupRealtimeSubscription() {
+    sb
+        .channel('linkinbi0-changes')
+        .on(
+            'postgres_changes',
+            { event: '*', schema: 'public', table: SUPABASE_TABLE_NAME },
+            (payload) => {
+                if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
+                    updateUI(payload.new);
+                }
+            }
+        )
+        .subscribe();
+}
+
+// Fetch latest data from Supabase
+async function fetchLatestData() {
+    try {
+        const { data, error } = await sb
+            .from(SUPABASE_TABLE_NAME)
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single();
+
+        if (error) return null;
+        return data;
+    } catch (err) {
+        return null;
+    }
+}
+
+// Update UI silently without any loading
+function updateUI(data) {
+    if (!data) return;
+
+    // Update page title
+    if (data.website_title) {
+        document.getElementById('pageTitle').textContent = data.website_title;
+    }
+
+    // Update profile
+    if (data.profile_pic) {
+        document.getElementById('profileImg').src = data.profile_pic;
+    }
+    if (data.name) {
+        document.getElementById('displayName').textContent = data.name;
+    }
+    if (data.title) {
+        document.getElementById('displayTitle').textContent = data.title;
+    }
+
+    // Update Facebook button
+    updateButton('btn-facebook', data.facebook, 'https://cdn.simpleicons.org/facebook/000000', 'Facebook');
+    
+    // Update Facebook Page button
+    updateButton('btn-fbpage', data.fb_page, 'https://cdn.simpleicons.org/facebook/000000', 'Facebook Page');
+    
+    // Update Instagram button
+    updateButton('btn-instagram', data.instagram, 'https://cdn.simpleicons.org/instagram/000000', 'Instagram');
+    
+    // Update WhatsApp button
+    updateButton('btn-whatsapp', data.whatsapp, 'https://cdn.simpleicons.org/whatsapp/000000', 'WhatsApp');
+    
+    // Update TikTok button
+    updateButton('btn-tiktok', data.tiktok, 'https://cdn.simpleicons.org/tiktok/000000', 'TikTok');
+    
+    // Update Telegram button
+    updateButton('btn-telegram', data.telegram, 'https://cdn.simpleicons.org/telegram/000000', 'Telegram');
+    
+    // Update Twitter button
+    updateButton('btn-twitter', data.twitter, 'https://cdn.simpleicons.org/x/000000', 'Twitter (X)');
+    
+    // Update Phone button
+    if (data.phone && data.phone.trim() !== '') {
+        const phoneBtn = document.getElementById('btn-phone');
+        phoneBtn.outerHTML = `<a class="btn" id="btn-phone" href="tel:${data.phone}"><img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" alt="Phone Logo">Call Me</a>`;
+    }
+    
+    // Update About button
+    if (data.about && data.about.trim() !== '') {
+        const aboutBtn = document.getElementById('btn-about');
+        aboutBtn.outerHTML = `<a class="btn" id="btn-about" href="#" onclick="alert('${data.about.replace(/'/g, "\\'").replace(/"/g, '"')}'); return false;"><img src="https://cdn.simpleicons.org/aboutdotme/000000" alt="About Logo">About Me</a>`;
+    }
+    
+    // Update Website button
+    if (data.website && data.website.trim() !== '') {
+        const webBtn = document.getElementById('btn-website');
+        webBtn.outerHTML = `<a class="btn" id="btn-website" href="${data.website}" target="_blank" rel="noopener noreferrer"><img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Website Logo">My Website</a>`;
+    }
+
+    // Update Footer
+    const copyrightLine = data.copyright_line || 'Copyright © 2026 MADE BY';
+    const madeBy = data.made_by || 'Your_Name';
+    const allRights = data.all_rights || 'All Rights Reserved.';
+    
+    document.getElementById('footerContent').innerHTML = `
+        ${copyrightLine} <br> "${madeBy}". <br> ${allRights}
+    `;
+}
+
+// Helper function to update buttons
+function updateButton(btnId, url, icon, label) {
+    const btn = document.getElementById(btnId);
+    if (!btn) return;
+    
+    if (url && url.trim() !== '') {
+        btn.outerHTML = `<a class="btn" id="${btnId}" href="${url}" target="_blank" rel="noopener noreferrer"><img src="${icon}" alt="${label} Logo">${label}</a>`;
+    }
+}
+
+// Initialize - ফাস্ট লোডিং, কোনো delay নেই
+async function init() {
+    // Setup real-time subscription
+    setupRealtimeSubscription();
+
+    // Background এ data fetch করে silently update করবে
+    const latestData = await fetchLatestData();
+    if (latestData) {
+        updateUI(latestData);
+    }
+    // ডাটা না থাকলেও কিছু হবে না, default content আগে থেকেই visible
+}
+
+// Start the app immediately
+init();
+</script>
+
+</body>
+</html>

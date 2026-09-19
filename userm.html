@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>USER MANAGEMENT । INYT444</title>
+    
+    <!-- Favicon - Direct Image Link -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/7ZsCGC17/451236214-995219779013572-5086974055196939289-n-(1).jpg">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #f7f7f7;
+            color: #000;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        /* ---------- Login Screen ---------- */
+        #loginScreen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .login-card {
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 2.5rem 2rem;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .login-card h2 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            color: #000;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+            color: #000;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        .input-group input:focus {
+            border-color: #000;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: 0.2s;
+            z-index: 10;
+            background: transparent;
+            border: none;
+            padding: 8px;
+        }
+
+        .toggle-password:hover {
+            color: #000;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 12px;
+            background: #000;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status {
+            margin-top: 1rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            min-height: 2.4rem;
+        }
+
+        .status-success {
+            background: rgba(0, 200, 100, 0.1);
+            color: #008a4a;
+            border: 1px solid rgba(0, 200, 100, 0.2);
+        }
+
+        .status-error {
+            background: rgba(255, 68, 68, 0.08);
+            color: #cc3333;
+            border: 1px solid rgba(255, 68, 68, 0.15);
+        }
+
+        .status-loading {
+            background: rgba(0, 100, 200, 0.08);
+            color: #0055aa;
+            border: 1px solid rgba(0, 100, 200, 0.15);
+        }
+
+        /* ---------- Admin / User Management Screen ---------- */
+        #adminScreen {
+            display: none;
+        }
+
+        .container {
+            background: #fff;
+            max-width: 1000px;
+            width: 100%;
+            border-radius: 20px;
+            padding: 16px 18px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eef2f7;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .header h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0b1e3a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header h1 i {
+            color: #2563eb;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            background: #e8f0fe;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: .7rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #1a56db;
+        }
+
+        .status-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot-green {
+            background: #22c55e;
+            animation: pulse 2s infinite;
+        }
+
+        .dot-red {
+            background: #ef4444;
+            animation: pulse 1s infinite;
+        }
+
+        .dot-yellow {
+            background: #eab308;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .3; }
+        }
+
+        .logout-btn {
+            background: #f1f5f9;
+            color: #1e293b;
+            border: 0;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: .75rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logout-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .alert {
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: none;
+            font-size: .85rem;
+            font-weight: 500;
+            animation: slideDown .3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+            display: block;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+            display: block;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border-left: 4px solid #3b82f6;
+            display: block;
+        }
+
+        .form-grid {
+            background: #f8fafc;
+            padding: 14px 16px;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            border: 1px solid #e9edf4;
+        }
+
+        .form-row {
+            margin-bottom: 10px;
+        }
+
+        .form-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-row label {
+            display: block;
+            font-weight: 600;
+            color: #1e293b;
+            font-size: .8rem;
+            margin-bottom: 4px;
+        }
+
+        .form-row label i {
+            color: #64748b;
+            margin-right: 6px;
+            width: 16px;
+        }
+
+        .form-row label .required {
+            color: #ef4444;
+            font-size: .7rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #d9e0e9;
+            border-radius: 12px;
+            font-size: .9rem;
+            background: #fff;
+            outline: 0;
+            transition: .2s;
+            -webkit-appearance: none;
+        }
+
+        .input-group input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+        }
+
+        .input-group input:invalid {
+            border-color: #ef4444;
+        }
+
+        .password-wrapper input {
+            padding-right: 44px;
+        }
+
+        .eye-btn {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: 0 0;
+            border: 0;
+            font-size: 1rem;
+            color: #64748b;
+            cursor: pointer;
+            padding: 8px 10px;
+            border-radius: 30px;
+            transition: .15s;
+        }
+
+        .eye-btn:active {
+            background: #e9edf4;
+        }
+
+        .password-strength-container {
+            margin-top: 6px;
+        }
+
+        .password-strength-bar {
+            height: 6px;
+            border-radius: 4px;
+            background: #e9edf4;
+            overflow: hidden;
+            transition: .3s;
+        }
+
+        .password-strength-bar .strength-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            transition: width .4s ease, background .4s ease;
+        }
+
+        .password-strength-text {
+            font-size: .7rem;
+            font-weight: 600;
+            margin-top: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .password-strength-text .strength-label {
+            color: #64748b;
+        }
+
+        .password-strength-text .strength-status {
+            font-weight: 700;
+        }
+
+        .password-strength-container.weak .strength-fill {
+            background: #ef4444 !important;
+            width: 33% !important;
+        }
+
+        .password-strength-container.weak .strength-status {
+            color: #ef4444 !important;
+        }
+
+        .password-strength-container.medium .strength-fill {
+            background: #eab308 !important;
+            width: 66% !important;
+        }
+
+        .password-strength-container.medium .strength-status {
+            color: #eab308 !important;
+        }
+
+        .password-strength-container.strong .strength-fill {
+            background: #2563eb !important;
+            width: 100% !important;
+        }
+
+        .password-strength-container.strong .strength-status {
+            color: #2563eb !important;
+        }
+
+        .default-password-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: .65rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            border: 0;
+            color: #fff;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: .95rem;
+            cursor: pointer;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 6px;
+            touch-action: manipulation;
+        }
+
+        .btn-primary:active {
+            transform: scale(.97);
+        }
+
+        .btn-primary:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-userlist {
+            background: #e9edf4;
+            border: 0;
+            color: #1e293b;
+            font-weight: 700;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: .85rem;
+            cursor: pointer;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-bottom: 16px;
+            touch-action: manipulation;
+        }
+
+        .btn-userlist:active {
+            transform: scale(.97);
+            background: #d1d9e6;
+        }
+
+        .btn-userlist i {
+            color: #2563eb;
+        }
+
+        .table-section {
+            margin-top: 4px;
+            display: none;
+        }
+
+        .table-section.active {
+            display: block;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .table-header h3 {
+            font-size: .95rem;
+            font-weight: 700;
+            color: #0b1e3a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .table-header h3 i {
+            color: #2563eb;
+        }
+
+        .count-badge {
+            background: #f1f5f9;
+            padding: 2px 14px;
+            border-radius: 40px;
+            font-size: .75rem;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid #eef2f7;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .8rem;
+            min-width: 600px;
+        }
+
+        thead {
+            background: #f1f5f9;
+        }
+
+        th {
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 700;
+            color: #1e293b;
+            border-bottom: 2px solid #d1d9e6;
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            white-space: nowrap;
+        }
+
+        th:nth-child(1) { width: 6%; }
+        th:nth-child(2) { width: 22%; }
+        th:nth-child(3) { width: 28%; }
+        th:nth-child(4) { width: 28%; }
+        th:nth-child(5) { width: 16%; }
+
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eef2f7;
+            vertical-align: middle;
+            word-break: break-word;
+        }
+
+        tr:hover td {
+            background: #fafbfc;
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .cell-id {
+            font-weight: 600;
+            color: #64748b;
+            font-size: .75rem;
+        }
+
+        .cell-name {
+            font-weight: 600;
+            color: #0b1e3a;
+        }
+
+        .cell-email {
+            color: #2563eb;
+        }
+
+        .cell-password {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .cell-password input {
+            border: 0;
+            background: #f1f5f9;
+            padding: 4px 12px;
+            border-radius: 30px;
+            width: 120px;
+            font-family: 'Courier New', monospace;
+            font-size: .75rem;
+            outline: 0;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .cell-password input:focus {
+            background: #e9edf4;
+        }
+
+        .eye-small {
+            background: 0 0;
+            border: 0;
+            color: #64748b;
+            cursor: pointer;
+            font-size: .8rem;
+            padding: 4px 6px;
+            border-radius: 30px;
+            transition: .15s;
+        }
+
+        .eye-small:active {
+            background: #e2e8f0;
+        }
+
+        .cell-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .btn-edit {
+            border: 0;
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: .7rem;
+            font-weight: 600;
+            cursor: pointer;
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: .15s;
+            background: #e9edf4;
+            color: #1e293b;
+        }
+
+        .btn-edit:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        .btn-edit i {
+            font-size: .65rem;
+        }
+
+        .btn-delete {
+            border: 0;
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: .7rem;
+            font-weight: 600;
+            cursor: pointer;
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: .15s;
+            background: #fecaca;
+            color: #991b1b;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+            color: #fff;
+        }
+
+        .btn-delete:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .btn-delete i {
+            font-size: .65rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 10px;
+            color: #94a3b8;
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 10px;
+            color: #cbd5e1;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2.5px solid #fff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        button, input, select {
+            touch-action: manipulation;
+        }
+
+        .container input {
+            font-size: 16px !important;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #fff;
+            padding: 24px 28px;
+            border-radius: 24px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            animation: fadeUp .2s ease;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-box h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0b1e3a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-box h3 i {
+            color: #2563eb;
+        }
+
+        .modal-field {
+            margin-bottom: 16px;
+        }
+
+        .modal-field label {
+            display: block;
+            font-weight: 600;
+            color: #334155;
+            font-size: .8rem;
+            margin-bottom: 5px;
+        }
+
+        .modal-field label i {
+            margin-right: 6px;
+            color: #64748b;
+        }
+
+        .modal-field .input-group input {
+            padding: 10px 14px;
+            font-size: .9rem;
+            border-radius: 12px;
+            border: 1.5px solid #d9e0e9;
+            width: 100%;
+            outline: 0;
+            background: #fff;
+        }
+
+        .modal-field .input-group input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+        }
+
+        .modal-field .help-text {
+            font-size: .65rem;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px;
+            border: 0;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: .9rem;
+            cursor: pointer;
+            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: .15s;
+        }
+
+        .modal-actions .btn-update {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        .modal-actions .btn-update:hover {
+            background: #1d4ed8;
+        }
+
+        .modal-actions .btn-update:active {
+            transform: scale(.97);
+        }
+
+        .modal-actions .btn-update:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        .modal-actions .btn-cancel {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .modal-actions .btn-cancel:hover {
+            background: #e2e8f0;
+        }
+
+        .modal-actions .btn-cancel:active {
+            transform: scale(.97);
+        }
+
+        .retry-btn {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 0;
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: .75rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 10px;
+            display: none;
+            width: 100%;
+        }
+
+        .retry-btn.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============ Login Screen ============ -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <h2>USER MANAGEMENT</h2>
+            <div class="input-group">
+                <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
+            </div>
+            <div class="input-group password-wrapper">
+                <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
+                <button type="button" class="toggle-password" id="togglePassIcon" aria-label="Show/Hide password">
+                    <i class="fa-regular fa-eye"></i>
+                </button>
+            </div>
+            <button class="login-btn" id="loginBtn">LOGIN</button>
+            <div id="loginStatus" class="status"></div>
+        </div>
+    </div>
+
+    <!-- ============ Admin / User Management Screen ============ -->
+    <div id="adminScreen">
+        <div class="container">
+            <div class="header">
+                <h1><i class="fas fa-database"></i> User Management</h1>
+                <div class="header-right">
+                    <div class="status-badge" id="b">
+                        <span class="dot dot-yellow" id="d"></span>
+                        <span id="t">Initializing...</span>
+                    </div>
+                    <button class="logout-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Log Out
+                    </button>
+                </div>
+            </div>
+            
+            <button id="r" class="retry-btn"><i class="fas fa-redo"></i> Retry</button>
+            <div id="a" class="alert"></div>
+            
+            <div class="form-grid">
+                <div class="form-row">
+                    <label><i class="fas fa-user"></i> Name <span class="required">(Optional)</span></label>
+                    <div class="input-group">
+                        <input type="text" id="n" placeholder="Full name" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label><i class="fas fa-envelope"></i> Email <span class="required">*</span></label>
+                    <div class="input-group">
+                        <input type="email" id="e" placeholder="email@example.com" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label><i class="fas fa-lock"></i> Password <span class="required">*</span></label>
+                    <div class="input-group">
+                        <div class="password-wrapper">
+                            <input type="password" id="p" placeholder="Enter password" required />
+                            <button type="button" class="eye-btn" id="ae">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="default-password-badge">
+                        <i class="fas fa-check-circle"></i> Password must be Medium+
+                    </div>
+                    <div class="password-strength-container" id="sc">
+                        <div class="password-strength-bar">
+                            <div class="strength-fill" id="sf"></div>
+                        </div>
+                        <div class="password-strength-text">
+                            <span class="strength-label">Strength</span>
+                            <span class="strength-status" id="ss">-</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary" id="add">
+                    <i class="fas fa-plus-circle"></i> Add User
+                </button>
+            </div>
+            
+            <button class="btn-userlist" id="ulb">
+                <i class="fas fa-list-ul"></i> User List
+            </button>
+            
+            <div class="table-section" id="uls">
+                <div class="table-header">
+                    <h3><i class="fas fa-table"></i> All Users</h3>
+                    <span class="count-badge" id="uc">0</span>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb">
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    <i class="fas fa-info-circle"></i> Open to load
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ Edit User Modal ============ -->
+    <div class="modal-overlay" id="em">
+        <div class="modal-box">
+            <h3><i class="fas fa-pen-fancy"></i> Edit User</h3>
+            <input type="hidden" id="eid" />
+            
+            <div class="modal-field">
+                <label><i class="fas fa-user"></i> Name</label>
+                <div class="input-group">
+                    <input type="text" id="en" placeholder="Full name" />
+                </div>
+            </div>
+            
+            <div class="modal-field">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <div class="input-group">
+                    <input type="email" id="ee" placeholder="Email" required />
+                </div>
+            </div>
+            
+            <div class="modal-field">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <div class="input-group">
+                    <div class="password-wrapper">
+                        <input type="password" id="ep" placeholder="New password (optional)" />
+                        <button type="button" class="eye-btn" id="ee2">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="password-strength-container" id="esc">
+                    <div class="password-strength-bar">
+                        <div class="strength-fill" id="esf"></div>
+                    </div>
+                    <div class="password-strength-text">
+                        <span class="strength-label">Strength</span>
+                        <span class="strength-status" id="ess">-</span>
+                    </div>
+                </div>
+                <div class="help-text">
+                    <i class="fas fa-info-circle"></i> Leave blank to keep current
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn-cancel" id="ce">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button class="btn-update" id="upd">
+                    <i class="fas fa-save"></i> Update
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================
+    🔧 CONFIGURATION — Only change these four values.
+    Paste directly between the quotes ("), no spaces or enters before/after.
+    ================================================================ -->
+    <script>
+        window.__CONFIG__ = {
+            SUPABASE_URL: "https://ovzyjnoqnbpwwlqtkwit.supabase.co",
+            SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92enlqbm9xbmJwd3dscXRrd2l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MzA2MDIsImV4cCI6MjA5NjUwNjYwMn0.UgGC9Bvjeud6v29CjUVrnfRWBuf7jDTxmCOW0u62NRw",
+            SUPABASE_SERVICE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92enlqbm9xbmJwd3dscXRrd2l0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MDkzMDYwMiwiZXhwIjoyMDk2NTA2NjAyfQ.ixpFqaGBIIrJ4Ci96k7brKlN5oeoWK_P1RROxmERKCA",
+            ALLOWED_EMAIL: "inyt_444@outlook.com"
+        };
+    </script>
+
+    <!-- ================================================================
+    Button Binding + Login Script
+    ================================================================ -->
+    <script>
+        // Global error handler
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.error || e.message);
+            var status = document.getElementById('loginStatus');
+            if (status) {
+                status.innerHTML = '<div class="status-error">⚠️ Script error: ' + (e.message || 'Unknown issue') + '</div>';
+            }
+        });
+
+        // Show status message with auto-hide
+        function showStatus(html, autoHideMs) {
+            var status = document.getElementById('loginStatus');
+            if (!status) return;
+            status.innerHTML = html;
+            if (autoHideMs) {
+                setTimeout(function() {
+                    status.innerHTML = '';
+                }, autoHideMs);
+            }
+        }
+
+        var supabaseClient = null;
+        var configReady = false;
+        var allowedEmail = '';
+
+        // Setup login configuration
+        function setupLoginConfig() {
+            try {
+                var cfg = window.__CONFIG__ || {};
+                var url = (cfg.SUPABASE_URL || '').trim();
+                var key = (cfg.SUPABASE_ANON_KEY || '').trim();
+                var email = (cfg.ALLOWED_EMAIL || '').trim();
+
+                if (!url || url === "ENTER_YOUR_URL" || 
+                    !key || key === "ENTER_YOUR_ANON_KEY" || 
+                    !email || email === "ENTER_YOUR_EMAIL") {
+                    console.error('❌ URL, Key or Email not set in CONFIG block');
+                    showStatus('<div class="status-error">⚠️ Set Supabase URL, Key and Email in the CONFIG block of the code</div>');
+                    return;
+                }
+
+                if (typeof supabase === 'undefined' || !supabase.createClient) {
+                    console.error('❌ Supabase SDK not loaded');
+                    showStatus('<div class="status-error">⚠️ Supabase SDK not loaded, check internet/CDN</div>');
+                    return;
+                }
+
+                supabaseClient = supabase.createClient(url, key, {
+                    auth: {
+                        persistSession: true,
+                        autoRefreshToken: true,
+                        detectSessionInUrl: false
+                    }
+                });
+                
+                allowedEmail = email;
+                configReady = true;
+                console.log('✅ Login configuration correct');
+            } catch (e) {
+                console.error('❌ Problem in CONFIG block:', e);
+                showStatus('<div class="status-error">⚠️ Problem in CONFIG block — check console</div>');
+            }
+        }
+
+        // Login function
+        async function login() {
+            var emailInput = document.getElementById('loginEmail');
+            var passwordInput = document.getElementById('loginPass');
+            var loginBtn = document.getElementById('loginBtn');
+            
+            var email = emailInput ? emailInput.value.trim() : '';
+            var password = passwordInput ? passwordInput.value.trim() : '';
+
+            if (!configReady || !supabaseClient) {
+                showStatus('<div class="status-error">⚠️ Set Supabase URL, Key and Email correctly in the CONFIG block below</div>', 4000);
+                return;
+            }
+
+            if (!email || !password) {
+                showStatus('<div class="status-error">Please enter email and password</div>', 3000);
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Logging in...';
+            showStatus('<div class="status-loading">⏳ Verifying...</div>');
+
+            try {
+                var result = await supabaseClient.auth.signInWithPassword({ 
+                    email: email, 
+                    password: password 
+                });
+
+                if (result.error) throw new Error(result.error.message);
+
+                var loggedInEmail = result.data.user ? result.data.user.email : '';
+                
+                if (loggedInEmail.toLowerCase() !== allowedEmail.toLowerCase()) {
+                    await supabaseClient.auth.signOut();
+                    throw new Error('This email (' + loggedInEmail + ') is not authorized. Use the correct email.');
+                }
+
+                showStatus('<div class="status-success">Welcome, ' + loggedInEmail + '!</div>', 2000);
+
+                // Successful login → Show admin panel
+                setTimeout(function() {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('adminScreen').style.display = 'block';
+                    if (window.startAdminPanel) window.startAdminPanel();
+                }, 600);
+
+            } catch (error) {
+                console.error('❌ Login error:', error);
+                showStatus('<div class="status-error">❌ ' + error.message + '</div>', 4000);
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+            }
+        }
+
+        // Logout function
+        async function logout() {
+            try {
+                if (supabaseClient) {
+                    await supabaseClient.auth.signOut();
+                }
+            } catch (e) {
+                console.error('Logout error:', e);
+            }
+            
+            document.getElementById('adminScreen').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+            
+            var emailInput = document.getElementById('loginEmail');
+            var passwordInput = document.getElementById('loginPass');
+            if (emailInput) emailInput.value = '';
+            if (passwordInput) passwordInput.value = '';
+        }
+
+        // Bind all button events
+        function bindButtons() {
+            var toggleBtn = document.getElementById('togglePassIcon');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var passInput = document.getElementById('loginPass');
+                    var icon = this.querySelector('i');
+                    
+                    if (passInput.type === 'password') {
+                        passInput.type = 'text';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        passInput.type = 'password';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
+                });
+            }
+
+            var loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', login);
+            }
+
+            var emailInput = document.getElementById('loginEmail');
+            if (emailInput) {
+                emailInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        login();
+                    }
+                });
+            }
+
+            var passwordInput = document.getElementById('loginPass');
+            if (passwordInput) {
+                passwordInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        login();
+                    }
+                });
+            }
+
+            var logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', logout);
+            }
+
+            setupLoginConfig();
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', bindButtons);
+        } else {
+            bindButtons();
+        }
+    </script>
+
+    <!-- ================================================================
+    User Management Panel Script
+    (Called via startAdminPanel() only after successful login)
+    ================================================================ -->
+    <script>
+        window.startAdminPanel = function() {
+            if (window.__adminStarted) return; // Start only once
+            window.__adminStarted = true;
+
+            var cfg = window.__CONFIG__ || {};
+            var SUPABASE_URL = cfg.SUPABASE_URL;
+            var SUPABASE_ANON_KEY = cfg.SUPABASE_ANON_KEY;
+            var SUPABASE_SERVICE_KEY = cfg.SUPABASE_SERVICE_KEY;
+
+            (async function() {
+                'use strict';
+                
+                var s = null;  // Supabase client
+                var a = null;  // Admin client
+                var r = false; // Ready flag
+                var c = false; // Connecting flag
+                var t = 0;     // Retry counter
+                var v = false; // User list visible
+                var u = [];    // Users array
+
+                // DOM element references
+                function $(id) { return document.getElementById(id); }
+                var tb = $('tb');
+                var uc = $('uc');
+                var am = $('a');
+                var rb = $('r');
+                var ts = $('t');
+                var td = $('d');
+                var ni = $('n');
+                var ei = $('e');
+                var pi = $('p');
+                var ab = $('add');
+                var ae = $('ae');
+                var sf = $('sf');
+                var ss = $('ss');
+                var sc = $('sc');
+                var ulb = $('ulb');
+                var uls = $('uls');
+                var em = $('em');
+                var eid = $('eid');
+                var en = $('en');
+                var ee = $('ee');
+                var ep = $('ep');
+                var up = $('upd');
+                var ce = $('ce');
+                var ee2 = $('ee2');
+                var esf = $('esf');
+                var ess = $('ess');
+                var esc = $('esc');
+
+                // Update status
+                function us(txt, p) {
+                    p = p || 'connecting';
+                    if (ts) ts.textContent = txt;
+                    if (td) {
+                        td.className = 'dot';
+                        td.classList.add(p === 'connected' ? 'dot-green' : p === 'error' ? 'dot-red' : 'dot-yellow');
+                    }
+                }
+
+                // Show alert
+                function sa(m, type) {
+                    type = type || 'success';
+                    if (!am) return;
+                    am.textContent = m;
+                    am.className = 'alert alert-' + type;
+                    clearTimeout(am._h);
+                    am._h = setTimeout(function() {
+                        am.className = 'alert';
+                    }, 5000);
+                    console.log('[' + type + ']', m);
+                }
+
+                // Set loading state
+                function sl(b, l, txt) {
+                    txt = txt || 'Loading...';
+                    if (!b) return;
+                    if (l) {
+                        b.disabled = true;
+                        b._o = b.innerHTML;
+                        b.innerHTML = '<span class="spinner"></span> ' + txt;
+                    } else {
+                        b.disabled = false;
+                        if (b._o) {
+                            b.innerHTML = b._o;
+                            b._o = null;
+                        }
+                    }
+                }
+
+                // Escape HTML
+                function eh(txt) {
+                    if (!txt) return '';
+                    var d = document.createElement('div');
+                    d.textContent = txt;
+                    return d.innerHTML;
+                }
+
+                // Get error message
+                function ge(e) {
+                    if (!e) return 'Unknown error';
+                    if (typeof e === 'string') return e;
+                    if (e.message) return e.message;
+                    if (e.error_description) return e.error_description;
+                    if (e.code === '23505') return 'Email already exists';
+                    if (e.code === 'PGRST116') return 'Query failed';
+                    if (e.code === '42P01') return 'Profiles table not found';
+                    return JSON.stringify(e).substring(0, 100);
+                }
+
+                // Delay promise
+                function d(ms) {
+                    return new Promise(function(resolve) {
+                        setTimeout(resolve, ms);
+                    });
+                }
+
+                // Check password strength
+                function cps(p) {
+                    if (!p) return { score: 0, label: '-', strength: '' };
+                    var score = 0;
+                    if (p.length >= 6) score++;
+                    if (p.length >= 8) score++;
+                    if (/[a-z]/.test(p)) score++;
+                    if (/[A-Z]/.test(p)) score++;
+                    if (/[0-9]/.test(p)) score++;
+                    if (/[^a-zA-Z0-9]/.test(p)) score++;
+                    
+                    var l, str;
+                    if (score <= 2) {
+                        l = 'Weak 🔴';
+                        str = 'weak';
+                    } else if (score <= 4) {
+                        l = 'Medium 🟡';
+                        str = 'medium';
+                    } else {
+                        l = 'Strong 🔵';
+                        str = 'strong';
+                    }
+                    return { score: score, label: l, strength: str };
+                }
+
+                // Update strength indicator
+                function usi(p, f, st, co) {
+                    var result = cps(p);
+                    if (co) co.className = 'password-strength-container';
+                    if (result.strength && co) {
+                        co.classList.add(result.strength);
+                    }
+                    if (st) st.textContent = result.label || '-';
+                }
+
+                // Validate email
+                function ie(e) {
+                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+                }
+
+                // Validate password
+                function ip(p) {
+                    if (!p || p.length < 6) return false;
+                    var result = cps(p);
+                    return result.strength !== 'weak';
+                }
+
+                // Initialize Supabase connection
+                async function init() {
+                    if (c || r) return;
+                    c = true;
+                    t++;
+                    
+                    if (rb) rb.classList.remove('show');
+                    us('Connecting...', 'connecting');
+                    
+                    try {
+                        if (!SUPABASE_URL || SUPABASE_URL === 'ENTER_YOUR_URL') {
+                            throw new Error('Missing SUPABASE_URL');
+                        }
+                        if (!SUPABASE_ANON_KEY || SUPABASE_ANON_KEY === 'ENTER_YOUR_ANON_KEY') {
+                            throw new Error('Missing ANON_KEY');
+                        }
+                        if (!SUPABASE_SERVICE_KEY || SUPABASE_SERVICE_KEY === 'ENTER_YOUR_SERVICE_ROLE_KEY') {
+                            throw new Error('Missing SERVICE_KEY');
+                        }
+                        if (!window.supabase || !window.supabase.createClient) {
+                            throw new Error('SDK not loaded');
+                        }
+
+                        var createClient = window.supabase.createClient;
+                        
+                        s = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                            auth: {
+                                persistSession: false,
+                                autoRefreshToken: false
+                            }
+                        });
+                        
+                        a = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+                            auth: {
+                                persistSession: false,
+                                autoRefreshToken: false
+                            }
+                        });
+
+                        // Test connection
+                        var testResult = await a.auth.admin.listUsers({ perPage: 1 });
+                        if (testResult.error) throw new Error('Test failed: ' + testResult.error.message);
+
+                        r = true;
+                        t = 0;
+                        us('Connected ✅', 'connected');
+                        sa('Connected Database Successfully', 'success');
+                        console.log('Connected');
+                        
+                    } catch (e) {
+                        console.error('❌', e);
+                        r = false;
+                        s = null;
+                        a = null;
+                        var m = ge(e);
+                        us('Error: ' + m, 'error');
+                        sa('❌ ' + m, 'error');
+
+                        if (t < 3) {
+                            var d2 = 2000 * t;
+                            sa('Retrying in ' + (d2/1000) + 's... (' + (t+1) + '/3)', 'info');
+                            await d(d2);
+                            c = false;
+                            return init();
+                        } else {
+                            us('Failed ❌', 'error');
+                            sa('❌ Failed after 3 attempts. Check keys.', 'error');
+                            if (tb) {
+                                tb.innerHTML = '<tr><td colspan="5" class="empty-state"><i class="fas fa-times-circle"></i> Cannot connect</td></tr>';
+                            }
+                            if (rb) rb.classList.add('show');
+                            c = false;
+                            return;
+                        }
+                    }
+                    c = false;
+                }
+
+                // Load users
+                async function load() {
+                    if (!r || !a) {
+                        sa('Not connected!', 'error');
+                        return;
+                    }
+                    
+                    try {
+                        if (tb) {
+                            tb.innerHTML = '<tr><td colspan="5" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
+                        }
+                        
+                        var listResult = await a.auth.admin.listUsers();
+                        if (listResult.error) throw listResult.error;
+                        
+                        var au = (listResult.data && listResult.data.users) || [];
+                        var pb = {};
+                        
+                        try {
+                            var profilesResult = await a.from('profiles').select('*');
+                            if (profilesResult.error) {
+                                console.warn('Profiles:', profilesResult.error.message);
+                            } else if (profilesResult.data) {
+                                profilesResult.data.forEach(function(p) {
+                                    if (p && p.id) pb[p.id] = p;
+                                });
+                            }
+                        } catch (e) {
+                            console.warn('Profiles unavailable:', e);
+                        }
+
+                        u = au.map(function(user) {
+                            var p = pb[user.id] || {};
+                            return {
+                                id: user.id,
+                                email: user.email || '',
+                                name: p.name || (user.user_metadata && user.user_metadata.name) || '',
+                                password: p.password || '',
+                                created_at: user.created_at || new Date().toISOString()
+                            };
+                        }).sort(function(a, b) {
+                            return new Date(b.created_at) - new Date(a.created_at);
+                        });
+                        
+                        render();
+                        console.log('✅ ' + u.length + ' users');
+                        
+                    } catch (e) {
+                        console.error('❌', e);
+                        sa('Load error: ' + ge(e), 'error');
+                        if (tb) {
+                            tb.innerHTML = '<tr><td colspan="5" class="empty-state"><i class="fas fa-exclamation-triangle"></i> Load failed</td></tr>';
+                        }
+                    }
+                }
+
+                // Render user table
+                function render() {
+                    if (!u || !u.length) {
+                        if (tb) tb.innerHTML = '<tr><td colspan="5" class="empty-state"><i class="fas fa-inbox"></i> No users</td></tr>';
+                        if (uc) uc.textContent = '0';
+                        return;
+                    }
+                    
+                    var h = '';
+                    u.forEach(function(user, i) {
+                        var pid = 'pwd_' + user.id;
+                        var nm = eh(user.name || user.email || 'N/A');
+                        var eml = eh(user.email);
+                        
+                        var pd = '<span style="color:#94a3b8;font-size:.7rem;">—</span>';
+                        if (user.password && user.password.trim()) {
+                            pd = '<div class="cell-password"><input type="password" id="' + pid + '" value="' + eh(user.password) + '" readonly /><button class="eye-small" data-pass="' + pid + '" type="button"><i class="fas fa-eye"></i></button></div>';
+                        }
+                        
+                        h += '<tr>' +
+                            '<td class="cell-id">' + (i + 1) + '</td>' +
+                            '<td class="cell-name">' + nm + '</td>' +
+                            '<td class="cell-email">' + eml + '</td>' +
+                            '<td>' + pd + '</td>' +
+                            '<td><div class="cell-actions">' +
+                            '<button class="btn-edit" data-uid="' + user.id + '" type="button"><i class="fas fa-edit"></i> Edit</button>' +
+                            '<button class="btn-delete" data-uid="' + user.id + '" type="button"><i class="fas fa-trash-alt"></i> Delete</button>' +
+                            '</div></td>' +
+                            '</tr>';
+                    });
+                    
+                    if (tb) tb.innerHTML = h;
+                    if (uc) uc.textContent = u.length.toString();
+                }
+
+                // Create user
+                async function create() {
+                    if (!r || !a) {
+                        sa('Not connected...', 'info');
+                        return;
+                    }
+                    
+                    var nm = ni ? ni.value.trim() : '';
+                    var eml = ei ? ei.value.trim().toLowerCase() : '';
+                    var pw = pi ? pi.value.trim() : '';
+                    var dn = nm || eml;
+
+                    if (!ie(eml)) {
+                        sa('❌ Valid email required', 'error');
+                        if (ei) ei.focus();
+                        return;
+                    }
+                    
+                    if (!ip(pw)) {
+                        sa('❌ Password must be Medium+', 'error');
+                        if (pi) pi.focus();
+                        return;
+                    }
+                    
+                    sl(ab, true, 'Creating...');
+                    
+                    try {
+                        var createResult = await a.auth.admin.createUser({
+                            email: eml,
+                            password: pw,
+                            email_confirm: true,
+                            user_metadata: { name: dn }
+                        });
+                        
+                        if (createResult.error) throw createResult.error;
+                        if (!createResult.data || !createResult.data.user || !createResult.data.user.id) {
+                            throw new Error('Create failed');
+                        }
+
+                        await a.from('profiles').upsert({
+                            id: createResult.data.user.id,
+                            email: eml,
+                            name: dn,
+                            password: pw,
+                            updated_at: new Date().toISOString()
+                        });
+
+                        sa('✅ "' + dn + '" created!', 'success');
+                        
+                        if (ni) ni.value = '';
+                        if (ei) ei.value = '';
+                        if (pi) pi.value = '';
+                        if (sf) sf.style.width = '0%';
+                        if (ss) ss.textContent = '-';
+                        if (sc) sc.className = 'password-strength-container';
+                        
+                        await d(1000);
+                        await load();
+                        if (!v) toggle();
+                        
+                    } catch (e) {
+                        console.error('Create error:', e);
+                        sa('❌ ' + ge(e), 'error');
+                    } finally {
+                        sl(ab, false);
+                    }
+                }
+
+                // Update user
+                async function update() {
+                    var uid = eid ? eid.value : '';
+                    if (!uid) return;
+                    
+                    var nm = en ? en.value.trim() : '';
+                    var eml = ee ? ee.value.trim().toLowerCase() : '';
+                    var np = ep ? ep.value.trim() : '';
+                    var dn = nm || eml;
+
+                    if (!ie(eml)) {
+                        sa('❌ Valid email required', 'error');
+                        if (ee) ee.focus();
+                        return;
+                    }
+                    
+                    if (np && !ip(np)) {
+                        sa('❌ Password must be Medium+', 'error');
+                        if (ep) ep.focus();
+                        return;
+                    }
+                    
+                    sl(up, true, 'Updating...');
+                    
+                    try {
+                        var au2 = { email: eml, data: { name: dn } };
+                        if (np) au2.password = np;
+                        
+                        var updateResult = await a.auth.admin.updateUserById(uid, au2);
+                        if (updateResult.error) throw updateResult.error;
+
+                        var pu = { id: uid, email: eml, name: dn, updated_at: new Date().toISOString() };
+                        if (np) pu.password = np;
+                        
+                        await a.from('profiles').upsert(pu);
+                        sa('✅ Updated!', 'success');
+                        close();
+                        await d(500);
+                        await load();
+                        
+                    } catch (e) {
+                        console.error('Update error:', e);
+                        sa('❌ ' + ge(e), 'error');
+                    } finally {
+                        sl(up, false);
+                    }
+                }
+
+                // Delete user
+                async function del(uid) {
+                    var user = u.find(function(user) { return user.id === uid; });
+                    var un = (user && (user.name || user.email)) || 'User';
+                    
+                    if (!confirm('Delete "' + un + '" permanently?')) return;
+                    
+                    try {
+                        var deleteResult = await a.auth.admin.deleteUser(uid);
+                        if (deleteResult.error) throw deleteResult.error;
+                        sa('✅ "' + un + '" deleted!', 'success');
+                        await d(500);
+                        await load();
+                    } catch (e) {
+                        console.error('Delete error:', e);
+                        sa('❌ ' + ge(e), 'error');
+                    }
+                }
+
+                // Open edit modal
+                function open(uid) {
+                    var user = u.find(function(user) { return user.id === uid; });
+                    if (!user) {
+                        sa('User not found', 'error');
+                        return;
+                    }
+                    
+                    if (eid) eid.value = uid;
+                    if (en) en.value = user.name || '';
+                    if (ee) ee.value = user.email || '';
+                    
+                    if (user.password && user.password.trim()) {
+                        if (ep) {
+                            ep.value = user.password;
+                            ep.type = 'password';
+                        }
+                        if (ee2) ee2.innerHTML = '<i class="fas fa-eye"></i>';
+                        usi(user.password, esf, ess, esc);
+                    } else {
+                        if (ep) {
+                            ep.value = '';
+                            ep.type = 'password';
+                        }
+                        if (ee2) ee2.innerHTML = '<i class="fas fa-eye"></i>';
+                        if (esf) esf.style.width = '0%';
+                        if (ess) ess.textContent = '-';
+                        if (esc) esc.className = 'password-strength-container';
+                    }
+                    
+                    if (em) em.classList.add('active');
+                    setTimeout(function() {
+                        if (en) en.focus();
+                    }, 100);
+                }
+
+                // Close modal
+                function close() {
+                    if (em) em.classList.remove('active');
+                    if (eid) eid.value = '';
+                    if (en) en.value = '';
+                    if (ee) ee.value = '';
+                    if (ep) ep.value = '';
+                }
+
+                // Toggle user list
+                function toggle() {
+                    v = !v;
+                    if (v) {
+                        if (uls) uls.classList.add('active');
+                        if (ulb) {
+                            ulb.innerHTML = '<i class="fas fa-times"></i> Close';
+                            ulb.style.background = '#fee2e2';
+                            ulb.style.color = '#991b1b';
+                        }
+                        load();
+                    } else {
+                        if (uls) uls.classList.remove('active');
+                        if (ulb) {
+                            ulb.innerHTML = '<i class="fas fa-list-ul"></i> User List';
+                            ulb.style.background = '#e9edf4';
+                            ulb.style.color = '#1e293b';
+                        }
+                    }
+                }
+
+                // Bind event listeners
+                if (ab) ab.addEventListener('click', create);
+                if (ulb) ulb.addEventListener('click', toggle);
+                if (rb) rb.addEventListener('click', function() {
+                    t = 0;
+                    c = false;
+                    r = false;
+                    init();
+                });
+
+                if (pi) pi.addEventListener('input', function() {
+                    usi(pi.value, sf, ss, sc);
+                });
+                
+                if (ep) ep.addEventListener('input', function() {
+                    usi(ep.value, esf, ess, esc);
+                });
+
+                // Enter key handlers
+                [ni, ei, pi].forEach(function(f) {
+                    if (f) f.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            if (ab) ab.click();
+                        }
+                    });
+                });
+
+                [en, ee, ep].forEach(function(f) {
+                    if (f) f.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            if (up) up.click();
+                        }
+                    });
+                });
+
+                // Password eye toggle
+                if (ae) ae.addEventListener('click', function() {
+                    var isPassword = pi.type === 'password';
+                    pi.type = isPassword ? 'text' : 'password';
+                    ae.innerHTML = isPassword ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+                });
+
+                if (ee2) ee2.addEventListener('click', function() {
+                    var isPassword = ep.type === 'password';
+                    ep.type = isPassword ? 'text' : 'password';
+                    ee2.innerHTML = isPassword ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+                });
+
+                // Table button clicks (Edit/Delete/Eye)
+                if (tb) tb.addEventListener('click', function(e) {
+                    var b = e.target.closest('button');
+                    if (!b) return;
+                    
+                    if (b.classList.contains('btn-edit')) {
+                        var uid = b.dataset.uid;
+                        if (uid) open(uid);
+                    } else if (b.classList.contains('btn-delete')) {
+                        var uid = b.dataset.uid;
+                        if (uid) del(uid);
+                    } else if (b.classList.contains('eye-small')) {
+                        var pid = b.dataset.pass;
+                        var f = document.getElementById(pid);
+                        if (f) {
+                            var isPassword = f.type === 'password';
+                            f.type = isPassword ? 'text' : 'password';
+                            b.innerHTML = isPassword ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+                        }
+                    }
+                });
+
+                if (up) up.addEventListener('click', update);
+                if (ce) ce.addEventListener('click', close);
+                if (em) em.addEventListener('click', function(e) {
+                    if (e.target === em) close();
+                });
+
+                // Start the admin panel
+                console.log('🚀 Starting admin panel...');
+                us('Starting...', 'connecting');
+                await d(300);
+                init();
+            })();
+        };
+    </script>
+
+</body>
+</html>
